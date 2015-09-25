@@ -1,0 +1,74 @@
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+
+            google.load("visualization", "1", {packages:["corechart"]});
+                //<!-- BEGIN CHART_JS -->
+
+            google.setOnLoadCallback(drawChart{CHART_INDEX});
+            function drawChart{CHART_INDEX}() {
+                var data = google.visualization.arrayToDataTable([
+                  {CHART_VALS}
+            ]);
+            var options = {
+                is3D:true,
+                width: '850',
+                height: '350',
+                tooltip: { color: 'black', fontSize: 15, bold: true },
+                pieSliceTextStyle: {color: '#ddd', fontSize: 20},
+                chartArea:{left:20,top:0,width:'100%',height:'100%'}
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div{CHART_INDEX}'));
+            chart.draw(data, options);
+            }
+
+            //<!-- END CHART_JS -->
+
+</script>
+
+<div class="inner-tabs">
+    
+    <ul>
+        <li><a href="#tabs-1">Ranking Geral</a></li>
+        <li><a href="#tabs-2">Graficos</a></li>
+       
+    </ul>
+    <div id="tabs-1">
+        <div class="inner-accordion">
+            <!-- BEGIN EACH_ANO -->
+            <h3>Resultado do ano de <b>{ANO}</b></h3>
+            <div>
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <th>Ordem</th>
+                            <th>Unidade</th>
+                            <th align="right">Total (R$)</th>
+                        </tr>                        
+                    </thead>
+                    <!-- BEGIN EACHUO -->
+                    <tbody>
+                        <tr>
+                            <td>{UOORDEM}</td>
+                            <td><a href="?mode=uoHistory&uo={UOID}&ano={ANOATUAL}">{UONOME}</td>
+                            <td align="right">{TOTAL}</td>
+                        </tr>
+                    </tbody>
+                    <!-- END EACHUO -->
+                </table>    
+            </div>
+            <!-- END EACH_ANO -->
+        </div>
+        <br style=  "clear:both"/>
+    </div>
+    <div id="tabs-2">
+        <div class="inner-accordion">
+            <!-- BEGIN CHART_DIVS -->
+            <h3>Proporção de Gastos do ano de {ANO}</h3>
+            <div>
+                <div class="uo-chart" id="chart_div{CHART_INDEX}">
+                </div>
+            </div>
+            <!-- END CHART_DIVS -->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <title>Sistema DAEE - Painel de Resultados</title>
+        <link type="text/css" rel="stylesheet" href="cssjs_libs/painel.css" />
+        <link type="text/css" rel="stylesheet" href="cssjs_libs/jqueryui/jquery-ui.structure.min.css" />
+        <link type="text/css" rel="stylesheet" href="cssjs_libs/jqueryui/jquery-ui.structure.css" />
+        <link type="text/css" rel="stylesheet" href="cssjs_libs/jqueryui/jquery-ui.theme.min.css" />
+        <script language="javascript" src="cssjs_libs/jquery.js"></script>
+        <script language="javascript" src="cssjs_libs/jqueryui/jquery-ui.js"></script>
+        <script language="javascript" src="cssjs_libs/painel.js"></script>
+        {JSCRIPT}
+
+    </head>
+    <body>
+        <div id="tudo">
+            <div id="header">
+                <div class="inner">
+                    <h1><img src="images/desperdicio-zero.jpg" width="150" height="150" /><img src="images/logo-sigup.jpg"  style="float:right" /></h1>
+                    <img src="images/logo-daee.png" width="105" height="135">
+                </div>
+            </div>
+            <div>
+                <div id="menu">
+                    <ul id="menu-container">
+                        <li class="{DISABLEBUTTON1}"><a href="?"><span class="ui-icon ui-icon-note"></span>Números do Sistema</a></li>
+                        <li><span class="ui-icon ui-icon-home"></span>Unidades Operacionais
+                            <ul>
+                                <li class="{DISABLEBUTTON2}"><a href="?mode=uoRanking"><span class="ui-icon ui-icon-star"></span>Ranking Geral</a></li>
+                                <li class="{DISABLEBUTTON5}"><a href="?mode=uoHistory"><span class="ui-icon ui-icon-clock"></span>Histórico da Unidade</a></li>
+                            </ul>
+                        </li>
+                        <li><span class="ui-icon ui-icon-lightbulb"></span>Unidades Consumidoras
+                            <ul>
+                                <li class="{DISABLEBUTTON4}"><a href="?mode=ucRanking"><span class="ui-icon ui-icon-star"></span>Ranking de 50 maiores</a></li>
+                                <li class="{DISABLEBUTTON5}"><a href="?mode=ucHistory"><span class="ui-icon ui-icon-clock"></span>Histórico de Consumo</a></li>
+                            </ul>
+                        </li>
+                        <li><span class="ui-icon ui-icon-arrowthick-2-ne-sw"></span>Variação
+                            <ul>
+                                <li class="{DISABLEBUTTON7}"><span class="ui-icon ui-icon-home"></span>Unidades Operacionais
+                                    <ul>
+                                        <!-- BEGIN MENUTP1 -->
+                                        <li><a href="?mode=uoEvoConsumo&tipo={TPINDEX}"><span class="ui-icon ui-icon-star"></span>{TPNOME}</a></li>
+                                        <!-- END MENUTP1 -->
+                                    </ul>    
+                                </li>
+                                <li class="{DISABLEBUTTON8}"><span class="ui-icon ui-icon-script"></span>Unidades Consumidoras
+                                    <ul>
+                                        <!-- BEGIN MENUTP2 -->
+                                        <li><a href="?mode=ucEvoConsumo&tipo={TPINDEX}"><span class="ui-icon ui-icon-star"></span>{TPNOME}</a></li>
+                                        <!-- END MENUTP2 -->
+                                    </ul>                                    
+                                </li>
+                            </ul>
+                        </li>                                
+                        <li><a href="?mode=uoGeoChart"><span class="ui-icon ui-icon-flag"></span>Gráfico em Mapa</a>
+                            <!--ul>
+                                <li class="{DISABLEBUTTON7}"><span class="ui-icon ui-icon-home"></span>Unidades Operacionais</li>
+                                <li class="{DISABLEBUTTON8}"><a href="?mode=ucGeoChart"><span class="ui-icon ui-icon-script"></span>Unidades Consumidoras</a></li>
+                            </ul -->
+                        </li>
+                        <li><a href="udd_relatorioUO.php"><span class="ui-icon ui-icon-arrowreturnthick-1-w"></span>Modo Antigo</a></li>
+                        <li><a href="logout.php"><span class="ui-icon ui-icon-circle-close"></span>Sair</a></li>
+                        <li class="ui-state-disabled"><small>{EXECTIME}</small></li>
+                    </ul>
+                </div>
+
+                <div id="conteudo">
+
+                    {CONTEUDO}
+
+                </div>
+                <br style="clear:both" />
+            </div>
+        </div>
+    </body>
+</html>

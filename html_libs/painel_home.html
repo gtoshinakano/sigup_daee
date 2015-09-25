@@ -1,0 +1,109 @@
+<div class="inner-tabs">
+    
+    <ul>
+        <li><a href="#tabs-1">Números Gerais</a></li>
+        <li><a href="#tabs-2">Totais Gerais</a></li>
+       
+    </ul>
+    <div id="tabs-1">
+        <div class="result-boxes">
+            <div class="result-boxes-border">
+                <div class="result-boxes-content">
+                    <h2>NOTAS LANÇADAS</h2>
+                    <b>{NUMNOTAS}</b>
+                </div>
+            </div>
+        </div>
+        <div class="result-boxes">
+            <div class="result-boxes-border">
+                <div class="result-boxes-content">
+                    <h2>LANÇAMENTOS DESDE</h2>
+                    <b>{LANCDESDE}</b>
+                </div>
+            </div>
+        </div>        
+        <div class="result-boxes">
+            <div class="result-boxes-border">
+                <div class="result-boxes-content">
+                    <h2>DADOS A PARTIR DE</h2>
+                    <b>{DADOSDESDE}</b>
+                </div>
+            </div>
+        </div>        
+        <div class="result-boxes">
+            <div class="result-boxes-border">
+                <div class="result-boxes-content">
+                    <h2>UNIDADES OPERACIONAIS</h2>
+                    <strong>{UOQTD}</strong>
+                </div>
+            </div>
+        </div>      
+        <div class="result-boxes">
+            <div class="result-boxes-border">
+                <div class="result-boxes-content">
+                    <h2>UNIDADES CONSUMIDORAS</h2>
+                    <strong>{UCQTD}</strong>
+                </div>
+            </div>
+        </div>            
+                
+        <br style=  "clear:both"/>
+    </div>
+    <div id="tabs-2">
+        <p>Os resultados abaixo são a soma de notas de todos os anos, desde os primeiros registros até os dias atuais.</p>
+        <div class="inner-accordion">
+            <!-- BEGIN EACHUCTIPO -->
+
+            <h3>{UCTIPONOME}: <b>{UCNOTAQTD}</b> notas</h3>
+            <div>
+                <div class="result-boxes">
+                    <div class="result-boxes-border">
+                        <div class="result-boxes-content">
+                            <h2>NOTAS LANÇADAS</h2>
+                            <b>{UCNOTAQTD}</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-boxes">
+                    <div class="result-boxes-border">
+                        <div class="result-boxes-content">
+                            <h2>VALOR TOTAL (R$)</h2>
+                            <b>{VALTOTAL}</b>
+                        </div>
+                    </div>
+                </div>
+                <!-- BEGIN SHOWCONS -->
+                <div class="result-boxes">
+                    <div class="result-boxes-border">
+                        <div class="result-boxes-content">
+                            <h2>CONSUMO TOTAL ({UCMEDIDA})</h2>
+                            <b>{CONSTOTAL}</b>
+                        </div>
+                    </div>
+                </div>                   
+                <!-- END SHOWCONS -->
+                <div class="result-boxes">
+                    <div class="result-boxes-border">
+                        <div class="result-boxes-content">
+                            <h2>MÉDIA R$ P/ NOTA (R$)</h2>
+                            <b>{VALMEDIA}</b>
+                        </div>
+                    </div>
+                </div>
+                <!-- BEGIN SHOWCONS2 -->
+                <div class="result-boxes">
+                    <div class="result-boxes-border">
+                        <div class="result-boxes-content">
+                            <h2>MÉDIA DE CONSUMO P/ NOTA ({UCMEDIDA})</h2>
+                            <b>{CONSMEDIA}</b>
+                        </div>
+                    </div>
+                </div>                   
+                <!-- END SHOWCONS2 -->                
+            </div>
+
+            <!-- END EACHUCTIPO -->
+        </div>
+        <p><small><b>Obs:</b> Clique nos tópicos para expandir as informações.</small></p>
+    </div>
+</div>

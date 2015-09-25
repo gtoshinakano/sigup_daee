@@ -1,0 +1,91 @@
+<!--script type="text/javascript" src="https://www.google.com/jsapi"></script-->
+<script type="text/javascript">
+
+$(document).ready(function(){
+    $('#mes-form').change(function(){
+           
+        var mes = $('#mes-form').val();
+        if(mes > 1){
+            $('#mes-ant').val(mes-1);
+            $('#form-submitter').removeAttr("disabled");
+        }else{
+         
+            $('#form-submitter').attr("disabled", "disabled");
+            
+        }
+           
+    });
+});
+    
+
+
+</script>
+
+<div class="inner-tabs">
+    
+    <ul>
+        <li><a href="#tabs-1">Ranking dos 50 maiores consumidores por Exercício</a></li>
+        
+    </ul>
+    <div id="tabs-1">
+        <fieldset>
+            <legend><b>Preencha o formulário para ver o <span class="green">Ranking</span></b></legend>
+            <div style="text-align: center">
+                <form method="get" id="form-busca">
+                    <input type="hidden" name="mode" value="ucRanking" />
+                    Consumidoras de <select name="tipo" >
+                        <!-- BEGIN EACHTIPO -->
+                        <option value="{TPINDEX}">{TPNOME}</option>
+                        <!-- END EACHTIPO -->
+                    </select>
+                    do ano de <select name="ano" id="ano">
+                        <!-- BEGIN ANOS -->
+                        <option value="{ANOFORM}">{ANOFORM}</option>
+                        <!-- END ANOS -->
+                    </select>
+                    <input type="submit" value="Gerar Ranking" id="form-submitter">
+                </form>
+            </div>
+        </fieldset>
+        <!-- BEGIN RESULTS -->
+        <h2>Ranking de <span class="green">{TIPONOME}</span> do ano de <span class="green">{GETANO}</span></h2>
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Unidade Consumidora</th>
+                    <th>Unidade</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- BEGIN EACHUC -->
+                <tr>
+                    <td align="center">{NO}</td>
+                    <td><span class="show-option" title="{TOOLTIP}"><a href="?mode=ucHistory&uc={UCID}&ano={GETANO}">{UCNOME}</a></td>
+                    <td align="center">{UC}</td>
+                    <td align="right"><small>R$</small> {TOTAL}</td>
+                </tr>
+                <!-- END EACHUC -->
+            </tbody>
+        </table>
+        <!-- END RESULTS -->
+        <!-- BEGIN NORESULTS -->
+        <div>
+            <p>- <b>Não foram encontrados registros para os dados fornecidos. </b></p>
+        </div>
+        <!-- END NORESULTS -->
+        <br style=  "clear:both"/>
+    </div>
+    <div id="tabs-2">
+        <div class="inner-accordion">
+            <!-- BEGIN CHART_DIVS -->
+            <h3>Proporção de Gastos do ano de {ANO}</h3>
+            <div>
+                <div class="uo-chart" id="chart_div{CHART_INDEX}">
+                </div>
+            </div>
+            <!-- END CHART_DIVS -->
+        </div>
+    </div>
+</div>

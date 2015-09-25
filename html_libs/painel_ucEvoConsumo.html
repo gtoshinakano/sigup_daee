@@ -1,0 +1,105 @@
+<!--script type="text/javascript" src="https://www.google.com/jsapi"></script-->
+<script type="text/javascript">
+
+$(document).ready(function(){
+    
+    $('#mes-form').change(function(){
+           
+        var mes = $('#mes-form').val();
+        if(mes > 1){
+            $('#mes-ant').val(mes-1);
+            $('#form-submitter').removeAttr("disabled");
+        }else{
+         
+            $('#form-submitter').attr("disabled", "disabled");
+            
+        }
+           
+    });
+
+
+    
+});
+    
+
+
+</script>
+
+<div class="inner-tabs">
+    
+    <ul>
+        <li><a href="#tabs-1">Variações de <b>Unidades Consumidoras</b> por Período</a></li>
+        
+    </ul>
+    <div id="tabs-1">
+        <fieldset>
+            <legend><b>Período de comparação para <span class="green">{TIPONOME}</span></b></legend>
+            <div style="text-align: center">
+                <form method="post" id="form-busca">
+                    De <select name="show_ant" id="mes-ant" disabled="disabled">
+                        <option value="1">Janeiro</option>
+                        <!-- BEGIN MESES -->
+                        <option value="{MESNUM}">{MESNOME}</option>
+                        <!-- END MESES -->
+                    </select>
+                    a <select name="mes_post" id="mes-form">
+                        <option value="null">SELECIONE</option>
+                        <!-- BEGIN MESES1 -->
+                        <option value="{MESNUM}">{MESNOME}</option>
+                        <!-- END MESES1 -->
+                    </select>
+                    de <select name="ano_form" id="ano-form">
+                        <!-- BEGIN ANOS -->
+                        <option value="{ANOFORM}">{ANOFORM}</option>
+                        <!-- END ANOS -->
+                    </select>
+                    <input type="submit" value="Buscar" id="form-submitter" disabled="disabled">
+                </form>
+            </div>
+        </fieldset>
+        <!-- BEGIN RESULTS -->
+        <h2>Resultados para <span class="green">{TIPONOME}</span> de <span class="green">{MESANT}</span> a <span class="green">{MESPOS}<span></h2>
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Unidade Consumidora</th>
+                    <th>Unidade</th>
+                    <th>{MESANT}</th>
+                    <th>{MESPOS}</th>
+                    <th>Variação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- BEGIN EACHUO -->
+                <tr>
+                    <td align="center">{NO}</td>
+                    <td><span class="show-option" title="{UCTOOLTIP}"><a href="?mode=ucHistory&uc={UCID}&ano={ANOCOR}">{UCNOME}</a></span></td>
+                    <td align="center">{UONOME}</td>
+                    <td align="right"><small>R$</small> {ANT}</td>
+                    <td align="right"><small>R$</small> {POST}</td>
+                    <td align="center">{VAR}</td>
+                </tr>
+                <!-- END EACHUO -->
+            </tbody>
+        </table>
+        <!-- END RESULTS -->
+        <!-- BEGIN NORESULTS -->
+        <div>
+            <p>- <b>Não foram encontrados registros para este período. </b></p>
+        </div>
+        <!-- END NORESULTS -->
+        <br style=  "clear:both"/>
+    </div>
+    <div id="tabs-2">
+        <div class="inner-accordion">
+            <!-- BEGIN CHART_DIVS -->
+            <h3>Proporção de Gastos do ano de {ANO}</h3>
+            <div>
+                <div class="uo-chart" id="chart_div{CHART_INDEX}">
+                </div>
+            </div>
+            <!-- END CHART_DIVS -->
+        </div>
+    </div>
+</div>

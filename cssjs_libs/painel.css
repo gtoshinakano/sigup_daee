@@ -1,0 +1,130 @@
+body{
+    background: #f9f9f9;
+    font-size: 13px;
+    font-family: "Verdana";
+    color: #333;
+    line-height: 25px;
+    margin:0;
+    padding:0;
+}
+
+a{ text-decoration: none; font-weight: normal; color: #0066cc; }
+a:hover{ color: #004499; text-decoration: underline;}
+strong{ font-weight: bold; }
+h3{
+    color:#666
+}
+
+table{border:0}
+table td{border:0}
+thead tr{background-color: #ccc; font-size:16px}
+
+fieldset{border: 1px dotted #333}
+
+#tudo{
+    width:1200px;
+    margin:0 auto;
+    background-color: white;
+    padding: 0 15px 0;
+}
+
+#header{
+    height:165px;
+
+    margin-bottom: 7px;
+}
+
+#header .inner{
+    margin:0 auto;
+    padding:15px 0 0 0;
+
+}
+
+#header .inner h1{
+    margin:0;
+    padding:19px 0 0;
+    display:inline;
+    float:right;
+    text-align:right;
+    font-family:"Arial";
+    font-size:210%;
+}
+
+#menu{
+    width: 215px;
+    float:left;
+
+}
+
+#menu-container a:hover, #menu-container a:link, #menu-container a:visited, #menu-container a:active{color:#333}
+
+#menu a{display: block;}
+.ui-menu { width: 215px; }
+
+#conteudo{
+    margin: 0 0 0 224px
+
+}
+
+#conteudo .inner-tabs{
+    width:100%;
+    overflow: auto;
+}
+
+.result-boxes{
+    width:33%;
+    float:left;
+    
+}
+.result-boxes-border{
+    border:1px solid #ddd;
+    margin: 0 4px 8px;
+    
+}
+
+.result-boxes-content{
+    padding:7px 11px;
+    font-size: 16px;
+}
+
+.result-boxes-content strong{
+    color: #238e23;
+    font-size: 40px;
+}
+.result-boxes-content b{
+    color: #238e23;
+    font-size: 28px;
+}
+
+.result-boxes-content h2{
+    margin:0 0 5px 0; padding: 0;
+    font-size:13px
+}
+
+.red{
+    color:red
+}
+.blue{
+    color:#0066cc
+}
+.green{
+    color:#238e23
+}
+
+.min-font{
+    font-size: 75%;
+}
+
+.hidden{
+    display:none
+}
+
+#status-bar{
+    border:3px dotted #999;
+    padding-left:15px;
+    margin-bottom: 10px;
+}
+#status-bar h3{
+    padding: 0;
+    margin: 7px 0 7px
+}

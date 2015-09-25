@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<servicos>
+	<servico>
+		<id>0</id>
+		<nome>Água</nome>
+		<descricao>Serviço de distribuição de Água e Esgoto</descricao>
+	</servico>
+	<servico>
+		<id>1</id>
+		<nome>Energia de Alta Tensão</nome>
+		<descricao>Serviço de distribuição de Energia Elétrica de Alta Tensão</descricao>
+	</servico>
+	<servico>
+		<id>2</id>
+		<nome>Energia de Baixa Tensão</nome>
+		<descricao>Serviço de distribuição de Energia Elétrica de Baixa Tensão</descricao>
+	</servico>
+	<servico>
+		<id>3</id>
+		<nome>Reprografia</nome>
+		<descricao>Serviço de Aluguel de Máquinas Corporativas</descricao>
+	</servico>
+</servicos>

@@ -1,0 +1,161 @@
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script type="text/javascript">
+
+    /**
+     * The HomeControl adds a control to the map that simply
+     * returns the user to Chicago. This constructor takes
+     * the control DIV as an argument.
+     * @constructor
+    */
+    function HomeControl(controlDiv, map) {
+
+        // Set CSS styles for the DIV containing the control
+        // Setting padding to 5 px will offset the control
+        // from the edge of the map
+        controlDiv.style.padding = '5px';
+
+        // Set CSS for the control border
+        var controlUI = document.createElement('div');
+        controlUI.style.backgroundColor = 'white';
+        controlUI.style.borderStyle = 'solid';
+        controlUI.style.borderWidth = '2px';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.textAlign = 'center';
+        controlUI.title = 'Clique para voltar à posição original';
+        controlDiv.appendChild(controlUI);
+
+        // Set CSS for the control interior
+        var controlText = document.createElement('div');
+        controlText.style.fontFamily = 'Arial,sans-serif';
+        controlText.style.fontSize = '12px';
+        controlText.style.paddingLeft = '4px';
+        controlText.style.paddingRight = '4px';
+        controlText.innerHTML = '<b>Voltar à Origem</b>';
+        controlUI.appendChild(controlText);
+
+        // Setup the click event listeners: simply set the map to
+        // Chicago
+        google.maps.event.addDomListener(controlUI, 'click', function() {
+            map.setCenter(new google.maps.LatLng(-22.227609, -48.319401));
+            map.setZoom(7);
+            infowin[boxatual].close();
+        });
+
+    }
+
+    var markers = Object();
+    var circles = Object();
+    var infowin = Object();
+    var boxatual= 0;
+    //Iniciar para desenhar mapa
+    function initialize() {
+        
+        // Create the map.
+        var mapOptions = {
+            zoom: 7,
+            center: new google.maps.LatLng(-22.227609, -48.319401), // CENTRO DO MAPA CIDADE DE DOURADO
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        };
+        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+//LOOP A PARTIR DAQUI <!-- BEGIN MAPMARKERS -->
+        markers[{SEQUENCIA}] = new google.maps.Marker({
+            position: new google.maps.LatLng({LATLONG}), //arrumar posição
+            map: map,
+            icon: 'images/daeelogo.png',
+            title: '{DIRNOME}'
+        });
+        circles[{SEQUENCIA}] = new google.maps.Circle({
+            center: markers[{SEQUENCIA}].getPosition(),
+            fillColor: '{GETCOLOR}',
+            fillOpacity: 0.15,
+            strokeColor: '{GETCOLOR}',
+            strokeOpacity: 0.3,
+            strokeWeight: 2,
+            //clickable: false,
+            radius: {GETRADIUS},//FAZER FÓRMULA 
+            map: map
+
+        });
+        infowin[{SEQUENCIA}] = new google.maps.InfoWindow({
+            content: $('#infoContent-{SEQUENCIA}').html() // TENTAR COLOCAR CONTENT COM INFO DE DIVS PUXANDO POR JQUERY
+        });
+
+        google.maps.event.addListener(markers[{SEQUENCIA}], 'click', function() {
+
+            if (boxatual != {SEQUENCIA})
+                infowin[boxatual].close();
+            
+            map.panTo(markers[{SEQUENCIA}].getPosition());
+            map.setZoom(10);
+            infowin[{SEQUENCIA}].open(map, markers[{SEQUENCIA}]);
+            boxatual = {SEQUENCIA}; //numero de sequencia
+
+        });
+        
+        google.maps.event.addListener(circles[{SEQUENCIA}], 'mouseover', function() {
+            $('#status-bar h3').text('{UOSIGLA} - {UONOME}');
+            
+        });
+//LOOP ATÉ AQUI <!-- END MAPMARKERS -->
+     
+        // Create the DIV to hold the control and
+        // call the HomeControl() constructor passing
+        // in this DIV.
+        var homeControlDiv = document.createElement('div');
+        var homeControl = new HomeControl(homeControlDiv, map);
+        homeControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);        
+        
+    }
+    
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+
+<div class="inner-tabs">
+    
+    <ul>
+        <li><a href="#tabs-1">Gráfico em Mapa : <b>Unidade Operacional</b></a></li>
+    </ul>
+    <div id="tabs-1">
+        <fieldset>
+            <legend><b>Selecione os dados para gerar mapa</b></legend>
+            <div style="text-align: center">
+                <form method="get" id="form-busca">
+                    <input type='hidden' name='mode' value='uoGeoChart' />
+                    {FORMTIPO}
+                    com Dados de <select name="ano" id="ano">
+                        <!-- BEGIN ANOS -->
+                        <option value="{ANOFORM}">{ANOFORM}</option>
+                        <!-- END ANOS -->
+                    </select>
+                    <input type="submit" value="Gerar Mapa" id="form-submitter">
+                </form>
+            </div>
+        </fieldset>
+        <!-- BEGIN MAPCONTAINER -->
+        <h2>Unidades do DAEE no Estado de São Paulo : {TIPONOME} em {ANO}</h2>
+        <div id="status-bar"><h3 class="blue">Passe o mouse sobre os círculos para ver de onde pertencem</h3></div>
+        <div id='map-canvas' style='height:600px'></div>
+        <!-- END MAPCONTAINER -->
+        <br style=  "clear:both"/>
+    </div>
+</div>
+
+<!-- BEGIN INFOWINDOWS -->
+<div class="hidden" id="infoContent-{SEQUENCIA}">
+    <div style="width:670px;">
+        <h2 style='padding:0;'>{UOSIGLA} - {UONOME}</h2>
+        <h3 style='margin:0;padding:0'>RANK <span class="green">{RANK}</span> de {ANO}</h3>
+        <b>SEDE : </b> {UOCIDADE}
+        <p><b>Total consumido : {TOTALCONS} <span class="blue">{TIPOMEDIDA}</span></b><br />
+        <b>Total pago : R$ {TOTALPAGO}</b></p>
+        <p><b>Quantidade de Consumidoras :</b> {UCQTD} <br />
+        <b>Quantidade de Notas no ano :</b> {NTQTD}</p>
+        
+        
+    
+    </div>
+</div>
+<!-- END INFOWINDOWS -->

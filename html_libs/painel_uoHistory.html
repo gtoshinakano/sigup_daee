@@ -1,0 +1,327 @@
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<style>
+  .custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+  }
+  .custom-combobox-input {
+    margin: 0;
+    padding: 5px 10px;
+    width:780px
+  }
+  </style>
+<script type="text/javascript">
+
+  (function( $ ) {
+    $.widget( "custom.combobox", {
+      _create: function() {
+        this.wrapper = $( "<span>" )
+          .addClass( "custom-combobox" )
+          .insertAfter( this.element );
+ 
+        this.element.hide();
+        this._createAutocomplete();
+        this._createShowAllButton();
+      },
+ 
+      _createAutocomplete: function() {
+        var selected = this.element.children( ":selected" ),
+          value = selected.val() ? selected.text() : "";
+ 
+        this.input = $( "<input>" )
+          .appendTo( this.wrapper )
+          .val( value )
+          .attr( "title", "" )
+          .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          .autocomplete({
+            delay: 0,
+            minLength: 0,
+            source: $.proxy( this, "_source" )
+          })
+          .tooltip({
+            tooltipClass: "ui-state-highlight"
+          });
+ 
+        this._on( this.input, {
+          autocompleteselect: function( event, ui ) {
+            ui.item.option.selected = true;
+            this._trigger( "select", event, {
+              item: ui.item.option
+            });
+          },
+ 
+          autocompletechange: "_removeIfInvalid"
+        });
+      },
+ 
+      _createShowAllButton: function() {
+        var input = this.input,
+          wasOpen = false;
+ 
+        $( "<a>" )
+          .attr( "tabIndex", -1 )
+          .attr( "title", "Mostrar todos os itens" )
+          .tooltip()
+          .appendTo( this.wrapper )
+          .button({
+            icons: {
+              primary: "ui-icon-triangle-1-s"
+            },
+            text: false
+          })
+          .removeClass( "ui-corner-all" )
+          .addClass( "custom-combobox-toggle ui-corner-right" )
+          .mousedown(function() {
+            wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+          })
+          .click(function() {
+            input.focus();
+ 
+            // Close if already visible
+            if ( wasOpen ) {
+              return;
+            }
+ 
+            // Pass empty string as value to search for, displaying all results
+            input.autocomplete( "search", "" );
+          });
+      },
+ 
+      _source: function( request, response ) {
+        var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+        response( this.element.children( "option" ).map(function() {
+          var text = $( this ).text();
+          if ( this.value && ( !request.term || matcher.test(text) ) )
+            return {
+              label: text,
+              value: text,
+              option: this
+            };
+        }) );
+      },
+ 
+      _removeIfInvalid: function( event, ui ) {
+ 
+        // Selected an item, nothing to do
+        if ( ui.item ) {
+          return;
+        }
+ 
+        // Search for a match (case-insensitive)
+        var value = this.input.val(),
+          valueLowerCase = value.toLowerCase(),
+          valid = false;
+        this.element.children( "option" ).each(function() {
+          if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+            this.selected = valid = true;
+            return false;
+          }
+        });
+ 
+        // Found a match, nothing to do
+        if ( valid ) {
+          return;
+        }
+ 
+        // Remove invalid value
+        this.input
+          .val( "" )
+          .attr( "title", value + " não combina com nenhum item." )
+          .tooltip( "open" );
+        this.element.val( "" );
+        this._delay(function() {
+          this.input.tooltip( "close" ).attr( "title", "" );
+        }, 2500 );
+        this.input.autocomplete( "instance" ).term = "";
+      },
+ 
+      _destroy: function() {
+        this.wrapper.remove();
+        this.element.show();
+      }
+    });
+  })( jQuery );
+ 
+  $(function() {
+    $( "#uo-form" ).combobox();
+
+  });
+    /*
+     * DESENHAR GRÁFICOS
+     * 
+     */
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+        ['Meses', '{GETANO}', 'Média'] 
+        {CHARTVAL}	
+    ]);
+    var options = {
+        title: 'Evolução Financeira de {UONOME}',
+        hAxis: {title: 'Meses', titleTextStyle: {color: 'red'}},
+                        vAxis: {title: 'Pago em R$', titleTextStyle: {color: 'red'}},
+                        pointSize: 5
+                    };
+
+            var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+    }
+    /*
+     * desenhar gráficos de cada tipo que tem consumo
+     * 
+     */
+    //<!-- BEGIN TIPO_CONS_CHART -->
+
+    google.setOnLoadCallback(drawChart{CHART_INDEX});
+
+    function drawChart{CHART_INDEX}() {
+    var data = google.visualization.arrayToDataTable([
+        ['Meses', '{GETANO}'] 
+        {CONSCHART}
+    ]);
+    var options = {
+        title: 'Evolução do consumo de {TIPONOME}',
+        hAxis: {title: 'Meses', titleTextStyle: {color: 'red'}},
+                        vAxis: {title: 'Consumo em {TIPOMEDIDA}', titleTextStyle: {color: 'red'}},
+                        pointSize: 5, width: 872, chartarea: {width: '85%'}
+                        
+                    };
+
+            var chart = new google.visualization.AreaChart(document.getElementById('chart-div-tipo-{CHART_INDEX}'));
+            chart.draw(data, options);
+    }
+    //<!-- END TIPO_CONS_CHART -->    
+
+</script>
+
+<div class="inner-tabs">
+    
+    <ul>
+        <li><a href="#tabs-1">Histórico de Unidade Operacional</a></li>
+        
+    </ul>
+    <div id="tabs-1">
+        <fieldset>
+            <legend><b>Selecione a <span class="green">Unidade Operacional</span></b></legend>
+            <div style="text-align: center">
+                <form method="get" id="form-busca">
+                    <input type="hidden" name="mode" value="uoHistory" />
+                    <select name="uo" id="uo-form">
+                        <!-- BEGIN EACHUOFORM -->
+                        <option value="{UOFORMID}">{UOFORMNOME}</option>
+                        <!-- END EACHUOFORM -->
+                    </select>
+                    <br /><br />Histórico de <select name="ano" id="ano">
+                        <!-- BEGIN ANOS -->
+                        <option value="{ANOFORM}">{ANOFORM}</option>
+                        <!-- END ANOS -->
+                    </select>
+                    <input type="submit" value="Analisar" id="form-submitter">
+                </form>
+            </div>
+        </fieldset>
+
+        <!-- BEGIN RESULTS -->
+        <h2><span class="green">{UONOME}</span> no ano de <span class="green">{GETANO}</span></h2>
+        <p>Desembolso total mensal:</p>
+        <table width="100%">
+            <thead>
+                <tr>
+
+                    <th width="7.5%">JAN</th>
+                    <th width="7.5%">FEV</th>
+                    <th width="7.5%">MAR</th>
+                    <th width="7.5%">ABR</th>
+                    <th width="7.5%">MAI</th>
+                    <th width="7.5%">JUN</th>
+                    <th width="7.5%">JUL</th>
+                    <th width="7.5%">AGO</th>
+                    <th width="7.5%">SET</th>
+                    <th width="7.5%">OUT</th>
+                    <th width="7.5%">NOV</th>
+                    <th width="7.5%">DEZ</th>                   
+                    <th>Média</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <!-- BEGIN TOTMESBLOCK -->
+                    <td align="right"><small>{TOTMESVAL}</small></td>
+                    <!-- END TOTMESBLOCK -->   
+                    <td align="center"><b>{TOTMEDIA}</b></td>
+            </tbody>
+        </table>
+        
+        <div class="inner-accordion">
+            <h3>Gráfico</h3>
+            <div>
+                <div id="chart_div" style="margin-top:15px"></div>
+            </div>
+            <!-- BEGIN EACHTIPO -->
+            <h3>{TIPONOME}</h3>
+            <div>
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <th>UC</th>
+                            <th>JAN</th>
+                            <th>FEV</th>
+                            <th>MAR</th>
+                            <th>ABR</th>
+                            <th>MAI</th>
+                            <th>JUN</th>
+                            <th>JUL</th>
+                            <th>AGO</th>
+                            <th>SET</th>
+                            <th>OUT</th>
+                            <th>NOV</th>
+                            <th>DEZ</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody class='min-font'>
+                        <!-- BEGIN EACHUCMENSAL -->
+                        <tr>
+                            <td align='center' class='show-option' title="{SHOWINFO}"><b>{RGI}</b></td>
+                            <!-- BEGIN EACHMESVAL --> 
+                            <td align='right'>{UCMESVAL}</td>
+                            <!-- END EACHMESVAL -->
+                            <td align='right'>{TOTVAL}</td>
+                        </tr>
+                        <!-- END EACHUCMENSAL -->
+                        <tr>
+                            <td align='center' class='show-option'><b>TOTAL</b></td>
+                            <!-- BEGIN EACH_TOT_MENSAL -->
+                            <td align='right'>
+                                {MESVAL}
+                            </td>
+                            <!-- END EACH_TOT_MENSAL -->
+                            <td>
+                                
+                            </td>
+                        </tr>                        
+                    </tbody>
+                </table>
+                <p><small><b>Obs:</b> Passe o mouse sobre a Unidade Consumidora para ver mais informações.</small></p>
+                <div style="margin-top:15px; width: 100%" id="chart-div-tipo-{CHART_INDEX}"></div>
+            </div>
+            <!-- END EACHTIPO -->
+            
+        </div>
+        <!-- END RESULTS -->
+        <!-- BEGIN NORESULTS -->
+        <div>
+            <p>- <b>Não foram encontrados registros para os dados fornecidos. </b></p>
+        </div>
+        <!-- END NORESULTS -->
+        <br style=  "clear:both"/>
+    </div>
+</div>

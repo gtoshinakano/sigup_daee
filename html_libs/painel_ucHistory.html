@@ -1,0 +1,270 @@
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<style>
+  .custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+  }
+  .custom-combobox-input {
+    margin: 0;
+    padding: 5px 10px;
+    width:780px
+  }
+  </style>
+<script type="text/javascript">
+
+  (function( $ ) {
+    $.widget( "custom.combobox", {
+      _create: function() {
+        this.wrapper = $( "<span>" )
+          .addClass( "custom-combobox" )
+          .insertAfter( this.element );
+ 
+        this.element.hide();
+        this._createAutocomplete();
+        this._createShowAllButton();
+      },
+ 
+      _createAutocomplete: function() {
+        var selected = this.element.children( ":selected" ),
+          value = selected.val() ? selected.text() : "";
+ 
+        this.input = $( "<input>" )
+          .appendTo( this.wrapper )
+          .val( value )
+          .attr( "title", "" )
+          .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          .autocomplete({
+            delay: 0,
+            minLength: 0,
+            source: $.proxy( this, "_source" )
+          })
+          .tooltip({
+            tooltipClass: "ui-state-highlight"
+          });
+ 
+        this._on( this.input, {
+          autocompleteselect: function( event, ui ) {
+            ui.item.option.selected = true;
+            this._trigger( "select", event, {
+              item: ui.item.option
+            });
+          },
+ 
+          autocompletechange: "_removeIfInvalid"
+        });
+      },
+ 
+      _createShowAllButton: function() {
+        var input = this.input,
+          wasOpen = false;
+ 
+        $( "<a>" )
+          .attr( "tabIndex", -1 )
+          .attr( "title", "Mostrar todos os itens" )
+          .tooltip()
+          .appendTo( this.wrapper )
+          .button({
+            icons: {
+              primary: "ui-icon-triangle-1-s"
+            },
+            text: false
+          })
+          .removeClass( "ui-corner-all" )
+          .addClass( "custom-combobox-toggle ui-corner-right" )
+          .mousedown(function() {
+            wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+          })
+          .click(function() {
+            input.focus();
+ 
+            // Close if already visible
+            if ( wasOpen ) {
+              return;
+            }
+ 
+            // Pass empty string as value to search for, displaying all results
+            input.autocomplete( "search", "" );
+          });
+      },
+ 
+      _source: function( request, response ) {
+        var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+        response( this.element.children( "option" ).map(function() {
+          var text = $( this ).text();
+          if ( this.value && ( !request.term || matcher.test(text) ) )
+            return {
+              label: text,
+              value: text,
+              option: this
+            };
+        }) );
+      },
+ 
+      _removeIfInvalid: function( event, ui ) {
+ 
+        // Selected an item, nothing to do
+        if ( ui.item ) {
+          return;
+        }
+ 
+        // Search for a match (case-insensitive)
+        var value = this.input.val(),
+          valueLowerCase = value.toLowerCase(),
+          valid = false;
+        this.element.children( "option" ).each(function() {
+          if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+            this.selected = valid = true;
+            return false;
+          }
+        });
+ 
+        // Found a match, nothing to do
+        if ( valid ) {
+          return;
+        }
+ 
+        // Remove invalid value
+        this.input
+          .val( "" )
+          .attr( "title", value + " não combina com nenhum item." )
+          .tooltip( "open" );
+        this.element.val( "" );
+        this._delay(function() {
+          this.input.tooltip( "close" ).attr( "title", "" );
+        }, 2500 );
+        this.input.autocomplete( "instance" ).term = "";
+      },
+ 
+      _destroy: function() {
+        this.wrapper.remove();
+        this.element.show();
+      }
+    });
+  })( jQuery );
+ 
+  $(function() {
+    $( "#uc-form" ).combobox();
+
+  });
+    /*
+     * DESENHAR AGRÁFICOS
+     * 
+     */
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    google.setOnLoadCallback(drawChart2);
+    function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+        ['Meses', '{GETANO}'] 
+        {CHARTVAL}	
+    ]);
+    var options = {
+        title: 'Evolução Financeira de {UCNOME}',
+        hAxis: {title: 'Meses', titleTextStyle: {color: 'red'}},
+                        vAxis: {title: 'Pago em R$', titleTextStyle: {color: 'red'}},
+                        pointSize: 5
+                    };
+
+            var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+    }
+
+    function drawChart2() {
+    var data = google.visualization.arrayToDataTable([
+        ['Meses', '{GETANO}'] 
+        {CHARTCON}	
+    ]);
+    var options = {
+        title: 'Consumo de {UCNOME}',
+        hAxis: {title: 'Meses', titleTextStyle: {color: 'red'}},
+                        vAxis: {title: 'Consumo em {TIPOMEDIDA}', titleTextStyle: {color: 'red'}},
+                        pointSize: 5
+                    };
+
+            var chart = new google.visualization.AreaChart(document.getElementById('chart_div2'));
+            chart.draw(data, options);
+        }    
+        
+    
+
+</script>
+
+<div class="inner-tabs">
+    
+    <ul>
+        <li><a href="#tabs-1">Histórico de Unidade Consumidora</a></li>
+        
+    </ul>
+    <div id="tabs-1">
+        <fieldset>
+            <legend><b>Selecione a <span class="green">Unidade Consumidora</span></b></legend>
+            <div style="text-align: center">
+                <form method="get" id="form-busca">
+                    <input type="hidden" name="mode" value="ucHistory" />
+                    <select name="uc" id="uc-form">
+                        <!-- BEGIN EACHUCFORM -->
+                        <option value="{UCFORMID}">{UCFORMNOME}</option>
+                        <!-- END EACHUCFORM -->
+                    </select>
+                    <br /><br />Histórico de <select name="ano" id="ano">
+                        <!-- BEGIN ANOS -->
+                        <option value="{ANOFORM}">{ANOFORM}</option>
+                        <!-- END ANOS -->
+                    </select>
+                    <input type="submit" value="Analisar" id="form-submitter">
+                </form>
+            </div>
+        </fieldset>
+
+        <!-- BEGIN RESULTS -->
+        <h2><span class="green">{UCNOME}</span> no ano de <span class="green">{GETANO}</span></h2>
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th>Mês</th>
+                    <!-- BEGIN MESLABEL -->
+                    <th>{MESNOME}</th>
+                    <!-- END MESLABEL -->
+                    <th>Média</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- BEGIN TABLEROWVAL -->
+                <tr>
+                    <th align="center">Valor (R$)</th>
+                    <!-- BEGIN VALBLOCK -->
+                    <td align="right"><small>{VAL}</small></td>
+                    <!-- END VALBLOCK -->                      
+                    <td align="right">{MEDIAVAL}</td>
+                </tr>
+                <!-- END TABLEROWVAL -->
+                <!-- BEGIN TABLEROWCONS -->
+                <tr>
+                    <th align="center">Consumo ({TIPOMEDIDA})</th>
+                    <!-- BEGIN CONSBLOCK -->
+                    <td align="right"><small class="blue">{CONS}</small></td>
+                    <!-- END CONSBLOCK -->                      
+                    <td align="right"><span class="blue">{MEDIACONS}</span></td>
+                </tr>
+                <!-- END TABLEROWCONS -->                
+            </tbody>
+        </table>
+        
+        <div id="chart_div" style="margin-top:15px"></div>
+        <div id="chart_div2" style="margin-top:15px"></div>
+        <!-- END RESULTS -->
+        <!-- BEGIN NORESULTS -->
+        <div>
+            <p>- <b>Não foram encontrados registros para os dados fornecidos. </b></p>
+        </div>
+        <!-- END NORESULTS -->
+        <br style=  "clear:both"/>
+    </div>
+</div>
