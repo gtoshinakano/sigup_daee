@@ -1,0 +1,84 @@
+<div class="content">
+    <div class="inner-content">
+        <h2>Assistente de Lançamento de Contas</h2>
+
+        <!-- BEGIN PRIMEIRO_FORM -->
+        <form name="contas" method="get"  >
+            <select name="mes_ref" class="data_ref" >
+                <!-- BEGIN EACH_MESREF -->
+                <option value="{MES}">{MESNOME}</option>
+                <!-- END EACH_MESREF -->
+            </select>
+            <select name="ano_ref" class="data_ref" >
+                <!-- BEGIN EACH_ANOREF -->
+                <option value="{ANO}">{ANO}</option>
+                <!-- END EACH_ANOREF -->
+            </select>
+            <input type="submit" value="Próximo"/>
+        </form>
+        <!-- END PRIMEIRO_FORM -->
+
+        <!-- BEGIN TABELA -->
+        <div class="simple-table notas" id="simple-table notas" >
+            <h3>RELAÇÃO DE CONTAS {NMES_REF}/{NANO_REF}</h3>
+            <table class="borda-simples " width="100%">
+                <tr>
+                    <th width="3%" rowspan="2"><input type="checkbox" id="marcar-todos" name="marcar-todos" class="notas-select" /> <label for="tudo" ></label> </th>
+                    <th width="5%" rowspan="2">{NTH_RGI}</th>
+                    <th width="5%" rowspan="2">UNIDADE</th>
+                    <th width="20%" rowspan="2">LOCALIDADE/IDENTIFICADOR</th>
+                    <th width="7%" rowspan="2">VENCIMENTO</th>
+                    <th width="7%" rowspan="2">LANÇAMENTO</th>
+                    <th width="30%" rowspan="2">EMPRESA</th>
+                    <!-- BEGIN CONSUMO -->
+                    <th width="15%" rowspan="2">CONSUMO</th>
+                    <!-- END CONSUMO -->
+                    <th width="15%" rowspan="2">VALOR</th>
+                </tr>
+
+                <tbody>
+                    <!-- BEGIN EACH_NO -->
+                    <tr>	
+                        <td align="center"><input type="checkbox" name="notas[]" value="{NID}" id="{LANCTO}" class="notas-select marcar"  title="{NVALOR}"/><label for="mantem-data_ref" ></label></td>
+                        <td align="center">{NNUMERO}</td>
+                        <td align="center">{NUNIDADE}</td>
+                        <td align="center">{NMUNICIPIO}</td>
+                        <td align="center">{NVENCIMENTO}</td>
+                        <td align="center">{LANCTO2}</td>
+                        <td align="center">{NEMPRESA}</td>
+                        <!-- BEGIN EACH_CONSUMO -->
+                        <td align="center">{NCONSUMO}</td>
+                        <!-- END EACH_CONSUMO -->
+                        <td align="center"><input type="TEXT" name="{NINDICE}" value="{NVALOR}" hidden="">R$ {NVALOR_C}</td>
+                    </tr>
+                    <!-- END EACH_NO -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2" align="center"><h4><input type="checkbox" name="in" value="1" id="notas_ref" class="notas-select marcar"  title="{NVALOR}"/> Tem Atestado </h4></td>
+                        <td align="center"><!--{UCTOTAL}--></td>
+                        <td colspan="3"></td>
+                        <td  align="center"><h4>TOTAL GERAL SELECIONADO</h4></td>
+                        <td align="center"><h4>R$ <span class="div-total">0,00</span></h4></td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="submitter">
+                <input type="button" value="Próximo" name="nextButton" />
+            </div>
+        </div>
+
+        <!-- END TABELA -->
+        
+        <div class="info">
+            <h3>RELAÇÃO DE CONTAS {NMES_REF}/{NANO_REF} </h3>
+            <div class="submitter">
+                <input type="button" value="Voltar" name="prevButton" />
+                
+            </div>
+             <textarea class="form-control textarea" id="mytextarea" name="conclusao" rows="1" id="conclusao"></textarea>
+        </div>
+
+
+    </div>
+</div>
