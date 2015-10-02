@@ -1,0 +1,13 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 02/10/2015, 14:17:49
+    Author     : gtnakano
+*/
+
+.menu-uc{display:inline-block; font-family: Arial; font-weight: bold; float:left; width:15%}
+.menu-uc a{display:block; color:#999; text-align: center}
+.menu-uc a:hover{color: #58A3DA; background-color: #000}
