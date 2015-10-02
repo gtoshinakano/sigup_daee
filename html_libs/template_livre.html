@@ -5,53 +5,66 @@
 		<meta charset="utf-8">
 		
 		<title>Sistema DAEE - ADA</title>
-		<link type="text/css" rel="stylesheet" href="cssjs_libs/geral.css" />
-		<script language="javascript" src="cssjs_libs/jquery.js"></script>
+                 <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"-->
+                 <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"-->
+		<link type="text/css" rel="stylesheet" href="cssjs_libs/bootstrap.min.css" />
+		<script language="javascript" src="cssjs_libs/boootstrap.min.js"></script>
 		<script language="javascript" src="cssjs_libs/less.js"></script>
 		{JSCRIPT}
 	</head>
 	<body>
-		<div id="header">
-			<div class="inner">
-				<h1><img src="images/desperdicio-zero.jpg" style="float:right"  width="150" height="150" /><img src="images/logo-sigup.jpg"style="float:right" />Sistema de <br />Gerenciamento de despesas com Utilidade Pública</h1>
-				<img src="images/logo-daee.png" width="117" height="150">
+		<div class="container-fluid" style="border-bottom:#0077b3 solid 6px; padding-bottom: 8px">
+			<div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                
+                                <div class="col-md-2">
+                                    <img src="images/logo-daee.png" width="117" height="150">
+                                </div>
+                                
+                                <div class="col-md-6"style="border-bottom:#0077b3 solid 0px;">
+                                    <h1><font size="6"><center>Sistema de Gerenciamento de despesas com Utilidade Públicas</center></font></h1>
+                                </div>
+                                        <div class="col-md-2" align="right">
+                                            <img src="images/logo-sigup.jpg">
+                                        </div>
+                                            <div class="col-md-2">
+                                                <img src="images/desperdicio-zero.jpg" width="150">
+                                            </div>
+                            </div>
 			</div>
 		</div>
-		<div id="menu">
-			<ul>
-				<li style="width:100%"><a href="resumo_dl.php">DOWNLOAD DE RELATÓRIOS</a></li>
+		<!--div id="menu">
+			<!--ul>
+				<li style="width:100%"><a href="resumo_dl.php">DOWNOAD DE RELATÓRIOS</a></li>
 			</ul>
-		</div>		
-		<div id="menu-2" class="second" >
-			<ul>
-			<!--
-				<li style="width:25%"><a href="ope_lancamento.php">FAZER LANÇAMENTOS</a></li>
-				<li style="width:25%"><a href="udd_index.php">RELATÓRIOS</a></li>
-				<li style="width:25%"><a href="ger_index.php">GERENCIAR INFORMAÇÕES</a></li>
-				<li style="width:25%"><a href="logout.php">LOGOUT</a></li>
-			-->
-				<li style="float:right"><a href="logout.php">SAIR</a></li>			
-				<li style="text-align:center; width:270px; background:none" ><b>{MENU_NAME}</b></li>
-				<!-- BEGIN ITEM_MENU -->
-					<li><a href="{ITEM_MENU_URL}">{ITEM_MENU_LINK}</a></li>
-				<!-- END ITEM_MENU -->
-			</ul>
-		</div>
-		<div>
+		</div-->
+                   
+				
+               <div class="container-fluid" style="margin-top:150px; background: #FFF">
 			{SECONDMENU}
-			<div id="conteudo">
+			
 				
 				{CONTEUDO}
+					
+		
+			<div class="row" style="margin-top:230px; padding:40px">
+                            <div class="col-md-4 col-md-offset-4">
+                                <center><p><b>SIGUP</b> - Sistema de Gerenciamento de Despesas com Utilidade Pública<br />
+			Dúvidas, sugestões ou correções: (11) 3293-8543 - Gabriel Toshinori Nakano <br /><b>DAEE - São Paulo</b></p>
 			
-			</div>
-		</div>
-		<div id="footer">
+                        	<small>{EXECTIME}<small></center>
+                            </div>
+                        </div>
+
+                </div>
+                        
+		<!--div id="footer">
 		
 			<p><b>SIGUP</b> - Sistema de Gerenciamento de Despesas com Utilidade Pública<br />
 			Dúvidas, sugestões ou correções: (11) 3293-8543 - Gabriel Toshinori Nakano <br /><b>DAEE - São Paulo</b></p>
 			
 			<small>{EXECTIME}<small>
 		
-		</div>
+		</div-->
 	</body>
 </html>

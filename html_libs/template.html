@@ -5,34 +5,62 @@
 		<meta charset="utf-8">
 		
 		<title>Sistema DAEE - ADA</title>
-		<link type="text/css" rel="stylesheet" href="cssjs_libs/geral.css" />
-		<script language="javascript" src="cssjs_libs/jquery.js"></script>
+		<!--link type="text/css" rel="stylesheet" href="cssjs_libs/geral.css" /-->
+                
+                <link type="text/css" rel="stylesheet" href="cssjs_libs/bootstrap.min.css" />
+		<script language="javascript" src="cssjs_libs/boootstrap.min.js"></script>
 		<script language="javascript" src="cssjs_libs/less.js"></script>
 		{JSCRIPT}
 	</head>
 	<body>
-		<div id="header">
+		<!--div id="header">
 			<div class="inner">
 				<h1><img src="images/logo-sigup.jpg"></h1>
 				<img src="images/logo-daee.png" width="117" height="150">
 			</div>
-		</div>
-		<div id="menu">
+		</div-->
+                <div class="container-fluid" style="border-bottom:#0077b3 solid 6px; padding-bottom: 8px">
+			<div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                
+                                <div class="col-md-2">
+                                    <img src="images/logo-daee.png" width="117" height="150">
+                                </div>
+                                
+                                <div class="col-md-6"style="border-bottom:#0077b3 solid 0px;">
+                                    <h1><font size="6"><center>Sistema de Gerenciamento de despesas com Utilidade Públicas</center></font></h1>
+                                </div>
+                                        <div class="col-md-2" align="right">
+                                            <img src="images/logo-sigup.jpg">
+                                        </div>
+                                            <div class="col-md-2">
+                                                <img src="images/desperdicio-zero.jpg" width="150">
+                                            </div>
+                            </div>
+			</div>
+                </div>
+		
+			<div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+		<div class="nav nav-pills">
 			<ul>
 				<li style="width:25%"><a href="ope_lancamento.php">FAZER LANÇAMENTOS</a></li>
 				<li style="width:25%"><a href="udd_index.php">RELATÓRIOS</a></li>
 				<li style="width:25%"><a href="ger_index.php">GERENCIAR INFORMAÇÕES</a></li>
 				<li style="width:25%"><a href="logout.php">LOGOUT</a></li>
+                               
 			</ul>
+                   {SECONDMENU}  
 		</div>
-		<div>
-			{SECONDMENU}
+                            </div>
+                        </div>
+			
 			<div id="conteudo">
 				
 				{CONTEUDO}
 			
 			</div>
-		</div>
-		{EXECTIME}
+		
+                {EXECTIME}
 	</body>
 </html>

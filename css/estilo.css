@@ -1,0 +1,38 @@
+body{
+background-color:#F00;
+}
+.login-box{
+margin:0px auto;
+background:#F4F4F4;
+border:solid 0px #CCC;
+width:25%;
+padding:15px;
+margin-top:150px;
+}
+#header{
+	height:150px;
+	background-color:#fff;
+	border:solid 0px #ccc;
+}
+
+#header .inner{
+	margin:0 auto;
+	padding:15px 0 0 0;
+	width:1133px;background-image: url(../images/header1.png);
+	background-repeat:no-repeat;
+	height:150px;
+	border:solid 0px #000;
+}
+
+#header .inner h1{
+    margin:0;
+    padding:19px 0 0;
+    display:inline;
+    float:right;
+    text-align:right;
+    font-family:"Arial";
+    font-size:210%;
+}
+#header.second{
+	border-bottom:8px solid #F4F4F4;
+}
