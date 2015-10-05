@@ -53,13 +53,14 @@ $(document).ready(function () {
             soma += parseFloat($(this).attr("title"));
         });
         $(".div-total").html(tratarValor(soma.toFixed(2), true));
+    //   $(".div-extenso").html(ValorPorExtenso(soma));
     });
-
+    
     $("input[name=marcar-todos]").change(function () {
         if (this.checked) {
             $("input[name='notas[]']").each(function () {
                 this.checked = true;
-               // alert(this.id);
+              
             });
             $("input[name='notas[]']").change();
         }
@@ -83,20 +84,10 @@ $(document).ready(function () {
     
     
      tinymce.init({
-            selector: "#mytextarea"
+            selector: "#mytextarea",
+            language: "pt_BR"
         });
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+   
 });
 
 
@@ -135,3 +126,68 @@ function number_format(number, decimals, dec_point, thousands_sep) {
     }
     return s.join(dec);
 }
+
+
+
+function ValorPorExtenso(valor) {
+
+if (!valor) return 'Zero';
+
+var singular = ["centavo", "real", "mil", "milhão", "bilhão", "trilhão", "quatrilhão"];
+var plural = ["centavos", "reais", "mil", "milhões", "bilhões", "trilhões", "quatrilhões"];
+
+var c = ["", "cento", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"];
+var d = ["", "dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"];
+var d10 = ["dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezesete", "dezoito", "dezenove"];
+var u = ["", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove"];
+
+var z = 0;
+
+valor = valor.toString();
+valor = number_format(valor, 2, '.', '.');
+
+var inteiro = valor.split(/\./);
+
+for (var i = 0; i < inteiro.length; i++) {
+inteiro[i] = inteiro[i].toString();
+for (var ii = inteiro[i].length; ii < 3; ii++) {
+inteiro[i] = '0' + inteiro[i];
+}
+}
+
+var fim = inteiro.length -( inteiro[inteiro.length-1] > 0 ? 1 : 2 );
+
+var rc, rd, ru;
+var r, t;
+var rt = "";
+var valor_split;
+for (var i = 0; i < inteiro.length; i++) {
+
+valor = inteiro[i];
+valor_split = valor.match(/./g);
+
+rc = ((valor > 100) && (valor < 200)) ? "cento" : c[valor_split[0]];
+rd = (valor_split[1] < 2) ? "" : d[valor_split[1]];
+ru = (valor > 0) ? ((valor_split[1] == 1) ? d10[valor_split[2]] : u[valor_split[2]]) : "";
+
+r = rc + ((rc && (rd || ru)) ? " e " : "") + rd + ((rd && ru) ? " e " : "") + ru;
+t = inteiro.length - 1 - i;
+
+r = r + (r ? " " + (valor > 1 ? plural[t] : singular[t]) : "");
+if (valor == "000") z++;
+else if (z > 0) z--;
+
+if ((t==1) && (z>0) && (inteiro[0] > 0)) {
+r = r + ((z>1) ? " de " : "") + plural[t];
+}
+if (r) {
+rt = rt + (((i > 0) && (i <= fim) && (inteiro[0] > 0) && (z < 1)) ? ( (i < fim) ? ", " : " e ") : " ") + r;
+}
+
+}
+
+return (rt ? rt : "zero");
+
+}
+
+

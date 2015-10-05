@@ -22,7 +22,7 @@ $nivel = $_SESSION['nivel'];
 $user = new User($_SESSION['usuario']);
 
 
-if (!isset($_GET['ano_ref'], $_GET['mes_ref']) || $_GET['ano_ref'] < 2012 || $_GET['mes_ref'] < 1 || $_GET['mes_ref'] > 12 || $_GET['ano_ref'] > Date('Y')) { //se não tem get
+if (!isset($_GET['ano_ref'], $_GET['mes_ref']) || $_GET['ano_ref'] < 2012 || $_GET['mes_ref'] < 1 || $_GET['mes_ref'] > 12 || $_GET['ano_ref'] > Date('Y'))  { //se não tem get
     for ($i = Date('Y'); $i >= 2010; $i--) {
         $tpl->ANO = $i;
         $tpl->block('EACH_ANOREF');
@@ -35,6 +35,7 @@ if (!isset($_GET['ano_ref'], $_GET['mes_ref']) || $_GET['ano_ref'] < 2012 || $_G
     }
     $tpl->block('PRIMEIRO_FORM');
 } else {
+    
     $ano_ref = (int) $_GET['ano_ref'];
     $mes_ref = (int) $_GET['mes_ref'];
 
@@ -97,6 +98,7 @@ if (!isset($_GET['ano_ref'], $_GET['mes_ref']) || $_GET['ano_ref'] < 2012 || $_G
     }
     $tpl->UCTOTAL = $count;
     $tpl->block('TABELA');
+
 }
 
 $tpl->show();
