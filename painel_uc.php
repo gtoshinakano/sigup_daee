@@ -4,18 +4,15 @@
 	require "src/scripts/restrito.php";
 	include "src/scripts/functions.php";
 	require "src/classes/Template.class.php";
-	include "src/classes/Users.class.php";
-	include "src/classes/UnidadeCons.class.php";
-	include "src/classes/Notas.class.php";
-	include_once "src/classes/Relatorio.class.php";
 	
 		//$tpl->TESTE = $emp->getServicos()[2]->children();	
 	
 	
 	redirectByPermission(0); // SETAR PERMISSÃO DA PÁGINA
 	$inicio = execucao();
-		
-	$tpl = new Template('html_libs/template_painel_uc.html');
+        
+        $tpl = new Template('html_libs/template_painel_uc.html');
+        //include "src/painel_uc/home.php";
         
         
 	

@@ -6,10 +6,13 @@
 		
 		<title>Sistema DAEE - ADA</title>
                 <link type="text/css" rel="stylesheet" href="cssjs_libs/bootstrap.min.css" />
-                <link type="text/css" rel="stylesheet" href="cssjs_libs/painel_uc.css" />
-		<script language="javascript" src="cssjs_libs/boootstrap.min.js"></script>
-		<script language="javascript" src="cssjs_libs/less.js"></script>
-		
+                <link type="text/css" rel="stylesheet" href="cssjs_libs/painel_uc.css" />               
+                <script language="javascript" src="cssjs_libs/jquery.js"></script>
+		<script language="javascript" src="cssjs_libs/bootstrap.min.js"></script>
+		<script language="javascript" src="cssjs_libs/painel_uc.less.js"></script>
+                <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+                <script type="text/javascript">google.load('visualization', '1.0', {'packages':['corechart']});</script>
+                		
 	</head>
 	<body>
             <div class="container-fluid" style="padding:8px">
@@ -32,14 +35,22 @@
                     </div>
 		</div>
                 <div class="row">
-                    <ul class="col-md-8 col-md-offset-2" style="margin-top:15px">
-                        <li class="menu-uc"><a href="#">Home</a></li>
-                        <li class="menu-uc"><a href="#">Profile</a></li>
-                        <li class="menu-uc"><a href="#">Messages</a></li>
+                    <div class="col-md-8 col-md-offset-2">
+                    <ul style="margin: 48px 0 0 0; padding:0">
+                        <li class="menu-uc"><a href="src/painel_uc/home.php" class="menu-active">Sua Consumidora</a></li>
+                        <li class="menu-uc"><a href="src/painel_uc/home.php?ano=2013">Medições</a></li>
+                        <li class="menu-uc"><a href="src/painel_uc/home.php">Mapa</a></li>
+                        <li class="menu-uc"><a href="src/painel_uc/home.php">Download</a></li>
+                        <li class="menu-uc"><a href="src/painel_uc/home.php">Configurações</a></li>
                     </ul>
+                    </div>
                 </div>
                 <div class="row" style="background: #47A3DA">
-                    \d asd asdsadasd
+                    <div class="col-md-8 col-md-offset-2" style="padding:32px; color:#fff">
+                        <div class="conteudo" id="conteudo">
+                        {CONTEUDO}
+                        </div>
+                    </div>
                 </div>
             </div>
 		<!--div id="header">

@@ -8,6 +8,15 @@ and open the template in the editor.
     Author     : gtnakano
 */
 
-.menu-uc{display:inline-block; font-family: Arial; font-weight: bold; float:left; width:15%}
-.menu-uc a{display:block; color:#999; text-align: center}
-.menu-uc a:hover{color: #58A3DA; background-color: #000}
+body{font-family: Arial;}
+.menu-uc{display:inline-block; font-weight: bold; float:left; width:15%; height:49px; font-size: 16px; text-decoration: none}
+.menu-uc a{display:block; text-align: center; padding-top: 15px; text-decoration: none}
+.menu-uc a:hover{color: #fff; background: #47A3DA; height: 100%; text-decoration: none}
+.menu-uc a:active,.menu-active{background: #47A3DA; color: #fff; height: 100%; text-decoration: none}
+.conteudo{color: #fff}
+.conteudo h2{color:#afdefa; font-weight: lighter; font-size: 28px; margin: 0; padding: 0}
+.rounded {
+  border-radius: 7px;
+  background: #fff; 
+  color:#333;
+}
