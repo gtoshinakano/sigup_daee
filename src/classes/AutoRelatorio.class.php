@@ -334,7 +334,7 @@
 		 *********************************************/		
 		private function setHistory($user, $sigla, $data_ref){
 		
-			$sql = "INSERT INTO rel_history VALUES ('','$user','$sigla', NOW(),'$data_ref')";
+			$sql = "INSERT INTO rel_history (id,usuario,sigla,data,data_ref) VALUES ('','$user','$sigla', NOW(),'$data_ref')";
 			mysql_query($sql);
 		
 		}

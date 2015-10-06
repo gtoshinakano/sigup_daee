@@ -154,7 +154,7 @@
 			if($nome != ""){
 				if($this->isCnpjValid($cnpj)){
 					
-					$sql	= "INSERT INTO sys_empresas VALUES('','$cnpj','$nome','$contato','$desc','$repre',NOW())";
+					$sql	= "INSERT INTO sys_empresas(id,cnpj,nome,contato,servico,representante,criado) VALUES('','$cnpj','$nome','$contato','$desc','$repre',NOW())";
 					if(mysql_query($sql))
 						return mysql_insert_id();
 						

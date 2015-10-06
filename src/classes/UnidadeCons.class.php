@@ -41,7 +41,7 @@
 			if(isset($rgi)){
 				
 				$endereco = $endereco;
-				$sql 	= "INSERT INTO daee_uddc VALUES('','$rgi','$numero','$compl','$endereco',$tipo,$vencto,$uo,$cidade,'$lat','$long',1,$contrato,$empresa)";
+				$sql 	= "INSERT INTO daee_uddc(id,rgi,numero,compl,rua,tipo,vencto,uo,cidade,lat,`long`,ativo,contrato,empresa) VALUES('','$rgi','$numero','$compl','$endereco',$tipo,$vencto,$uo,$cidade,'$lat','$long',1,$contrato,$empresa)";
 				mysql_query($sql);
 				//$this->teste = $sql;
 				
