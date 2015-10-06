@@ -74,7 +74,7 @@
 				$comlicit	= (int) $comlicit;
 				$permissao 	= (int) $permissao;
 				
-				$sql = "INSERT INTO daee_contratos VALUES('',$tipo_pasta,'$numero',$volume,'$nome',$empresaId,$servico,$unidadeId,'$contrato',$comlicit,'$data','$vigencia',NOW(),1,$userid,$permissao)";
+				$sql = "INSERT INTO daee_contratos(id,pasta,numero,volume,nome,empresa,servico,unidade,contrato,comlicit,data,vigencia,criado,ativo,criador,permissao) VALUES('',$tipo_pasta,'$numero',$volume,'$nome',$empresaId,$servico,$unidadeId,'$contrato',$comlicit,'$data','$vigencia',NOW(),1,$userid,$permissao)";
 				$query = mysql_query($sql);
 				
 				$this->teste = $sql;

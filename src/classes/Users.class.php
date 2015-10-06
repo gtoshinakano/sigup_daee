@@ -29,7 +29,7 @@
 				$nivel	= (int) $nivel;
 				$cargo	= mysql_real_escape_string($cargo);
 				
-				$sql	= "INSERT INTO sys_users VALUES('','$login','$senha','$nome','$cargo',$pront,$nivel,$bacia,'',NOW(),1)";
+				$sql	= "INSERT INTO sys_users(id,login,senha,nome,cargo,pront,nivel,bacia,lastlogin,criado,ativo) VALUES('','$login','$senha','$nome','$cargo',$pront,$nivel,$bacia,'',NOW(),1)";
 				$query	= mysql_query($sql);
 				
 				$this->id		= mysql_insert_id();
@@ -248,7 +248,7 @@
 			}
 			
 			$user = $this->id;
-			$sql = "INSERT INTO sys_history VALUES('', $user, '$tipo', '$link', '$motivo', '$obs', NOW())";
+			$sql = "INSERT INTO sys_history(id,user,tipo,link,motivo,obs,data) VALUES('', $user, '$tipo', '$link', '$motivo', '$obs', NOW())";
 			mysql_query($sql);
 			
 		
