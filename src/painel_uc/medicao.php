@@ -17,23 +17,16 @@
     $ucTipos = $relatorio->ucTipos;
     
     
+    
     $getAno = (isset($_GET['ano']) && $_GET['ano']>=2012 && $_GET['ano']<=Date('Y')) ? $_GET['ano'] : Date('Y');
-    //$_SESSION['uc'] = 619;
+    $getMes = (isset($_GET['mes']) && $_GET['mes']>=1 && $_GET['ano']<=12) ? $_GET['ano'] : Date('n');
     
     //$tpl->UCRGI = "RGI 1203920-23 : PET - Vestiário 1 e 2";
     $tpl->ANO_ATUAL = $getAno;
-    $tpl->ANO_ATUAL_MENOS   = $getAno - 1;
-    $tpl->ANO_ATUAL_MAIS    = $getAno + 1;
     
     if(isset($_SESSION['uc'])){
                 
         $ucid = (int) $_SESSION['uc'];
-        
-        $ultSql = "SELECT mes_ref, ano_ref FROM daee_notas WHERE uc= $ucid ORDER BY criado DESC LIMIT 1";
-        $ultQuery = mysql_query($ultSql);
-        $ult = mysql_fetch_array($ultQuery);
-        $tpl->ULTIMANOTA = getMesNome($ult['mes_ref'], true) . "/" . $ult['ano_ref'];
-        
         $tpl->GETANO = $getAno;
         $sql = "SELECT * FROM ( SELECT uo.unidade,uo.nome AS dirnome,uc.rgi,uc.compl,uc.tipo,n.mes_ref,n.ano_ref,SUM(n.valor) AS valor,SUM(n.consumo) AS consumo, uc.rua, e.nome ";
         $sql.= "FROM daee_udds uo,daee_uddc uc,daee_notas n, sys_empresas e ";
@@ -81,7 +74,6 @@
             if ($relatorio->temConsumo($info['tipo']))
                 $tpl->block('TABLEROWCONS');
             $tpl->UCNOME = $info['nome'];
-
 
         }else {
 
