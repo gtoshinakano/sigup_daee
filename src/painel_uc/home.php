@@ -10,7 +10,9 @@
     
     
     redirectByPermission(0);
-    $tpl = new Template("../../html_libs/painel_uc_home.html");    
+    $tpl = new Template("../../html_libs/painel_uc_conteudo_container.html");    
+    $tpl->addFile('CONTEUDO_1', '../../html_libs/painel_uc_home.html');
+    $tpl->addFile('CONTEUDO_2', '../../html_libs/painel_uc_home_2.html');
     $relatorio = new Relatorio();
     $ucTipos = $relatorio->ucTipos;
     
@@ -55,13 +57,15 @@
                 $info['unidade'] = $linha['unidade'];
                 $info['valor'][] = $linha['valor'];
                 $info['consumo'][] = $linha['consumo'];
-                $info['chartval'].= ",['" . getMesNome($linha['mes_ref']) . "'," . $linha['valor'] . "]";
-                $info['chartcon'].= ",['" . getMesNome($linha['mes_ref']) . "', 200," . $linha['consumo'] . "]";// COLOCAR META ONDE 400 
+                $info['chartval'].= ",['" . getMesNome($linha['mes_ref']) . "'," . $linha['valor'] . ", @@MEDIAVAL@@]";
+                $info['chartcon'].= ",['" . getMesNome($linha['mes_ref']) . "', 200, @@MEDIACONS@@, " . $linha['consumo'] . "]";// COLOCAR META ONDE 400 
             }
 
             $tpl->MEDIAVAL = tratarValor($relatorio->average($info['valor']), true);
             $tpl->MEDIACONS = tratarValor($relatorio->average($info['consumo']));
+            $info['chartval'] = str_replace('@@MEDIAVAL@@', $relatorio->average($info['valor']), $info['chartval']);
             $tpl->CHARTVAL = $info['chartval'];
+            $info['chartcon'] = str_replace('@@MEDIACONS@@', $relatorio->average($info['consumo']), $info['chartcon']);
             $tpl->CHARTCON = ($relatorio->temConsumo($info['tipo'])) ? $info['chartcon'] : "";
 
             $tpl->TIPOMEDIDA = $relatorio->getTipoMedida($info['tipo']);
@@ -72,7 +76,6 @@
             $tpl->UCNOME = $info['nome'];
 
 
-            $tpl->block('RESULTS');
         }else {
 
             $tpl->block('NORESULTS');
@@ -84,40 +87,5 @@
     }
     
     $tpl->show();
-        
-
-    //$tpl->CONTEUDO = "<h2>RGI 1203920-23 : PET - Vestiário 1 e 2</h2>";
-    /*$relatorio = new Relatorio();
-    $geral = $relatorio->getGerais();
-
-    $tpl->LANCDESDE = ExplodeDateTime2($geral['first']);
-    $tpl->DADOSDESDE = getMesNome($geral['dados_desde']['mes_ref'], true) . "/" . $geral['dados_desde']['ano_ref'];
-    
-    $default = array();
-    $default['notas'] = 0;
-    foreach ($geral['total_geral'] as $ucTipo) {
-
-        $tpl->UCNOTAQTD = tratarValor($ucTipo['cnt']);
-        $tpl->VALTOTAL  = tratarValor($ucTipo['val'],true);
-        $medida = $relatorio->getTipoMedida($ucTipo['tipo']);
-        if($medida != "Min" && $medida != "Mb" && $medida != "NDA"){
-            
-            $tpl->UCMEDIDA = $medida;
-            $tpl->CONSTOTAL = tratarValor($ucTipo['cons']);
-            $tpl->CONSMEDIA = tratarValor($ucTipo['cons']/$ucTipo['cnt']);
-            $tpl->block('SHOWCONS');
-            $tpl->block('SHOWCONS2');
-            
-        }
-        $tpl->VALMEDIA = tratarValor($ucTipo['val'] / $ucTipo['cnt'],true);
-        $tpl->UCTIPONOME= $relatorio->getTipoNome($ucTipo['tipo']);
-        $tpl->block('EACHUCTIPO');
-        $default['notas'] += $ucTipo['cnt'];
-        
-    }
-    
-    $tpl->NUMNOTAS = tratarValor($default['notas']);
-    $tpl->UOQTD = $geral['unidades'][0];
-    $tpl->UCQTD = $geral['unidades'][1];*/
-    
+       
 ?>

@@ -19,14 +19,18 @@ $(document).ready(function(){
         var loc = $(this).attr("href");
         $('#conteudo').load(loc, function(){
             drawChart();
-            drawChart2();
-            
-            
-            
+            drawChart2();      
         });
         
         
     });
+
+    $(window).resize(function(){
+        drawChart();
+        drawChart2();
+    });
+    
+    
 
 
 });
