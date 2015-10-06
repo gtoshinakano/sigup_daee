@@ -8,11 +8,14 @@
 		<!--link type="text/css" rel="stylesheet" href="cssjs_libs/geral.css" /-->
                 
                 <link type="text/css" rel="stylesheet" href="cssjs_libs/bootstrap.min.css" />
-		<script language="javascript" src="cssjs_libs/boootstrap.min.js"></script>
+                <link type="text/css" rel="stylesheet" href="cssjs_libs/bootstrap.css" />
+                
+		<script language="javascript" src="cssjs_libs/bootstrap.min.js"></script>
+                <script language="javascript" src="cssjs_libs/bootstrap.js"></script>
 		<script language="javascript" src="cssjs_libs/less.js"></script>
 		{JSCRIPT}
 	</head>
-	<body>
+<body>
 		<!--div id="header">
 			<div class="inner">
 				<h1><img src="images/logo-sigup.jpg"></h1>
@@ -21,7 +24,7 @@
 		</div-->
                 <div class="container-fluid" style="border-bottom:#0077b3 solid 6px; padding-bottom: 8px">
 			<div class="row">
-                            <div class="col-md-8 col-md-offset-2">
+                            <div class="col-md-10 col-md-offset-1">
                                 
                                 <div class="col-md-2">
                                     <img src="images/logo-daee.png" width="117" height="150">
@@ -39,28 +42,39 @@
                             </div>
 			</div>
                 </div>
-		
-			<div class="row">
-                            <div class="col-md-8 col-md-offset-2">
-		<div class="nav nav-pills">
-			<ul>
-				<li style="width:25%"><a href="ope_lancamento.php">FAZER LANÇAMENTOS</a></li>
-				<li style="width:25%"><a href="udd_index.php">RELATÓRIOS</a></li>
-				<li style="width:25%"><a href="ger_index.php">GERENCIAR INFORMAÇÕES</a></li>
-				<li style="width:25%"><a href="logout.php">LOGOUT</a></li>
-                               
-			</ul>
-                   {SECONDMENU}  
-		</div>
-                            </div>
+                
+                
+                <div class="content">
+                    
+                        <div class="col-md-10 col-md-offset-1" style="font-size: 14px;margin-bottom:2px;margin-top: 2px;">
+                            <ul class="nav nav-tabs" style="background:#FFF;">
+                                <li><a href="ope_lancamento.php">FAZER LANÇAMENTOS</a></li>
+                                <li><a href="udd_index.php">RELATÓRIOS</a></li>
+                                <li><a href="ger_index.php">GERENCIAR INFORMAÇÕES</a></li>
+                                <li><a href="logout.php">LOGOUT</a></li>
+                            </ul> 
+
                         </div>
+                    <div>
+                     {SECONDMENU}  
+                 
+                    </div>
+                </div>
+
+                
+                
+                <div class="content">
+                        <div class="col-md-10 col-md-offset-1" style="background: #FFF; padding:10px;;margin-top: 10px">
+
+                                {CONTEUDO}   
+                        </div>
+                       
+                </div>
 			
-			<div id="conteudo">
-				
-				{CONTEUDO}
-			
-			</div>
-		
-                {EXECTIME}
-	</body>
+                <div class="content">		
+                    <div class="col-md-4 col-md-offset-4">
+                    {EXECTIME}
+                    </div>
+                </div>
+</body>
 </html>
