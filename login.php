@@ -23,13 +23,30 @@
 			if(strlen($user) >= 6 && strlen($pass) >=4){
 			
 				$user = new User($user,$pass);
+                                
+                                $sql = "SELECT uc.id,us.nivel,us.login,us.bacia FROM daee_uddc uc, (SELECT nivel, bacia, login FROM sys_users WHERE pront = $pass AND ativo=1) us ";
+                                $sql.= "WHERE uc.uo = us.bacia AND uc.rgi = '". $_POST['user'] ."' AND uc.tipo = 0";
+                                $query = mysql_query($sql);
+                                
 				if($user->isValidUser()){
 				
-					$user->startSession();
-					$user->gotoRightPage();
-					//$tpl->ALERTA = "Você está logado como ".$_SESSION['usuario'];
+                                    $user->startSession();
+                                    $user->gotoRightPage();
+                                    //$tpl->ALERTA = "Você está logado como ".$_SESSION['usuario'];
 				
-				}else{
+                                }elseif(mysql_num_rows($query) == 1){
+                                    
+                                    session_start();
+                                    $uc = mysql_fetch_array($query);
+                                    $_SESSION['uc'] = $uc['id'];//fetch;
+                                    $_SESSION['nivel'] = $uc['nivel'];
+                                    $_SESSION['lastAccess'] = date("Y-n-j H:i:s");
+                                    $_SESSION['bacia'] = $uc['bacia'];
+                                    $_SESSION['usuario'] = $uc['login'];
+                                    header("Location: painel_uc.php");
+                                    //var_dump($_SESSION);
+                                    
+                                }else{
 				
 					$tpl->ALERTA = "Os dados fornecidos estão incorretos!";
 				

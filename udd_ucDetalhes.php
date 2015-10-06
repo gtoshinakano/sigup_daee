@@ -31,7 +31,8 @@
 			$tpl->CHAVE	 = $chave;
 			if(mysql_num_rows($queryVerif))	{
 					
-				$id = mysql_fetch_array($queryVerif)['id'];
+				$id = mysql_fetch_array($queryVerif);
+                                $id = $id['id'];
 				$uc = new UnidadeConsumidora($id);
 
 				/*********************************
@@ -86,7 +87,8 @@
 				
 				$mediaUC = (count($eachMes) > 0) ? $mesPagoTotal / count($eachMes) : 1;
 				$tpl->MEDIA	= tratarValor($mediaUC, true);
-				$tpl->AUMENTO = getPorcentagem((end($eachMes)['valor'] * 100) / $mediaUC - 100 ,true);
+                                $end = end($eachMes);
+				$tpl->AUMENTO = getPorcentagem(($end['valor'] * 100) / $mediaUC - 100 ,true);
 				
 				
 				/*********************************
