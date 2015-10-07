@@ -48,7 +48,7 @@ $(document).ready(function () {
 
     //somar valores
     $("input[name='notas[]']").change(function () {
-        $('.info').show();
+      //  $('.info').show();
         var soma = 0;
         $("input[name='notas[]']:checked").each(function () {
             soma += parseFloat($(this).attr("title"));
@@ -75,12 +75,12 @@ $(document).ready(function () {
     
      $('.info').hide();
      $("input[name=nextButton]").click(function(){
-    //    $('.simple-table').hide();
-    //    $('.info').show();
+      $('.simple-table').hide();
+        $('.info').show();
     });
     $("input[name=prevButton]").click(function(){
-    //    $('.simple-table').show();
-    //    $('.info').hide();
+        $('.simple-table').show();
+        $('.info').hide();
     });
     
  

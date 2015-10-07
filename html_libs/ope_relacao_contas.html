@@ -1,6 +1,6 @@
 <div class="content">
     <div class="inner-content">
-        <h2>Assistente de Lançamento de Contas</h2>
+        <h2>Emitir Quadro/Informação</h2>
 
         <!-- BEGIN PRIMEIRO_FORM -->
         <form name="contas" method="get"  class="container" >
@@ -19,9 +19,12 @@
         </form>
         <!-- END PRIMEIRO_FORM -->
 
-        <!-- BEGIN TABELA -->
-        <div class="simple-table notas" id="simple-table notas" >
-            <form name="rel_contas" method="get"  >
+
+
+        <form name="rel_contas" method="get"  >
+            <!-- BEGIN TABELA -->
+            <div class="simple-table notas" id="simple-table notas" >
+
                 <h3>RELAÇÃO DE CONTAS {NMES_REF}/{NANO_REF}</h3>
                 <table class="borda-simples " width="100%">
                     <tr>
@@ -66,67 +69,64 @@
                     </tfoot>
                 </table>
                 <div class="submitter">
-
                     <input type="button" value="Próximo" name="nextButton" class="btn btn-primary" />
                 </div>
-            </form>
-        </div>
+            </div>
 
-        <!-- END TABELA -->
-        <div class="container">
-            <div class="info ">
-                <h3>RELAÇÃO DE CONTAS {NMES_REF}/{NANO_REF}</h3>
-                <form name="info" id="info" class="form-horizontal">
+            <!-- END TABELA -->
+            <div class="container">
+                <div class="info ">
+                    <h3>RELAÇÃO DE CONTAS {NMES_REF}/{NANO_REF}</h3>
                     <div class="form-group">
                         <label for="autos" class="col-sm-4 control-label">Autos: </label>
                         <div class="col-sm-8">
-                            <input type="text" id="autos" placeholder="Nº Autos">
+                            <input type="number" id="autos" name="autos" placeholder="Nº Autos"  min="0">
                         </div>
-
                     </div>
                     <div class="form-group">
                         <label for="prov" class="col-sm-4 control-label">Prov.: </label>
                         <div class="col-sm-8">
-                            <input type="text" id="prov" placeholder="Prov">
+                            <input type="number" id="prov" name="prov" placeholder="Prov" min="0">
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label for="ninfo" class="col-sm-4 control-label">INFORMAÇÃO ADA </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="ninfo" name="ninfo" placeholder="Nº da informação">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="nfls" class="col-sm-4 control-label">Planilhas de consumo: </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="nfls" name="nfls" placeholder="nº das fls">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="natestado" class="col-sm-4 control-label"> Atestado de Pagamento  </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="natestado" name="natestado" placeholder="Nº do atestado">
+                        </div>
+                    </div>
                    
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">INFORMAÇÃO ADA </label>
-                        <div class="col-sm-8">
-                            <input type="text" id="prov" placeholder="Nº da informação">
-                        </div>
-                    </div>
                    <div class="form-group">
-                       <label class="col-sm-4 control-label">Planilhas de consumo: </label>
-                        
+                        <label for="natest2" class="col-sm-4 control-label"></label>
                         <div class="col-sm-8">
-                            <input type="text" id="prov" placeholder="nº das fls">
-                          
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label"> Atestado de Pagamento  </label>
-                        <div class="col-sm-8">
-                            <input type="text" id="prov" placeholder="Nº do atestado">
-                        </div>
-                    </div>
-                    
-                    <br/> <br/>
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-4 col-sm-10">
-                            
-                            <input type="button" value="Voltar" name="prevButton" class="btn btn-primary"/>
-                            <button type="submit" class="btn btn-default">Próximo</button>
+                            <br/> <br/> <br/> <br/>
                         </div>
                     </div>
                     
                     
-                </form>
-
-                    <br/> <br/> <br/> <br/>
+                    <input type="button" value="Voltar" name="prevButton" class="btn btn-primary"/>
+               <button type="submit" class="btn btn-primary ">Enviar</button>
+                  
+                </div>
+               
             </div>
-        </div>
+              
+        </form>
+
+        <!-- BEGIN PDF -->
+        <H1>hI {HI}</H1>
+        <!-- END PDF -->
+        
     </div>

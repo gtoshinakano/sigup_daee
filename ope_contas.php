@@ -8,7 +8,6 @@ include_once "src/classes/Users.class.php";
 include_once "src/classes/Notas.class.php";
 include_once "src/classes/UnidadeCons.class.php";
 
-
 redirectByPermission(2); // SETAR PERMISSÃO DA PÁGINA
 
 $tpl = new Template('html_libs/template_ope.html');
@@ -21,7 +20,7 @@ $nivel = $_SESSION['nivel'];
 //$nivel = 2;
 $user = new User($_SESSION['usuario']);
 
-
+if (!isset($_GET['notas'])){
 if (!isset($_GET['ano_ref'], $_GET['mes_ref']) || $_GET['ano_ref'] < 2012 || $_GET['mes_ref'] < 1 || $_GET['mes_ref'] > 12 || $_GET['ano_ref'] > Date('Y'))  { //se não tem get
     for ($i = Date('Y'); $i >= 2010; $i--) {
         $tpl->ANO = $i;
@@ -34,8 +33,8 @@ if (!isset($_GET['ano_ref'], $_GET['mes_ref']) || $_GET['ano_ref'] < 2012 || $_G
         $tpl->block('EACH_MESREF');
     }
     $tpl->block('PRIMEIRO_FORM');
-} else {
     
+} else {
     $ano_ref = (int) $_GET['ano_ref'];
     $mes_ref = (int) $_GET['mes_ref'];
 
@@ -69,7 +68,6 @@ if (!isset($_GET['ano_ref'], $_GET['mes_ref']) || $_GET['ano_ref'] < 2012 || $_G
             $temConsumo = false;
             break;
     }
-
     if ($temConsumo == true) {
         $tpl->block('CONSUMO');
     }
@@ -84,7 +82,7 @@ if (!isset($_GET['ano_ref'], $_GET['mes_ref']) || $_GET['ano_ref'] < 2012 || $_G
         $tpl->NVENCIMENTO = date("d/m/Y", strtotime($res['vencto']));
         $tpl->NEMPRESA = $res['emp_nome'];
         $tpl->LANCTO = $res['criado'];
-         $tpl->LANCTO2 = date("d/m/Y", strtotime($res['criado']));;
+        $tpl->LANCTO2 = date("d/m/Y", strtotime($res['criado']));;
 
         if ($temConsumo == true) {
             $tpl->block('EACH_CONSUMO');
@@ -99,6 +97,11 @@ if (!isset($_GET['ano_ref'], $_GET['mes_ref']) || $_GET['ano_ref'] < 2012 || $_G
     $tpl->UCTOTAL = $count;
     $tpl->block('TABELA');
 
+}
+}else{ //receber notas[] como parametro, gerar informação e/ou atestado
+    // echo "hi";
+    $tpl->HI = "HELLO";
+    $tpl->block('PDF');
 }
 
 $tpl->show();
