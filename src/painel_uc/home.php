@@ -35,7 +35,7 @@
         $tpl->ULTIMANOTA = getMesNome($ult['mes_ref'], true) . "/" . $ult['ano_ref'];
         
         $tpl->GETANO = $getAno;
-        $sql = "SELECT * FROM ( SELECT uo.unidade,uo.nome AS dirnome,uc.rgi,uc.compl,uc.tipo,n.mes_ref,n.ano_ref,SUM(n.valor) AS valor,SUM(n.consumo) AS consumo, uc.rua, e.nome ";
+        $sql = "SELECT * FROM ( SELECT uo.unidade,uo.nome AS dirnome,uc.rgi,uc.compl,uc.tipo,n.mes_ref,n.ano_ref,SUM(n.valor) AS valor,SUM(n.consumo) AS consumo, uc.rua, e.nome, uc.meta ";
         $sql.= "FROM daee_udds uo,daee_uddc uc,daee_notas n, sys_empresas e ";
         $sql.= "WHERE uc.uo = uo.id AND n.uc=uc.id AND uc.empresa=e.id AND uc.id=$ucid AND n.ano_ref = $getAno ";
         $sql.= "GROUP BY n.mes_ref,uc.id ORDER BY valor DESC,uo.unidade,n.mes_ref ASC ) AS res ";
@@ -64,8 +64,9 @@
                 $info['unidade'] = $linha['unidade'];
                 $info['valor'][] = $linha['valor'];
                 $info['consumo'][] = $linha['consumo'];
+                $info['meta'] = $linha['meta'];
                 $info['chartval'].= ",['" . getMesNome($linha['mes_ref']) . "'," . $linha['valor'] . ", @@MEDIAVAL@@]";
-                $info['chartcon'].= ",['" . getMesNome($linha['mes_ref']) . "', 200, @@MEDIACONS@@, " . $linha['consumo'] . "]";// COLOCAR META ONDE 400 
+                $info['chartcon'].= ",['" . getMesNome($linha['mes_ref']) . "'," . $linha['meta'] . ", @@MEDIACONS@@, 24, " . $linha['consumo'] . "]";// COLOCAR META ONDE 400 
             }
 
             $tpl->MEDIAVAL = tratarValor($relatorio->average($info['valor']), true);
@@ -76,6 +77,7 @@
             $tpl->CHARTCON = ($relatorio->temConsumo($info['tipo'])) ? $info['chartcon'] : "";
 
             $tpl->TIPOMEDIDA = $relatorio->getTipoMedida($info['tipo']);
+            $tpl->META = tratarValor($info['meta']);
 
             $tpl->block('TABLEROWVAL');
             if ($relatorio->temConsumo($info['tipo']))

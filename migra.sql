@@ -1,6 +1,6 @@
 ## PARA HOME
 
-ALTER TABLE daee_uddc ADD COLUMN meta INT(11);
+ALTER TABLE daee_uddc ADD COLUMN meta INT(11) NOT NULL DEFAULT 0;
 ALTER TABLE daee_uddc ADD COLUMN area INT(11);
 ALTER TABLE daee_uddc ADD COLUMN pop_fixa INT(11);
 
@@ -11,3 +11,15 @@ ALTER TABLE daee_notas ADD COLUMN medicao INT(11);
 ALTER TABLE daee_notas ADD COLUMN pop_flut INT(11);
 ALTER TABLE daee_notas ADD COLUMN dias_uteis TINYINT(2);
 
+CREATE TABLE sys_medicao(
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	uc INT(11) NOT NULL,
+	user VARCHAR(50) NOT NULL,
+	data_leitura DATE,
+	leitura INT(11) NOT NULL,
+	pop_flut INT(11) NOT NULL DEFAULT 0,
+	obs TEXT,
+	PRIMARY KEY(id),
+	FOREIGN KEY(uc) REFERENCES daee_uddc(id) ON DELETE CASCADE
+
+);

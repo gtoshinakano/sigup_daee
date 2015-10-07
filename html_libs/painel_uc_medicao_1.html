@@ -4,7 +4,7 @@
         <h2>RGI {UCNOME}</h2>    
     </div>
     <div class="col-md-4" align="right">
-        <h2>Última nota: {ULTIMANOTA}</h2>
+        <h2>Referência {REFERENCIA}</h2>
     </div>
 </div>
 
@@ -17,40 +17,25 @@
      * 
      */
     function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-        ['Meses', '{GETANO}', 'Média'] 
-        {CHARTVAL}	
-    ]);
-    var options = {
-            title: 'Evolução Financeira',
-            hAxis: {title: 'Meses', titleTextStyle: {color: '#47A3DA'}},
-            vAxis: {title: 'Pago em R$', titleTextStyle: {color: '#47A3DA'}},
-            pointSize: 5,
-            colors: ['Yellow','#D9EDF7','MediumSeaGreen','DarkGreen','DarkGreen','Lime','Chartreuse','GreenYellow','YellowGreen','OliveDrab','DarkOliveGreen','Olive','','','','']
-                    };
-
-            var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-            chart.draw(data, options);
-    }
-
-    function drawChart2() {
-        var data = google.visualization.arrayToDataTable([
-            ['Meses', 'Meta', 'Média', 'Meta Bônus', '{GETANO}' ] 
-            {CHARTCON}	
+        var data = google.visualization.arrayToDataTable([            
+            {CHARTDATA}
         ]);
         var options = {
-            title: 'Histórico de Consumo',
-            hAxis: {title: 'Meses', titleTextStyle: {color: '#47A3DA'}},
-            vAxis: {title: 'Consumo em {TIPOMEDIDA}', titleTextStyle: {color: '#47A3DA'}}, pointSize: 5,
+            title: 'Medições',
+            hAxis: {title: 'Dias', titleTextStyle: {color: '#47A3DA'}, baselineColor: 'blue', format:'d MMM y', minValue: new Date({DATA_INIC}), maxValue: new Date({DATA_FINC})},
+            vAxis: {titleTextStyle: {color: '#47A3DA'}}, pointSize: 5,
+            curveType: 'function',
             //colors: ['MediumSeaGreen','#D9EDF7','#DB261D','DarkGreen','#DB261D','Lime','Chartreuse','GreenYellow','YellowGreen','OliveDrab','DarkOliveGreen','Olive','','','',''] //ORIGINAL
-            colors: ['MediumSeaGreen','#D9EDF7','DarkGreen','#DB261D','Lime','Chartreuse','GreenYellow','YellowGreen','OliveDrab','DarkOliveGreen','Olive','','','',''] 
+            colors: ['#DB261D','Lime','Chartreuse','GreenYellow','YellowGreen','OliveDrab','DarkOliveGreen','Olive','','','',''] 
         };
 
-                var chart = new google.visualization.AreaChart(document.getElementById('chart_div2'));
-                chart.draw(data, options);
+        var chart = new google.visualization.LineChart(document.getElementById('chart_med'));
+        chart.draw(data, options);
     }
     
-    $(document).ready(function(){
+    
+    
+    /*$(document).ready(function(){
         
         $('.muda-ano').click(function(e){
         
@@ -64,7 +49,7 @@
         
         });    
         
-    });    
+    });    */
 
 </script>
 
@@ -72,11 +57,11 @@
 <div class="container rounded" style="padding:15px; margin-top: 27px">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-6"><h3>Relatório de Consumo</h3></div>
-            <div class="col-md-6" align="right"><h3><a href="src/painel_uc/home.php?ano={ANO_ATUAL_MENOS}" class="muda-ano">&Lt;</a> <span style="text-decoration: underline">Exercício {ANO_ATUAL}</span> <a href="src/painel_uc/home.php?ano={ANO_ATUAL_MAIS}" class="muda-ano">&Gt;</a></h3></div>
+            <div class="col-md-6"><h3>Período de {PERIODO} dias <small>{REFERENCIA}</small></h3></div>
+            <div class="col-md-6" align="right"><h3><a href="src/painel_uc/medicoes.php?mes={MES_ANT}&ano={ANO_ANT}" class="muda-ano">&Lt;</a> <span style="text-decoration: underline">De {DATA_INI} a {DATA_FIN}</span> <a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="muda-ano">&Gt;</a></h3></div>
         </div>
         <div class="row">
-            <div id="chart_div2" style="margin-top:15px"></div>
+            <div id="chart_med" style="margin-top:15px"></div>
         </div>
     </div>
     <div class="col-md-12">
@@ -90,6 +75,7 @@
                 <span class="btn btn-lg bg-warning" title="Média por população fixa (servidores)">Média (F): {MEDSERV} <small>{TIPOMEDIDA}/pessoa/mês</small></span>
                 <span class="btn btn-lg bg-danger" title="Média por área total">Média (A): {MEDFLU} <small>{TIPOMEDIDA}/m²</small></span>
             </div>
+{TESTE}            
         </div>
     </div>
 </div> 
