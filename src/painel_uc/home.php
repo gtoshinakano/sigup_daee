@@ -47,6 +47,7 @@
             $info;
             $info['chartval'] = "";
             $info['chartcon'] = "";
+            $consAtu          = 0;
             while ($linha = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
                 $tpl->MESNOME = getMesNome($linha['mes_ref']);
@@ -65,8 +66,12 @@
                 $info['valor'][] = $linha['valor'];
                 $info['consumo'][] = $linha['consumo'];
                 $info['meta'] = $linha['meta'];
+                
+                $variacao = ($consAtu == 0) ? "" : ($linha['consumo'] * 100 / $consAtu) - 100 ;
+                $consAtu = $linha['consumo'];
                 $info['chartval'].= ",['" . getMesNome($linha['mes_ref']) . "'," . $linha['valor'] . ", @@MEDIAVAL@@]";
-                $info['chartcon'].= ",['" . getMesNome($linha['mes_ref']) . "'," . $linha['meta'] . ", @@MEDIACONS@@, 24, " . $linha['consumo'] . "]";// COLOCAR META ONDE 400 
+                $info['chartcon'].= ",['" . getMesNome($linha['mes_ref']) . "'," . $linha['meta'] . ", @@MEDIACONS@@, " . $linha['consumo'] . ", '". getPorcentagem($variacao) ."%']";
+                
             }
 
             $tpl->MEDIAVAL = tratarValor($relatorio->average($info['valor']), true);
@@ -74,7 +79,7 @@
             $info['chartval'] = str_replace('@@MEDIAVAL@@', $relatorio->average($info['valor']), $info['chartval']);
             $tpl->CHARTVAL = $info['chartval'];
             $info['chartcon'] = str_replace('@@MEDIACONS@@', $relatorio->average($info['consumo']), $info['chartcon']);
-            $tpl->CHARTCON = ($relatorio->temConsumo($info['tipo'])) ? $info['chartcon'] : "";
+            $tpl->CHARTCON = substr_replace($info['chartcon'], "", 0,1);
 
             $tpl->TIPOMEDIDA = $relatorio->getTipoMedida($info['tipo']);
             $tpl->META = tratarValor($info['meta']);
@@ -88,6 +93,7 @@
         }else {
 
             $tpl->block('NORESULTS');
+            
         }
     }else{
         

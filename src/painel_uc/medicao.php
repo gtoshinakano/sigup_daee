@@ -1,8 +1,7 @@
 <?php
-    //include "../classes/Users.class.php";
-    //include "../classes/UnidadeCons.class.php";
-    //include "../classes/Notas.class.php";
+    
     require "../scripts/conecta.php";
+    //include "../classes/UnidadeCons.class.php";
     include "../scripts/functions.php";
     include "../classes/Relatorio.class.php";
     require "../classes/Template.class.php";
@@ -29,147 +28,112 @@
         $getMes = (isset($_GET['mes']) && $_GET['mes']>=1 && $_GET['mes']<=12) ? $_GET['mes'] : Date('n');
         $mesAnt     = ($getMes == 1) ? 12 : $getMes-1 ;
         $anoAnt     = ($getMes == 1) ? $getAno-1 : $getAno ;
-        $sqlDatas   = "SELECT data_medicao, medicao FROM daee_notas WHERE uc=$ucid AND ((mes_ref=$mesAnt AND ano_ref=$anoAnt) OR (mes_ref=$getMes AND ano_ref=$getAno)) ORDER BY data_medicao";
+        $sqlDatas   = "SELECT data_medicao, medicao, consumo, mes_ref FROM daee_notas WHERE uc=$ucid AND data_medicao IS NOT NULL AND ((mes_ref=$mesAnt AND ano_ref=$anoAnt) OR (mes_ref=$getMes AND ano_ref=$getAno)) ORDER BY data_medicao";
         $queryDatas = mysql_query($sqlDatas);
         $data_inicial= "";
         $data_final = "";
-        $medicao;
-        if(mysql_num_rows($queryDatas) == 1 && $getMes == Date('n')){
+        $med_ini    = 0;
+        $med_fin    = 0;
+        $consumo_ini= 0;
+        $continue   = false;
+        if(mysql_num_rows($queryDatas) == 1){
             $linha       = mysql_fetch_array($queryDatas);
-            $data_inicial= $linha['data_medicao'];
-            $data_final  = Date('Y-m-d');
-            $medicao[] = $linha;
+            if($linha['mes_ref'] == $mesAnt){
+                $data_inicial= $linha['data_medicao'];
+                $data_final  = Date('Y-m-d');
+                $med_ini = $linha['medicao'];
+                $consumo_ini = $linha['consumo'];
+                $continue = true;
+            }else
+                $continue = false;
         } elseif(mysql_num_rows($queryDatas) == 2){
             $ret;
-            while($linha = mysql_fetch_array($queryDatas)){
+            while($linha = mysql_fetch_row($queryDatas)){
                 $ret[] = $linha;
             }
             $data_inicial = $ret[0][0];
             $data_final   = $ret[1][0];
-            $medicao      = $ret;
+            $med_ini      = $ret[0][1];
+            $med_fin      = $ret[1][1];
+            $consumo_ini  = $ret[0][2];
+            $continue = true;
         }else{ 
-            $data_inicial = null;
-            $data_final   = null;
+            $continue = false;
         }
         $time_inicial   = strtotime($data_inicial);
         $time_final     = strtotime($data_final);
         $diferenca      = $time_final - $time_inicial; // Calcula a diferença de segundos entre as duas datas:
         $quantDias      = (int)floor( $diferenca / (60 * 60 * 24)); // 225 dias
         
-        /*
-         * Mostrando Variáveis
-         * 
-         */
-        
-        $tpl->PERIODO = $quantDias;
-        $tpl->REFERENCIA = getMesNome($getMes) . "/" . $getAno;
-        $tpl->DATA_INI = setDateDiaMesAno($data_inicial);
-        $tpl->DATA_FIN = setDateDiaMesAno($data_final);
-        $tpl->DATA_INIC= str_replace("-", ",", $data_inicial);
-        $tpl->DATA_FINC= str_replace("-", ",", $data_final);
-        //$tpl->TESTE = $data_inicial . $data_final;
-        
-        /*
-         * Buscando pontos de medição no BD
-         * 
-         */
-        $sqlPontos = "SELECT m.* FROM sys_medicao m WHERE m.uc = $ucid AND m.data_leitura BETWEEN '$data_inicial' AND '$data_final' ORDER BY m.data_leitura";
-        $queryPontos = mysql_query($sqlPontos);
-        $pontos;
-        if(mysql_num_rows($queryPontos) > 0){
+        if($continue){
             
-            $chart_data = "['date', 'Consumo'],";
-            while($linha = mysql_fetch_array($queryPontos)){
+            /*
+             * Mostrando Variáveis
+             * 
+             */
+            $tpl->PERIODO   = $quantDias;
+            $tpl->REFERENCIA= $mes_ref = getMesNome($getMes) . "/" . $getAno;
+            $tpl->DATA_INI  = setDateDiaMesAno($data_inicial);
+            $tpl->DATA_FIN  = setDateDiaMesAno($data_final);
+            $tpl->DATA_INIC = str_replace("-", ",", $data_inicial);
+            //$tpl->DATA_FINC = str_replace("-", ",", $data_final);
+            $tpl->MES_ANT   = $mesAnt;
+            $tpl->ANO_ANT   = $anoAnt;
+            $tpl->MES_POS   = ($getMes == 12) ? 1 : $getMes+1;
+            $tpl->ANO_POS   = ($getMes == 12 && $getAno < Date('Y')) ? $getAno+1 : $getAno;
+
+            $sqlPontos = "SELECT m.* FROM sys_medicao m WHERE m.uc = $ucid AND m.data_leitura BETWEEN '$data_inicial' AND '$data_final' ORDER BY m.data_leitura";
+            $queryPontos = mysql_query($sqlPontos);
+            $pontos;
+            $chart_data = "[" . convertDateToGoogle($data_inicial) . ", " . $med_ini . ", '". getMesNome($mesAnt) . "/" . $anoAnt ."', '<b>Nota Lançada em</b> " . setDateDiaMesAno($data_inicial) . "<br />Inicial: $med_ini {TIPOMEDIDA}<br />Consumido: $consumo_ini {TIPOMEDIDA}'],";
+            if(mysql_num_rows($queryPontos) > 0){
+
+                $med_ant    = 0;
+                while($linha = mysql_fetch_array($queryPontos)){
+
+                    if($med_ant == 0) $med_ini = $linha['leitura'];
+                    $variacao   = ($med_ant == 0) ?  "" : ($linha['leitura'] * 100 / $med_ant) - 100;
+                    $diferenca  = $linha['leitura'] - $med_ant;
+                    $tooltip    = "<b>" . setDateDiaMesAno($linha['data_leitura']) . "</b><br />Leitura " . $linha['leitura'] . " {TIPOMEDIDA}<br />" . " Consumido ".  tratarValor($diferenca). " {TIPOMEDIDA}";
+                    $chart_data.= "[" . convertDateToGoogle($linha['data_leitura']) . ", " . $linha['leitura'] . ", '" . getPorcentagem($variacao) . "%', '$tooltip'],";
+                    $med_ant    = $linha['leitura'];
+                    $pontos[] = $linha;
+
+                }
+
+                $tpl->CHARTDATA = substr_replace($chart_data, '', -1);
+                $tpl->CON_PERIODO = $med_ant - $med_ini;
+                $tpl->VAR_PERIODO = getPorcentagem(($med_ant * 100 / $med_ini) - 100);
+
+            }elseif($med_fin > 0){
                 
-                $chart_data.= "[" . convertDateToGoogle($linha['data_leitura']) . ", " . $linha['leitura'] . "],";
-                $ponos[] = $linha;
+                $tpl->CHARTDATA = $chart_data . "[" . convertDateToGoogle($data_final) . ", " . $med_fin . ", '$mes_ref', '<b>Nota Lançada em</b> " . setDateDiaMesAno($data_final) . "<br />Inicial: $med_fin {TIPOMEDIDA}<br />Consumido: ". tratarValor($med_fin - $med_ini) ."{TIPOMEDIDA}']";
+                $tpl->CON_PERIODO = $med_fin - $med_ini;
+                $tpl->VAR_PERIODO = getPorcentagem((($med_fin - $med_ini) * 100 / $consumo_ini) - 100);                
+                
+            }else{
+
+                $tpl->CHARTDATA = $chart_data;
                 
             }
+
+            /*
+             * Buscando dados da Consumidora no BD
+             * 
+             */
+            $ucSql = "SELECT * FROM daee_uddc WHERE id = $ucid";
+            $ucQuery = mysql_query($ucSql);
+            $uc = mysql_fetch_array($ucQuery);
+            $tpl->TIPOMEDIDA = $relatorio->getTipoMedida($uc['tipo']);
+            $tpl->UCNOME = $uc['rgi'] . " - " . $uc['compl'];
             
-            $tpl->CHARTDATA = substr_replace($chart_data, '', -1);
-            
-        }else 
-            $tpl->CHARTDATA = "['date', 'Consumo'],[new Date('$data_inicial'), 0]";
+            $tpl->block('RESULTS');
+
+        }else{
         
-        /*
-         * Buscando dados da Consumidora no BD
-         * 
-         */
-        $ucSql = "";
-        
-        
-        
-        //$tpl->UCNOME = $dados[0]['rgi'] . " - " . $dados[0]['compl'];
-        
-        
-       //$data_inicial   = () ? : ;
-       //$data_final     = () ? : ;            
-        
-        /*
-         * Desenhar Gráfico
-         *            ['date', 'Consumo'],
-            [new Date(2014,11,25),  1000],
-            [new Date(2014,11,27),  1170],
-            [new Date(2014,11,31),  660],
-            [new Date(2015,0,05),  1030],
-            [new Date(2015,0,15),  660],
-         */
-        
-        //$tpl->GETANO = $getAno;
-        
-        
-        
-        /*$sql = "SELECT * FROM ( SELECT uo.unidade,uo.nome AS dirnome,uc.rgi,uc.compl,uc.tipo,n.mes_ref,n.ano_ref,SUM(n.valor) AS valor,SUM(n.consumo) AS consumo, uc.rua, e.nome ";
-        $sql.= "FROM daee_udds uo,daee_uddc uc,daee_notas n, sys_empresas e ";
-        $sql.= "WHERE uc.uo = uo.id AND n.uc=uc.id AND uc.empresa=e.id AND uc.id=$ucid AND n.ano_ref = $getAno ";
-        $sql.= "GROUP BY n.mes_ref,uc.id ORDER BY valor DESC,uo.unidade,n.mes_ref ASC ) AS res ";
-        $sql.= "GROUP BY res.rgi,res.mes_ref ";
-        $query = mysql_query($sql);
-
-        if (mysql_num_rows($query) > 0) {
-
-            $info;
-            $info['chartval'] = "";
-            $info['chartcon'] = "";
-            while ($linha = mysql_fetch_array($query, MYSQL_ASSOC)) {
-
-                $tpl->MESNOME = getMesNome($linha['mes_ref']);
-                $tpl->block('MESLABEL');
-
-                $tpl->VAL = tratarValor($linha['valor'], true);
-                $tpl->block('VALBLOCK');
-
-                $tpl->CONS = tratarValor($linha['consumo']);
-                $tpl->block('CONSBLOCK');
-
-
-                $info['nome'] = $linha['rgi'] . " - " . $linha['compl'];
-                $info['tipo'] = $linha['tipo'];
-                $info['unidade'] = $linha['unidade'];
-                $info['valor'][] = $linha['valor'];
-                $info['consumo'][] = $linha['consumo'];
-                $info['chartval'].= ",['" . getMesNome($linha['mes_ref']) . "'," . $linha['valor'] . ", @@MEDIAVAL@@]";
-                $info['chartcon'].= ",['" . getMesNome($linha['mes_ref']) . "', 200, @@MEDIACONS@@, " . $linha['consumo'] . "]";// COLOCAR META ONDE 400 
-            }
-
-            $tpl->MEDIAVAL = tratarValor($relatorio->average($info['valor']), true);
-            $tpl->MEDIACONS = tratarValor($relatorio->average($info['consumo']));
-            $info['chartval'] = str_replace('@@MEDIAVAL@@', $relatorio->average($info['valor']), $info['chartval']);
-            $tpl->CHARTVAL = $info['chartval'];
-            $info['chartcon'] = str_replace('@@MEDIACONS@@', $relatorio->average($info['consumo']), $info['chartcon']);
-            $tpl->CHARTCON = ($relatorio->temConsumo($info['tipo'])) ? $info['chartcon'] : "";
-
-            $tpl->TIPOMEDIDA = $relatorio->getTipoMedida($info['tipo']);
-
-            $tpl->block('TABLEROWVAL');
-            if ($relatorio->temConsumo($info['tipo']))
-                $tpl->block('TABLEROWCONS');
-            $tpl->UCNOME = $info['nome'];
-
-        }else {
-
             $tpl->block('NORESULTS');
-        }*/
+        }
+        
     }else{
         
         $tpl->block('NORESULTS');

@@ -1,42 +1,39 @@
 <div class="row">
     <div class="container">
-        <h3>Lançamentos mensais de {ANO_ATUAL}</h3>
-        <table class="table table-striped" width="100%">
-            <thead>
-                <tr>
-                    <th>Mês</th>
-                    <!-- BEGIN MESLABEL -->
-                    <th>{MESNOME}</th>
-                    <!-- END MESLABEL -->
-                    <th>Média</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- BEGIN TABLEROWCONS -->
-                <tr>
-                    <th align="center">Consumo ({TIPOMEDIDA})</th>
-                    <!-- BEGIN CONSBLOCK -->
-                    <td align="right">{CONS}</td>
-                    <!-- END CONSBLOCK -->                      
-                    <td align="right"><b>{MEDIACONS}</b></td>
-                </tr>
-                <!-- END TABLEROWCONS -->                
-                <!-- BEGIN TABLEROWVAL -->
-                <tr>
-                    <th align="center">Valor (R$)</th>
-                    <!-- BEGIN VALBLOCK -->
-                    <td align="right"><small>{VAL}</small></td>
-                    <!-- END VALBLOCK -->                      
-                    <td align="right"><b>{MEDIAVAL}</b></td>
-                </tr>
-                <!-- END TABLEROWVAL -->             
-            </tbody>
-        </table>
-        <!-- BEGIN NORESULTS -->
-        <div>
-            <p>- <b>Não foram encontrados registros para os dados fornecidos. </b></p>
+        <div class="page-header">
+            <h3>Lançamentos mensais de {ANO_ATUAL}</h3>
+            <table class="table table-striped" width="100%">
+                <thead>
+                    <tr>
+                        <th>Mês</th>
+                        <!-- BEGIN MESLABEL -->
+                        <th>{MESNOME}</th>
+                        <!-- END MESLABEL -->
+                        <th>Média</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- BEGIN TABLEROWCONS -->
+                    <tr>
+                        <th align="center">Consumo ({TIPOMEDIDA})</th>
+                        <!-- BEGIN CONSBLOCK -->
+                        <td align="right">{CONS}</td>
+                        <!-- END CONSBLOCK -->                      
+                        <td align="right"><b>{MEDIACONS}</b></td>
+                    </tr>
+                    <!-- END TABLEROWCONS -->                
+                    <!-- BEGIN TABLEROWVAL -->
+                    <tr>
+                        <th align="center">Valor (R$)</th>
+                        <!-- BEGIN VALBLOCK -->
+                        <td align="right"><small>{VAL}</small></td>
+                        <!-- END VALBLOCK -->                      
+                        <td align="right"><b>{MEDIAVAL}</b></td>
+                    </tr>
+                    <!-- END TABLEROWVAL -->             
+                </tbody>
+            </table>
         </div>
-        <!-- END NORESULTS -->
     </div>
 
 </div>

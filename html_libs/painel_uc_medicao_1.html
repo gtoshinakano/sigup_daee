@@ -1,4 +1,60 @@
+<script type="text/javascript">
+    
 
+    /*
+     * DESENHAR GRÁFICOS
+     * 
+     */
+    function drawChart() {
+    
+        var data = new google.visualization.DataTable();
+        data.addColumn('date', 'Datas'); // Implicit domain label col.
+        data.addColumn('number', 'Medido'); // Implicit series 1 data col.
+        data.addColumn({type:'string', role:'annotation'}); // annotation role col.
+        //data.addColumn({type:'string', role:'annotationText'}); // annotationText col.
+        data.addColumn({type:'string', role:'tooltip', 'p': {'html': true}}); // annotationText col.
+        data.addRows([{CHARTDATA}]);
+        var options = {
+            title: 'Medições do Hidrômetro',
+            hAxis: {title: 'Dias', titleTextStyle: {color: '#47A3DA'}, baselineColor: 'blue', format:'d MMM y', minValue: new Date({DATA_INIC})},
+            vAxis: {titleTextStyle: {color: '#47A3DA'}}, pointSize: 5,
+            curveType: 'function',
+            tooltip: {isHtml: true},
+            //colors: ['MediumSeaGreen','#D9EDF7','#DB261D','DarkGreen','#DB261D','Lime','Chartreuse','GreenYellow','YellowGreen','OliveDrab','DarkOliveGreen','Olive','','','',''] //ORIGINAL
+            colors: ['#DB261D','Lime','Chartreuse','GreenYellow','YellowGreen','OliveDrab','DarkOliveGreen','Olive','','','',''] 
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_med'));
+        chart.draw(data, options);
+    }
+    
+            
+    
+    
+    $(document).ready(function(){
+        
+        $('.muda-periodo').click(function(e){
+        
+            //alert("sad");
+            e.preventDefault();
+            var href = $(this).attr('href');
+            $('#conteudo').load(href, function(){
+                drawChart();
+       
+            });
+        
+        });    
+        
+    });
+
+</script>
+
+    <!-- BEGIN NORESULTS -->
+    <div class="alert alert-danger">
+        Não foram encontradas medições para o este período. <strong><a href="src/painel_uc/medicao.php" class="muda-periodo">Clique aqui para voltar</a></strong>
+    </div>
+    <!-- END NORESULTS -->
+    <!-- BEGIN RESULTS -->
 <div class="row" id="grafico">
     <div class="col-md-8">
         <h2>RGI {UCNOME}</h2>    
@@ -8,74 +64,28 @@
     </div>
 </div>
 
-
-<script type="text/javascript">
-    
-
-    /*
-     * DESENHAR GRÁFICOS
-     * 
-     */
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable([            
-            {CHARTDATA}
-        ]);
-        var options = {
-            title: 'Medições',
-            hAxis: {title: 'Dias', titleTextStyle: {color: '#47A3DA'}, baselineColor: 'blue', format:'d MMM y', minValue: new Date({DATA_INIC}), maxValue: new Date({DATA_FINC})},
-            vAxis: {titleTextStyle: {color: '#47A3DA'}}, pointSize: 5,
-            curveType: 'function',
-            //colors: ['MediumSeaGreen','#D9EDF7','#DB261D','DarkGreen','#DB261D','Lime','Chartreuse','GreenYellow','YellowGreen','OliveDrab','DarkOliveGreen','Olive','','','',''] //ORIGINAL
-            colors: ['#DB261D','Lime','Chartreuse','GreenYellow','YellowGreen','OliveDrab','DarkOliveGreen','Olive','','','',''] 
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('chart_med'));
-        chart.draw(data, options);
-    }
-    
-    
-    
-    /*$(document).ready(function(){
-        
-        $('.muda-ano').click(function(e){
-        
-            //alert("sad");
-            e.preventDefault();
-            var href = $(this).attr('href');
-            $('#conteudo').load(href, function(){
-                drawChart();
-                drawChart2();     
-            });
-        
-        });    
-        
-    });    */
-
-</script>
-
-
 <div class="container rounded" style="padding:15px; margin-top: 27px">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-6"><h3>Período de {PERIODO} dias <small>{REFERENCIA}</small></h3></div>
-            <div class="col-md-6" align="right"><h3><a href="src/painel_uc/medicoes.php?mes={MES_ANT}&ano={ANO_ANT}" class="muda-ano">&Lt;</a> <span style="text-decoration: underline">De {DATA_INI} a {DATA_FIN}</span> <a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="muda-ano">&Gt;</a></h3></div>
+            <div class="col-md-7"><h3>Período de {PERIODO} dias <small>{REFERENCIA} <i>mês de referência da nota pela empresa</i></small></h3></div>
+            <div class="col-md-5" align="right"><h3><a href="src/painel_uc/medicao.php?mes={MES_ANT}&ano={ANO_ANT}" class="btn btn-warning muda-periodo">&Lt;</a> <span style="text-decoration: underline">{DATA_INI} a {DATA_FIN}</span> <a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="btn btn-warning muda-periodo">&Gt;</a></h3></div>
         </div>
         <div class="row">
             <div id="chart_med" style="margin-top:15px"></div>
         </div>
     </div>
     <div class="col-md-12">
-        <div class="row">
-            <div id="chart_div" style="margin-top:15px"></div>
+        <div class="row" style="margin-top:10px;" >
+            <div class="col-md-5 col-md-offset-1"><a href="src/painel_uc/medicao.php?mes={MES_ANT}&ano={ANO_ANT}" class="btn btn-warning muda-periodo"><b>&Lt; MÊS ANTERIOR</b> <span class="badge">{MES_ANT}/{ANO_ANT}</span></a></div>
+            <div class="col-md-5" align="right"><a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="btn btn-warning muda-periodo"> <b>MÊS POSTERIOR <span class="badge">{MES_POS}/{ANO_POS}</span> &Gt;</b></a></div>
         </div>
         <div class="row col-md-10 col-md-offset-1" style="margin-top:25px; margin-bottom:20px">
             <div class="btn-group btn-group-justified" style="">
-                <span class="btn btn-lg bg-success" title="Meta estabelecida pela concessionária">Meta: {META} <small>{TIPOMEDIDA}/mês</small></span>
-                <span class="btn btn-lg bg-info" title="Média Mensal">Média (M): {MEDIACONS} <small>{TIPOMEDIDA}/mês</small></span>
-                <span class="btn btn-lg bg-warning" title="Média por população fixa (servidores)">Média (F): {MEDSERV} <small>{TIPOMEDIDA}/pessoa/mês</small></span>
-                <span class="btn btn-lg bg-danger" title="Média por área total">Média (A): {MEDFLU} <small>{TIPOMEDIDA}/m²</small></span>
+                <span class="btn btn-lg bg-success" title="Meta estabelecida pela concessionária">Consumo do Período <small>{CON_PERIODO} {TIPOMEDIDA}</small></span>
+                <span class="btn btn-lg bg-info" title="Variação em todo o período">Variação do período: <small>{VAR_PERIODO} %</small></span>
             </div>
-{TESTE}            
         </div>
     </div>
 </div> 
+
+<!-- END RESULTS -->
