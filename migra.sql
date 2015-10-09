@@ -18,7 +18,7 @@ CREATE TABLE sys_medicao(
 	data_leitura DATE,
 	leitura INT(11) NOT NULL,
 	pop_flut INT(11) NOT NULL DEFAULT 0,
-	obs TEXT,
+	obs VARCHAR(255),
 	PRIMARY KEY(id),
 	FOREIGN KEY(uc) REFERENCES daee_uddc(id) ON DELETE CASCADE
 

@@ -43,7 +43,10 @@
        
             });
         
-        });    
+        });
+        
+        $('[data-toggle="tooltip"]').tooltip(); 
+        $('[data-toggle="popover"]').popover(); 
         
     });
 
@@ -67,7 +70,7 @@
 <div class="container rounded" style="padding:15px; margin-top: 27px">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-7"><h3>Período de {PERIODO} dias <small>{REFERENCIA} <i>mês de referência da nota pela empresa</i></small></h3></div>
+            <div class="col-md-7"><h3>{REFERENCIA} - Período de {PERIODO} dias <small><i>mês de referência da nota pela empresa</i></small></h3></div>
             <div class="col-md-5" align="right"><h3><a href="src/painel_uc/medicao.php?mes={MES_ANT}&ano={ANO_ANT}" class="btn btn-warning muda-periodo">&Lt;</a> <span style="text-decoration: underline">{DATA_INI} a {DATA_FIN}</span> <a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="btn btn-warning muda-periodo">&Gt;</a></h3></div>
         </div>
         <div class="row">
@@ -81,11 +84,15 @@
         </div>
         <div class="row col-md-10 col-md-offset-1" style="margin-top:25px; margin-bottom:20px">
             <div class="btn-group btn-group-justified" style="">
-                <span class="btn btn-lg bg-success" title="Meta estabelecida pela concessionária">Consumo do Período <small>{CON_PERIODO} {TIPOMEDIDA}</small></span>
-                <span class="btn btn-lg bg-info" title="Variação em todo o período">Variação do período: <small>{VAR_PERIODO} %</small></span>
+                <span class="btn btn-lg bg-danger" title="Meta estabelecida pela concessionária"><span class="badge">{MES_ANT}/{ANO_ANT}</span> Consumo Anterior<small> {CON_ANTERIOR} {TIPOMEDIDA}</small></span>
+                <span class="btn btn-lg bg-success" title="Meta estabelecida pela concessionária">Consumo Atual <small>{CON_PERIODO} {TIPOMEDIDA}</small></span>
+                <span class="btn btn-lg bg-info" title="Variação em todo o período">Variação no período: <small>{VAR_PERIODO} %</small></span>
             </div>
+        </div>
+        <div class="row col-md-10 col-md-offset-1">
+            <small><i>* As leituras são <b>SEMPRE CUMULATIVAS</b>. Caso exista uma redução no gráfico, provavelmente houve erro na leitura da conta e será necessária uma investigação.</i></small>
         </div>
     </div>
 </div> 
-
+    
 <!-- END RESULTS -->

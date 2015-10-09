@@ -11,7 +11,7 @@
     redirectByPermission(0);
     $tpl = new Template("../../html_libs/painel_uc_conteudo_container.html");    
     $tpl->addFile('CONTEUDO_1', '../../html_libs/painel_uc_medicao_1.html');
-    //$tpl->addFile('CONTEUDO_2', '../../html_libs/painel_uc_home_2.html');
+    $tpl->addFile('CONTEUDO_2', '../../html_libs/painel_uc_medicao_2.html');
     $relatorio = new Relatorio();
     $ucTipos = $relatorio->ucTipos;
     
@@ -56,6 +56,7 @@
             $med_ini      = $ret[0][1];
             $med_fin      = $ret[1][1];
             $consumo_ini  = $ret[0][2];
+            $consumo_fin  = $ret[1][2];
             $continue = true;
         }else{ 
             $continue = false;
@@ -82,37 +83,41 @@
             $tpl->MES_POS   = ($getMes == 12) ? 1 : $getMes+1;
             $tpl->ANO_POS   = ($getMes == 12 && $getAno < Date('Y')) ? $getAno+1 : $getAno;
 
+            
+            
             $sqlPontos = "SELECT m.* FROM sys_medicao m WHERE m.uc = $ucid AND m.data_leitura BETWEEN '$data_inicial' AND '$data_final' ORDER BY m.data_leitura";
             $queryPontos = mysql_query($sqlPontos);
             $pontos;
-            $chart_data = "[" . convertDateToGoogle($data_inicial) . ", " . $med_ini . ", '". getMesNome($mesAnt) . "/" . $anoAnt ."', '<b>Nota Lançada em</b> " . setDateDiaMesAno($data_inicial) . "<br />Inicial: $med_ini {TIPOMEDIDA}<br />Consumido: $consumo_ini {TIPOMEDIDA}'],";
+            $chart_data = "[" . convertDateToGoogle($data_inicial) . ", " . $med_ini . ", '". getMesNome($mesAnt) . "/" . $anoAnt ."', '<b>Leitura feita pela empresa em:</b> " . setDateDiaMesAno($data_inicial) . "<br />Inicial: $med_ini {TIPOMEDIDA}<br />Consumo do período: $consumo_ini {TIPOMEDIDA}'],";
             if(mysql_num_rows($queryPontos) > 0){
 
-                $med_ant    = 0;
+                $med_ant = $med_ini;
+                $con_periodo = 0;
                 while($linha = mysql_fetch_array($queryPontos)){
 
-                    if($med_ant == 0) $med_ini = $linha['leitura'];
-                    $variacao   = ($med_ant == 0) ?  "" : ($linha['leitura'] * 100 / $med_ant) - 100;
                     $diferenca  = $linha['leitura'] - $med_ant;
-                    $tooltip    = "<b>" . setDateDiaMesAno($linha['data_leitura']) . "</b><br />Leitura " . $linha['leitura'] . " {TIPOMEDIDA}<br />" . " Consumido ".  tratarValor($diferenca). " {TIPOMEDIDA}";
-                    $chart_data.= "[" . convertDateToGoogle($linha['data_leitura']) . ", " . $linha['leitura'] . ", '" . getPorcentagem($variacao) . "%', '$tooltip'],";
+                    $con_periodo += $diferenca;
+                    $tooltip    = "<b>" . setDateDiaMesAno($linha['data_leitura']) . "</b> Leitura " . $linha['leitura'] . " {TIPOMEDIDA}<br />" . " Consumo desde a última medição <b>" . tratarValor($diferenca). "</b> {TIPOMEDIDA}<br /><b>Obs:</b> " . $linha['obs'];
+                    $chart_data.= "[" . convertDateToGoogle($linha['data_leitura']) . ", " . $linha['leitura'] . ", '" . tratarValor($con_periodo) . " {TIPOMEDIDA}', '$tooltip'],";
                     $med_ant    = $linha['leitura'];
                     $pontos[] = $linha;
 
                 }
 
-                $tpl->CHARTDATA = substr_replace($chart_data, '', -1);
-                $tpl->CON_PERIODO = $med_ant - $med_ini;
-                $tpl->VAR_PERIODO = getPorcentagem(($med_ant * 100 / $med_ini) - 100);
+                $tpl->CHARTDATA = $chart_data . "[" . convertDateToGoogle($data_final) . ", " . $med_fin . ", '". tratarValor($med_fin - $med_ini) ."{TIPOMEDIDA}', '<b>Leitura constante na nota</b> " . setDateDiaMesAno($data_final) . "<br />Final: $med_fin {TIPOMEDIDA}<br />Consumido: ". tratarValor($med_fin - $med_ini) ." {TIPOMEDIDA}']";
+                $tpl->CON_PERIODO = $f = tratarValor($med_fin - $med_ini);
+                $tpl->VAR_PERIODO = getPorcentagem(($f * 100 / $consumo_ini) - 100);
+                //var_dump($pontos);
 
             }elseif($med_fin > 0){
                 
-                $tpl->CHARTDATA = $chart_data . "[" . convertDateToGoogle($data_final) . ", " . $med_fin . ", '$mes_ref', '<b>Nota Lançada em</b> " . setDateDiaMesAno($data_final) . "<br />Inicial: $med_fin {TIPOMEDIDA}<br />Consumido: ". tratarValor($med_fin - $med_ini) ."{TIPOMEDIDA}']";
+                $tpl->CHARTDATA = $chart_data . "[" . convertDateToGoogle($data_final) . ", " . $med_fin . ", '$mes_ref', '<b>Leitura constante na nota</b> " . setDateDiaMesAno($data_final) . "<br />Final: $med_fin {TIPOMEDIDA}<br />Consumido: ". tratarValor($med_fin - $med_ini) ."{TIPOMEDIDA}']";
                 $tpl->CON_PERIODO = $med_fin - $med_ini;
                 $tpl->VAR_PERIODO = getPorcentagem((($med_fin - $med_ini) * 100 / $consumo_ini) - 100);                
                 
             }else{
 
+                $med_fin = $med_ini;
                 $tpl->CHARTDATA = $chart_data;
                 
             }
@@ -126,8 +131,20 @@
             $uc = mysql_fetch_array($ucQuery);
             $tpl->TIPOMEDIDA = $relatorio->getTipoMedida($uc['tipo']);
             $tpl->UCNOME = $uc['rgi'] . " - " . $uc['compl'];
+            $tpl->CON_ANTERIOR= $consumo_ini;
+            
             
             $tpl->block('RESULTS');
+            
+            /*
+             * Mostrar formulário
+             */
+            if($getMes == Date('n') || $getMes == Date('n') - 1 ){
+                
+                $tpl->MED_FIN = $med_fin;
+                $tpl->block('FORM_BLOCK');
+            
+            }
 
         }else{
         
