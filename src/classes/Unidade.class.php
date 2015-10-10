@@ -44,7 +44,7 @@
 				
 				}else{
 				
-					$sql = "INSERT INTO daee_udds VALUES ('', '$nome', '$end', '$num', '$udd', $cidade, '$lat', '$long')";
+					$sql = "INSERT INTO daee_udds(id,nome,endereco,numero,unidade,cidade,latitude,longitude) VALUES ('', '$nome', '$end', '$num', '$udd', $cidade, '$lat', '$long')";
 					$query = mysql_query($sql);
 					
 				}

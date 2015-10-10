@@ -40,8 +40,8 @@
 			
 				//if(!$this->verificaDuplicidade($numero)){
 				
-					$sql = "INSERT INTO daee_notas VALUES('','$numero','$nome',$sequencia,$tipo,'$emissao',$mes_ref,$ano_ref,$consumo,$valor,$contrato,'$prov',$usuario,$uc,'$vencto','$saida','$pagto',NOW(),'$desc')";
-					$this->sql = $sql;
+					$sql = ("INSERT INTO daee_notas(id,numero,nome,sequencia,tipo,emissao,mes_ref,ano_ref,consumo,valor,contrato,provisoria,usuario,uc,vencto,saida,pagto,criado,`desc`)VALUES('','$numero','$nome',$sequencia,$tipo,'$emissao',$mes_ref,$ano_ref,$consumo,$valor,$contrato,'$prov',$usuario,$uc,'$vencto','$saida','$pagto',NOW(),'$desc')");
+                                        $this->sql = $sql;
 					$this->ultimovencto = ($numero == "Indefinido") ? $vencto : "";
 					$this->uc = $uc;
 					$this->contrato = $contrato;
