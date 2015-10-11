@@ -70,8 +70,19 @@
 <div class="container rounded" style="padding:15px; margin-top: 27px">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-7"><h3>{REFERENCIA} - Período de {PERIODO} dias <small><i>mês de referência da nota pela empresa</i></small></h3></div>
-            <div class="col-md-5" align="right"><h3><a href="src/painel_uc/medicao.php?mes={MES_ANT}&ano={ANO_ANT}" class="btn btn-warning muda-periodo">&Lt;</a> <span style="text-decoration: underline">{DATA_INI} a {DATA_FIN}</span> <a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="btn btn-warning muda-periodo">&Gt;</a></h3></div>
+            <div class="col-md-4" style="padding-top:6px">
+                <h4>RGI: <kbd>{UCNOME}</kbd></h4>
+            </div>
+            <div class="col-md-4 text-center">
+                <h1>{REFERENCIAC} </h1><small>(Total de <b>{PERIODO}</b> dias) <i>mês de referência da nota pela empresa</i></small>
+            </div>
+            <div class="col-md-4" align="right">
+                <h4>
+                    <a href="src/painel_uc/medicao.php?mes={MES_ANT}&ano={ANO_ANT}" class="btn btn-warning muda-periodo">&Lt;</a> 
+                    <span style="text-decoration: underline">{DATA_INI} a {DATA_FIN}</span> 
+                    <a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="btn btn-warning muda-periodo">&Gt;</a>
+                </h4>
+            </div>
         </div>
         <div class="row">
             <div id="chart_med" style="margin-top:15px"></div>
@@ -79,19 +90,54 @@
     </div>
     <div class="col-md-12">
         <div class="row" style="margin-top:10px;" >
-            <div class="col-md-5 col-md-offset-1"><a href="src/painel_uc/medicao.php?mes={MES_ANT}&ano={ANO_ANT}" class="btn btn-warning muda-periodo"><b>&Lt; MÊS ANTERIOR</b> <span class="badge">{MES_ANT}/{ANO_ANT}</span></a></div>
-            <div class="col-md-5" align="right"><a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="btn btn-warning muda-periodo"> <b>MÊS POSTERIOR <span class="badge">{MES_POS}/{ANO_POS}</span> &Gt;</b></a></div>
+            <div class="col-md-5 col-md-offset-1">
+                <a href="src/painel_uc/medicao.php?mes={MES_ANT}&ano={ANO_ANT}" class="btn btn-warning muda-periodo">
+                    <b>&Lt; MÊS ANTERIOR</b> <span class="badge">{MES_ANTERIOR}/{ANO_ANT}</span>                
+                </a>
+            </div>
+            <div class="col-md-5" align="right">
+                <a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="btn btn-warning muda-periodo" id="posterior"> 
+                    <b>MÊS POSTERIOR <span class="badge">{MES_POSTERIOR}/{ANO_POS}</span> &Gt;</b>
+                </a>
+            </div>
         </div>
         <div class="row col-md-10 col-md-offset-1" style="margin-top:25px; margin-bottom:20px">
             <div class="btn-group btn-group-justified" style="">
-                <span class="btn btn-lg bg-danger" title="Meta estabelecida pela concessionária"><span class="badge">{MES_ANT}/{ANO_ANT}</span> Consumo Anterior<small> {CON_ANTERIOR} {TIPOMEDIDA}</small></span>
-                <span class="btn btn-lg bg-success" title="Meta estabelecida pela concessionária">Consumo Atual <small>{CON_PERIODO} {TIPOMEDIDA}</small></span>
-                <span class="btn btn-lg bg-info" title="Variação em todo o período">Variação no período: <small>{VAR_PERIODO} %</small></span>
+                <span class="btn btn-lg bg-danger" title="Meta estabelecida pela concessionária"> Consumo <code>{MES_ANTERIOR}/{ANO_ANT}</code> : <small> {CON_ANTERIOR} {TIPOMEDIDA}</small></span>
+                <span class="btn btn-lg bg-success" title="Meta estabelecida pela concessionária">Consumo <code>{REFERENCIA}</code> : <small>{CON_PERIODO} {TIPOMEDIDA}</small></span>
+                <span class="btn btn-lg bg-info" title="Variação em todo o período">Variação: <small>{VAR_PERIODO} %</small></span>
             </div>
         </div>
         <div class="row col-md-10 col-md-offset-1">
+            <blockquote>
             <small><i>* As leituras são <b>SEMPRE CUMULATIVAS</b>. Caso exista uma redução no gráfico, provavelmente houve erro na leitura da conta e será necessária uma investigação.</i></small>
+            </blockquote>
         </div>
+        
+    </div>
+    <div class="col-md-12">
+        <div class="well">
+            <h4><span class=""></span>Informações da Nota : <b>{REFERENCIA}</b></h4>
+            {TESTE}
+            <!-- BEGIN NOTA_BLOCK -->
+            <blockquote>
+                <ul class="list-group">
+
+                    <li class="list-group-item">Data de Lançamento: {NDATA_LANCTO}</li>
+                    <li class="list-group-item">Data da Leitura: {NDATA_LEITURA}</li>
+                    <li class="list-group-item">Leitura: {NLEITURA}</li>
+                    <li class="list-group-item">Consumo Faturado: {NLEITURA}</li>
+                    <li class="list-group-item">Valor Faturado: {NVALOR}</li>
+
+                </ul>
+            </blockquote>
+            <!-- END NOTA_BLOCK -->
+            <!-- BEGIN SNOTA_BLOCK -->
+            <div class="alert alert-warning">A nota ainda não foi lançada no sistema</div>
+            <!-- END SNOTA_BLOCK -->
+            sdf
+        </div>
+
     </div>
 </div> 
     
