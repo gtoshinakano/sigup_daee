@@ -97,22 +97,27 @@
 
                 $med_ant = $med_ini;
                 $con_periodo = 0;
+                /*
+                 * Mostrar pontos no Gráfico
+                 */
                 while($linha = mysql_fetch_array($queryPontos)){
 
                     $diferenca  = $linha['leitura'] - $med_ant;
                     $con_periodo += $diferenca;
-                    $tooltip    = "<b>" . setDateDiaMesAno($linha['data_leitura']) . "</b> Leitura <b>" . $linha['leitura'] . " {TIPOMEDIDA}</b><br />" . " Consumo desde a última medição <b>" . tratarValor($diferenca). " {TIPOMEDIDA}</b><br /><b>". $linha['user'] .":</b> " . $linha['obs'];
-                    $chart_data.= "[" . convertDateToGoogle($linha['data_leitura']) . ", " . $linha['leitura'] . ", '" . tratarValor($con_periodo) . " {TIPOMEDIDA}', '$tooltip'],";
+                    $litros     = $diferenca * 1000;
+                    //$mediaLitros= ; FAZER
+                    $tooltip    = "<b>" . setDateDiaMesAno($linha['data_leitura']) . "</b> Leitura <b>" . $linha['leitura'] . " {TIPOMEDIDA}</b><br />" . " Consumo desde a última medição<br /><b>" . $diferenca. "{TIPOMEDIDA} = " . $litros . " Litros ()</b><br /><b>". $linha['user'] .":</b> " . $linha['obs'];
+                    $chart_data.= "[" . convertDateToGoogle($linha['data_leitura']) . ", " . $linha['leitura'] . ", '" . $con_periodo . " {TIPOMEDIDA}', '$tooltip'],";
                     $med_ant    = $linha['leitura'];
+                    $med_fin    = ($linha['leitura'] > $med_fin) ? $linha['leitura'] : $med_fin;
                     $pontos[] = $linha;
-                    $data_fin_loop = $linha['data_leitura'];
 
                 }
-
                 $tpl->CHARTDATA = substr($chart_data, 0, -1) ;//Sem vírgula no final
                 $tpl->CHARTDATA.= ($consumo_fin > 0) ? ",[" . convertDateToGoogle($data_final) . ", " . $med_fin . ", '". tratarValor($med_fin - $med_ini) ."{TIPOMEDIDA}', '<b>$mes_ref</b><br />Leitura constante na nota " . setDateDiaMesAno($data_final) . "<br />Final: $med_fin {TIPOMEDIDA}<br />Consumido: ". tratarValor($med_fin - $med_ini) ." {TIPOMEDIDA} ']" : "";
-                $tpl->CON_PERIODO = tratarValor($med_fin - $med_ini);
+                                
                 $diff = $med_fin - $med_ini;
+                $tpl->CON_PERIODO = $diff;
                 $tpl->VAR_PERIODO = getPorcentagem(($diff * 100 / $consumo_ini) - 100);
                 //var_dump($pontos);
 
@@ -138,14 +143,29 @@
             $tpl->TIPOMEDIDA = $relatorio->getTipoMedida($uc['tipo']);
             $tpl->UCNOME = $uc['rgi'] . " - " . $uc['compl'];
             $tpl->CON_ANTERIOR= $consumo_ini;
+            $meta = $uc['meta'];
+            $tpl->META = $meta;
             
             /*
              * Buscando nota
              */
-            //$nota_sql = "SELECT "
-            $tpl->TESTE = $nota_id;
+            //$tpl->TESTE = $nota_id;
             $notaSql = "SELECT n.*, c.* FROM daee_uddc c, daee_notas n WHERE n.uc = c.id AND n.id = " .$nota_id;
-            $tpl->block('NOTA_BLOCK');
+            $notaQuery= mysql_query($notaSql);
+            if(mysql_num_rows($notaQuery) == 1){
+                
+                $nota = mysql_fetch_array($notaQuery);
+                $tpl->NDATA_LANCTO  = ExplodeDateTime($nota['criado']) . " <abbr>($nota_id)</abbr>";
+                $tpl->NDATA_LEITURA = setDateDiaMesAno($nota['data_medicao']);
+                $tpl->NLEITURA      = $nota['medicao'];
+                $tpl->NCONSUMO      = $nota['consumo'];
+                $tpl->NVALOR        = tratarValor($nota['valor'],true);
+                
+                $tpl->block('NOTA_BLOCK');
+                
+            }else
+                $tpl->block('SNOTA_BLOCK');
+            
             
             $tpl->block('RESULTS');
             

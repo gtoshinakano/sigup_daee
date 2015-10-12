@@ -16,7 +16,8 @@
         data.addRows([{CHARTDATA}]);
         var options = {
             title: 'Medições do Hidrômetro',
-            hAxis: {title: 'Dias', titleTextStyle: {color: '#47A3DA'}, baselineColor: 'blue', format:'d MMM y', minValue: new Date({DATA_INIC})},
+            legend: { position: "none" },
+            hAxis: {title: 'Dias do período', titleTextStyle: {color: '#47A3DA'}, baselineColor: 'blue', format:'d MMM y', minValue: new Date({DATA_INIC})},
             vAxis: {titleTextStyle: {color: '#47A3DA'}}, pointSize: 5,
             curveType: 'function',
             tooltip: {isHtml: true},
@@ -27,8 +28,29 @@
         var chart = new google.visualization.LineChart(document.getElementById('chart_med'));
         chart.draw(data, options);
     }
-    
-            
+    /*
+     * Gráfico de META
+     * 
+     */
+     function drawChart2() {
+        
+         var data = google.visualization.arrayToDataTable([
+                             ['x', '{TIPOMEDIDA}', { role: 'style' }, { role: 'annotation' }],
+                             ['{REFERENCIA}', {CON_PERIODO}, '#47A3DA', '{REFERENCIA}\n {CON_PERIODO} {TIPOMEDIDA}'], // RGB value
+                             ['META', {META}, '#DB261D', 'META {META} {TIPOMEDIDA}'], // English color name
+                     ]);
+        var options = {
+            hAxis: { titleTextStyle: {color: '#47A3DA'}, baselineColor: 'blue', format:'d MMM y', minValue: new Date({DATA_INIC})},
+            vAxis: {titleTextStyle: {color: '#47A3DA'}}, pointSize: 5,
+            //tooltip: {isHtml: true},
+            legend: { position: "none" }
+            //colors: ['MediumSeaGreen','#D9EDF7','#DB261D','DarkGreen','#DB261D','Lime','Chartreuse','GreenYellow','YellowGreen','OliveDrab','DarkOliveGreen','Olive','','','',''] //ORIGINAL
+            //colors: ['GreenYellow','#DB261D','Chartreuse','GreenYellow','YellowGreen','OliveDrab','DarkOliveGreen','Olive','','','',''] 
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_meta'));
+        chart.draw(data, options);
+    }           
     
     
     $(document).ready(function(){
@@ -40,6 +62,7 @@
             var href = $(this).attr('href');
             $('#conteudo').load(href, function(){
                 drawChart();
+                drawChart2();
        
             });
         
@@ -90,12 +113,13 @@
     </div>
     <div class="col-md-12">
         <div class="row" style="margin-top:10px;" >
-            <div class="col-md-5 col-md-offset-1">
+            <div class="col-md-3 col-md-offset-1">
                 <a href="src/painel_uc/medicao.php?mes={MES_ANT}&ano={ANO_ANT}" class="btn btn-warning muda-periodo">
                     <b>&Lt; MÊS ANTERIOR</b> <span class="badge">{MES_ANTERIOR}/{ANO_ANT}</span>                
                 </a>
             </div>
-            <div class="col-md-5" align="right">
+            <div class="col-md-4" id="chart_meta" style="height: 200px"></div>
+            <div class="col-md-3 col-md-1" align="right">
                 <a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="btn btn-warning muda-periodo" id="posterior"> 
                     <b>MÊS POSTERIOR <span class="badge">{MES_POSTERIOR}/{ANO_POS}</span> &Gt;</b>
                 </a>
@@ -103,8 +127,8 @@
         </div>
         <div class="row col-md-10 col-md-offset-1" style="margin-top:25px; margin-bottom:20px">
             <div class="btn-group btn-group-justified" style="">
-                <span class="btn btn-lg bg-danger" title="Meta estabelecida pela concessionária"> Consumo <code>{MES_ANTERIOR}/{ANO_ANT}</code> : <small> {CON_ANTERIOR} {TIPOMEDIDA}</small></span>
-                <span class="btn btn-lg bg-success" title="Meta estabelecida pela concessionária">Consumo <code>{REFERENCIA}</code> : <small>{CON_PERIODO} {TIPOMEDIDA}</small></span>
+                <span class="btn btn-lg bg-danger" > Consumo <code>{MES_ANTERIOR}/{ANO_ANT}</code> : <small> {CON_ANTERIOR} {TIPOMEDIDA}</small></span>
+                <span class="btn btn-lg bg-success">Consumo <code>{REFERENCIA}</code> : <small>{CON_PERIODO} {TIPOMEDIDA}</small></span>
                 <span class="btn btn-lg bg-info" title="Variação em todo o período">Variação: <small>{VAR_PERIODO} %</small></span>
             </div>
         </div>
@@ -121,21 +145,23 @@
             {TESTE}
             <!-- BEGIN NOTA_BLOCK -->
             <blockquote>
+                <div class="row">
+
                 <ul class="list-group">
 
-                    <li class="list-group-item">Data de Lançamento: {NDATA_LANCTO}</li>
-                    <li class="list-group-item">Data da Leitura: {NDATA_LEITURA}</li>
-                    <li class="list-group-item">Leitura: {NLEITURA}</li>
-                    <li class="list-group-item">Consumo Faturado: {NLEITURA}</li>
-                    <li class="list-group-item">Valor Faturado: {NVALOR}</li>
+                    <li class="list-group-item"><samp><strong>Data de Lançamento:</strong> {NDATA_LANCTO}</samp></li>
+                    <li class="list-group-item list-group-item-success"><samp><strong>Data da Leitura:</strong> {NDATA_LEITURA}</samp></li>
+                    <li class="list-group-item list-group-item-danger"><samp><strong>Leitura: {NLEITURA} {TIPOMEDIDA}</strong></samp></li>
+                    <li class="list-group-item list-group-item-info"><samp><strong>Consumo Faturado: {NCONSUMO} {TIPOMEDIDA}</strong></samp></li>
+                    <li class="list-group-item list-group-item-info"><samp><strong>Valor Faturado:</strong> R$ {NVALOR}</samp></li>
 
                 </ul>
+                </div>
             </blockquote>
             <!-- END NOTA_BLOCK -->
             <!-- BEGIN SNOTA_BLOCK -->
             <div class="alert alert-warning">A nota ainda não foi lançada no sistema</div>
             <!-- END SNOTA_BLOCK -->
-            sdf
         </div>
 
     </div>
