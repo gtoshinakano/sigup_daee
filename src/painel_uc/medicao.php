@@ -20,7 +20,13 @@
     if(isset($_SESSION['uc'])){
         
         $ucid = (int) $_SESSION['uc'];
-        
+        /*
+         * Buscando dados da Consumidora no BD
+         */
+        $ucSql = "SELECT * FROM daee_uddc WHERE id = $ucid";
+        $ucQuery = mysql_query($ucSql);
+        $uc = mysql_fetch_array($ucQuery);
+
         /*
         * Pegando Datas do banco e Calculando quantidade de dias 
         * Caso não haja conta com data de medição, não mostrar nada
@@ -109,6 +115,7 @@
                 $med_ant = $med_ini;
                 $con_periodo = 0;
                 $data_ant    = strtotime($data_inicial);
+                $i = 0;
                 /*
                  * Mostrar pontos no Gráfico
                  */
@@ -124,7 +131,7 @@
                     $med_Litro_dia= round($litros / $diff_dias * 100) / 100;
                     $data_ant   = strtotime($linha['data_leitura']);
                     
-                    $tooltip    = "<b>" . setDateDiaMesAno($linha['data_leitura']) . "</b> Leitura <b>" . $linha['leitura'] . " {TIPOMEDIDA}</b><br />" . " Consumo desde a última medição<br /><b>" . $diferenca. "{TIPOMEDIDA} = " . $litros . " L ( $med_Litro_dia L/dia )</b><br /><b>". $linha['user'] .":</b> " . $linha['obs'];
+                    $tooltip    = "<b>" . setDateDiaMesAno($linha['data_leitura']) . "</b> Leitura <b>" . $linha['leitura'] . " {TIPOMEDIDA}</b><br />" . " Consumo desde a última medição<br />$diff_dias dias.<br /><b>" . $diferenca. "{TIPOMEDIDA} = " . $litros . " L ( $med_Litro_dia L/dia )</b><br /><b>". $linha['user'] .":</b> " . $linha['obs'];
                     $chart_data.= "[" . convertDateToGoogle($linha['data_leitura']) . ", " . $linha['leitura'] . ", '" . $con_periodo . " {TIPOMEDIDA}', '$tooltip'],";
                     $med_ant    = $linha['leitura'];
                     $med_fin    = ($linha['leitura'] > $med_fin) ? $linha['leitura'] : $med_fin;
@@ -132,11 +139,15 @@
                     /* 
                      * Mostrar Medições a Tabela
                      */
-                    $tpl->TR_DATA       = setDateDiaMesAno($linha['data_leitura']);
+                    $tpl->TR_INDEX      = $i;
+                    $tpl->TR_DATA       = ExplodeDateTime($linha['criado_em']);
                     $tpl->TR_MEDICAO    = $linha['leitura'];
-                    $tpl->TR_CONSUMO    = $litros;
-                    $tpl->TR_DIAS_UT    = "--";
-                    $tpl->TR_POP_FLU    = "--";
+                    $tpl->TR_CONSUMO    = tratarValor($litros);
+                    $tpl->TR_DIAS_UT    = $diff_dias;
+                    $tpl->TR_POP_FLU    = $linha['pop_flut'];
+                    $tpl->TR_MED_DIA    = $med_Litro_dia;
+                    $tpl->TR_MED_PES    = $med_Litro_dia / $uc['pop_fixa'];
+                    $i++;
                     $tpl->block('TABLEROW_INPUT');                    
 
                 }
@@ -162,17 +173,15 @@
             }
 
             /*
-             * Buscando dados da Consumidora no BD
+             * Dados UC
              */
-            $ucSql = "SELECT * FROM daee_uddc WHERE id = $ucid";
-            $ucQuery = mysql_query($ucSql);
-            $uc = mysql_fetch_array($ucQuery);
             $tpl->TIPOMEDIDA = $relatorio->getTipoMedida($uc['tipo']);
             $tpl->UCNOME = $uc['rgi'] . " - " . $uc['compl'];
             $tpl->CON_ANTERIOR= $consumo_ini;
             $meta = $uc['meta'];
             $tpl->META = $meta;
             $tpl->DATA_HOJE = date('d/m/Y');
+            $tpl->POP_FIXA = $uc['pop_fixa'];
             
             $tpl->block('HISTORICO_MED');
             /*

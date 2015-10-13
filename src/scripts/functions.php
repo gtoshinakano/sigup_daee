@@ -7,7 +7,7 @@ function ExplodeDateTime($dateTime, $br = false) {
         $hora = $sep[1];
         $sepDia = explode("-", $dia);
         $sepHora = explode(":", $hora);
-        $separador = ($br) ? "<br />" : "às";
+        $separador = ($br) ? "<br />" : "-";
         $explodeDateTime = "$sepDia[2]/$sepDia[1]/$sepDia[0] " . $separador . " $sepHora[0]:$sepHora[1]";
         return $explodeDateTime;
     } else
