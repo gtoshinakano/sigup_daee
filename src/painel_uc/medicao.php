@@ -92,7 +92,17 @@
             
             $sqlPontos = "SELECT m.* FROM sys_medicao m WHERE m.uc = $ucid AND m.data_leitura BETWEEN '$data_inicial' AND '$data_final' ORDER BY m.data_leitura";
             $queryPontos = mysql_query($sqlPontos);
-            $pontos;
+            /*
+             * Mostrar TABLEROW_FIXO e Primeiro ponto do gráfico
+             */
+            $tpl->TR_CLASS      = 'warning';
+            $tpl->TR_MES_REF    = getMesNome($mesAnt) . "/" . $anoAnt;
+            $tpl->TR_DATA       = setDateDiaMesAno($data_inicial);
+            $tpl->TR_MEDICAO    = $med_ini;
+            $tpl->TR_CONSUMO    = "--";
+            $tpl->TR_DIAS_UT    = "--";
+            $tpl->TR_POP_FLU    = "--";
+            $tpl->block('TABLEROW_FIXO');
             $chart_data = "[" . convertDateToGoogle($data_inicial) . ", " . $med_ini . ", '". getMesNome($mesAnt) . "/" . $anoAnt ."', '<b>Leitura feita pela empresa em:</b> " . setDateDiaMesAno($data_inicial) . "<br />Inicial: <b>$med_ini {TIPOMEDIDA}</b><br />Consumo do período: $consumo_ini {TIPOMEDIDA}'],";
             if(mysql_num_rows($queryPontos) > 0){
 
@@ -118,9 +128,16 @@
                     $chart_data.= "[" . convertDateToGoogle($linha['data_leitura']) . ", " . $linha['leitura'] . ", '" . $con_periodo . " {TIPOMEDIDA}', '$tooltip'],";
                     $med_ant    = $linha['leitura'];
                     $med_fin    = ($linha['leitura'] > $med_fin) ? $linha['leitura'] : $med_fin;
+                    
                     /* 
-                     * Mostrar Medições
+                     * Mostrar Medições a Tabela
                      */
+                    $tpl->TR_DATA       = setDateDiaMesAno($linha['data_leitura']);
+                    $tpl->TR_MEDICAO    = $linha['leitura'];
+                    $tpl->TR_CONSUMO    = $litros;
+                    $tpl->TR_DIAS_UT    = "--";
+                    $tpl->TR_POP_FLU    = "--";
+                    $tpl->block('TABLEROW_INPUT');                    
 
                 }
                 $tpl->CHARTDATA = substr($chart_data, 0, -1) ;//Sem vírgula no final
@@ -183,7 +200,7 @@
             /*
              * Mostrar formulário
              */
-            if($getMes == Date('n') || $getMes == Date('n') - 1 ){
+            if($getMes == Date('n') || $getMes == Date('n') - 1 && $quantDias > 31  ){
                 
                 $tpl->MED_FIN = $med_fin;
                 $tpl->block('FORM_BLOCK');
