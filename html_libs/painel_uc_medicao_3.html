@@ -1,0 +1,29 @@
+<!-- BEGIN HISTORICO_MED -->
+<div class="row bg-success">
+    <div class="container">
+        <div class="row" style="margin-top:32px">
+            <div class="col-md-3" style="margin-top: 2px">
+                <a href="src/painel_uc/medicao.php?mes={MES_ANT}&ano={ANO_ANT}" class="btn btn-warning muda-periodo">
+                    <b>&Lt; MÊS ANTERIOR</b> <span class="badge">{MES_ANTERIOR}/{ANO_ANT}</span>                
+                </a>
+            </div>
+            <div class="col-md-6 text-center">
+                <h1 style="margin-top: 0">{REFERENCIAC}</h1>
+            </div>
+            <div class="col-md-3" align="right"  style="margin-top: 2px">
+                <a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="btn btn-warning muda-periodo" id="posterior"> 
+                    <b>MÊS POSTERIOR <span class="badge">{MES_POSTERIOR}/{ANO_POS}</span> &Gt;</b>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 page-header">
+                <p><kbd>{UCNOME}</kbd> (Seu histórico de medições em <b>{PERIODO} dias</b>)</p>
+            </div>
+        </div>
+        <div class="row">
+            
+        </div>
+    </div>
+</div>
+<!-- END HISTORICO_MED -->

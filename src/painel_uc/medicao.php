@@ -12,6 +12,7 @@
     $tpl = new Template("../../html_libs/painel_uc_conteudo_container.html");    
     $tpl->addFile('CONTEUDO_1', '../../html_libs/painel_uc_medicao_1.html');
     $tpl->addFile('CONTEUDO_2', '../../html_libs/painel_uc_medicao_2.html');
+    $tpl->addFile('CONTEUDO_3', '../../html_libs/painel_uc_medicao_3.html');
     $relatorio = new Relatorio();
     $ucTipos = $relatorio->ucTipos;
     
@@ -156,6 +157,7 @@
             $tpl->META = $meta;
             $tpl->DATA_HOJE = date('d/m/Y');
             
+            $tpl->block('HISTORICO_MED');
             /*
              * Buscando nota
              */
