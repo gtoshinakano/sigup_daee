@@ -115,7 +115,7 @@
                 $med_ant = $med_ini;
                 $con_periodo = 0;
                 $data_ant    = strtotime($data_inicial);
-                $i = 0;
+                $i = 1;
                 /*
                  * Mostrar pontos no Gráfico
                  */
@@ -128,7 +128,7 @@
                      * Calcular média de litros por dia
                      */
                     $diff_dias  = (int)floor( (strtotime($linha['data_leitura']) - $data_ant) / (60 * 60 * 24)); // Dias decorridos entre pontos
-                    $med_Litro_dia= round($litros / $diff_dias * 100) / 100;
+                    $med_Litro_dia= ($diff_dias > 0) ? round($litros / $diff_dias * 100) / 100 : round($litros / 1 * 100) / 100;
                     $data_ant   = strtotime($linha['data_leitura']);
                     
                     $tooltip    = "<b>" . setDateDiaMesAno($linha['data_leitura']) . "</b> Leitura <b>" . $linha['leitura'] . " {TIPOMEDIDA}</b><br />" . " Consumo desde a última medição<br />$diff_dias dias.<br /><b>" . $diferenca. "{TIPOMEDIDA} = " . $litros . " L ( $med_Litro_dia L/dia )</b><br /><b>". $linha['user'] .":</b> " . $linha['obs'];
@@ -143,10 +143,11 @@
                     $tpl->TR_DATA       = ExplodeDateTime($linha['criado_em']);
                     $tpl->TR_MEDICAO    = $linha['leitura'];
                     $tpl->TR_CONSUMO    = tratarValor($litros);
+                    $tpl->TR_CONSUMO_T  = $litros;
                     $tpl->TR_DIAS_UT    = $diff_dias;
                     $tpl->TR_POP_FLU    = $linha['pop_flut'];
                     $tpl->TR_MED_DIA    = $med_Litro_dia;
-                    $tpl->TR_MED_PES    = $med_Litro_dia / $uc['pop_fixa'];
+                    $tpl->TR_MED_PES    = round($med_Litro_dia / ($uc['pop_fixa'] + $linha['pop_flut']) * 100) / 100;
                     $i++;
                     $tpl->block('TABLEROW_INPUT');                    
 
@@ -157,13 +158,40 @@
                 $diff = $med_fin - $med_ini;
                 $tpl->CON_PERIODO = round($diff * 100) / 100;
                 $tpl->VAR_PERIODO = getPorcentagem(($diff * 100 / $consumo_ini) - 100);
-                //var_dump($pontos);
-
+                /* 
+                 * Mostrar Ultima nota na Tabela
+                 */
+                if($consumo_fin > 0){
+                    
+                    $tpl->TR_INDEX      = $i;
+                    $tpl->TR_DATA       = setDateDiaMesAno($data_final) . " " . $mes_ref;
+                    $tpl->TR_MEDICAO    = $med_fin;
+                    $tpl->TR_CONSUMO    = tratarValor(($med_fin - $med_ant) * 1000);
+                    $tpl->TR_CONSUMO_T  = ($med_fin - $med_ant) * 1000;
+                    $tpl->TR_DIAS_UT    = $d = (int)floor( (strtotime($data_final) - $data_ant) / (60 * 60 * 24));
+                    $tpl->TR_POP_FLU    = 0;
+                    $tpl->TR_MED_DIA    = $m = round(($med_fin - $med_ant) * 1000 / $d * 100) / 100;
+                    $tpl->TR_MED_PES    = round($m / $uc['pop_fixa'] * 100) / 100;
+                    $i++;
+                    $tpl->block('TABLEROW_INPUT');
+                    
+                }
+                
             }elseif($med_fin > 0){
                 
                 $tpl->CHARTDATA = $chart_data . "[" . convertDateToGoogle($data_final) . ", " . $med_fin . ", '$mes_ref', '<b>$mes_ref</b><br />Leitura constante na nota " . setDateDiaMesAno($data_final) . "<br />Final: <b>$med_fin {TIPOMEDIDA}</b><br />Consumido: <b>". tratarValor($med_fin - $med_ini) ."</b>{TIPOMEDIDA}']";
                 $tpl->CON_PERIODO = $med_fin - $med_ini;
-                $tpl->VAR_PERIODO = getPorcentagem((($med_fin - $med_ini) * 100 / $consumo_ini) - 100);                
+                $tpl->VAR_PERIODO = getPorcentagem((($med_fin - $med_ini) * 100 / $consumo_ini) - 100); 
+                $tpl->TR_INDEX      = 1;
+                $tpl->TR_DATA       = setDateDiaMesAno($data_final) . " " . $mes_ref;
+                $tpl->TR_MEDICAO    = $med_fin;
+                $tpl->TR_CONSUMO    = tratarValor(($med_fin - $med_ini) * 1000);
+                $tpl->TR_CONSUMO_T  = ($med_fin - $med_ini) * 1000;
+                $tpl->TR_DIAS_UT    = $d = (int)floor( (strtotime($data_final) - strtotime($data_inicial)) / (60 * 60 * 24));
+                $tpl->TR_POP_FLU    = 0;
+                $tpl->TR_MED_DIA    = $m = round(($med_fin - $med_ini) * 1000 / $d * 100) / 100;
+                $tpl->TR_MED_PES    = round($m / $uc['pop_fixa'] * 100) / 100;
+                $tpl->block('TABLEROW_INPUT');                
                 
             }else{
 

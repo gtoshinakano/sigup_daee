@@ -23,54 +23,86 @@
         </div>
         <div class="row">
             <div class="col-md-9">
+                <input type="hidden" id="fixa" value="{POP_FIXA}"/>
                 <table class="table table-striped">
                     <thead>
                         <tr class="bg-info">
                             <th>Data de Medição</th>
                             <th>Medição</th>
-                            <th>Consumo<br />no Período</th>
-                            <th>Dias Úteis</th>
-                            <th>População <br />Flutuante</th>
-                            <th>Média<br />L/Dia</th>
-                            <th>Média<br />L/Pessoa/Dia</th>
+                            <th class="text-center">Consumo<br />no Período <br /><span class="label label-info">A</span></th>
+                            <th class="text-center">Dias Úteis <br /><span class="label label-info">B</span></th>
+                            <th class="text-center">População <br />Flutuante<br /><span class="label label-info">C</span></th>
+                            <th class="text-center">Média<br />L/Dia<br /><span class="label label-success">D</span></th> 
+                            <th class="text-center">Média<br />L/Pessoa/Dia<br /><span class="label label-success">E</span></th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- BEGIN TABLEROW_FIXO -->
                         <tr class="{TR_CLASS}">
-                            <td><b><kbd>{TR_MES_REF}</kbd> - {TR_DATA}</b></td>
+                            <td><kbd>{TR_MES_REF}</kbd> - <b>{TR_DATA}</b></td>
                             <td class="text-center"><b>{TR_MEDICAO} {TIPOMEDIDA}</b></td>
                             <td class="text-center">{TR_CONSUMO}</td>
                             <td class="text-center" width="10%">{TR_DIAS_UT}</td>
                             <td class="text-center" width="10%">{TR_POP_FLU}</td>
-                            <td class="text-center"><code>L/Dia</code></td>
-                            <td class="text-center"><code>L/Pessoa/Dia</code</td>
+                            <td class="text-center" width="10%"><code>L/Dia</code></td>
+                            <td class="text-center" width="10%"><code>L/Pessoa/Dia</code</td>
                         </tr>
                         <!-- END TABLEROW_FIXO -->
                         <!-- BEGIN TABLEROW_INPUT -->
                         <tr>
                             <td><kbd>{TR_INDEX}</kbd> - {TR_DATA}</td>
                             <td class="text-center"><b>{TR_MEDICAO} {TIPOMEDIDA}</b></td>
-                            <td class="text-center">{TR_CONSUMO} L</td>
+                            <td class="text-center">{TR_CONSUMO} L<input type="hidden" name='{TR_INDEX}' value="{TR_CONSUMO_T}" ></td>
                             <td class="text-center">
-                                <input type="number" min="0" max="{TR_DIAS_UT}" value="{TR_DIAS_UT}" class="form-control input-sm" id="TR-D{TR_INDEX}" />
+                                <input type="number" min="1" max="{TR_DIAS_UT}" value="{TR_DIAS_UT}" class="form-control input-sm dias-ut" title="{TR_INDEX}" />
                             </td>
                             <td class="text-center">
-                                <input type="number" min="0" value="{TR_POP_FLU}" class="form-control input-sm" id="TR-F{TR_INDEX}"  />
+                                <input type="number" min="0" value="{TR_POP_FLU}" class="form-control input-sm pop-flu" title='{TR_INDEX}' />
                             </td>
                             <td class="text-center">
-                                <code>{TR_MED_DIA}</code>
+                                <code id="TR-D{TR_INDEX}">{TR_MED_DIA}</code>
                             </td>
                             <td class="text-center">
-                                <code>{TR_MED_PES}</code>
+                                <code id="TR-P{TR_INDEX}">{TR_MED_PES}</code>
                             </td>
                         </tr>
-                        <!-- END TABLEROW_INPUT -->                        
+                        <!-- END TABLEROW_INPUT -->
                     </tbody>
+                    <tfoot>
+                        
+                    </tfoot>
                 </table>
             </div>
-            <div class="col-md-3 rounded">
-                <h5>FÓRMULA UTILIZADA</h5>
+            <div class="col-md-3 rounded" style="padding-top: 10px; padding-bottom: 10px">
+                <b><span class="label label-success">D</span> - Média de Litros por Dia</b>
+                <div style="margin-left:30px">
+                    <div style="padding-bottom: 3px; border-bottom:1px solid #333; width: 20px; float: left">
+                        <span class="label label-info">A</span>
+                    </div>
+                    <div style="padding-bottom: 3px; float: left">
+                        &nbsp;<code>L/Dia</code>
+                    </div>
+                </div>
+                <div style="margin-bottom: 5px; margin-left:30px; clear:left">
+                    <span class="label label-info">B</span>
+                </div>
+                <b><span class="label label-success">E</span> - Média de Litros por Pessoa/Dia </b>
+                <div style="margin-left:30px">
+                    <div style="padding-bottom: 3px; border-bottom:1px solid #333; width: 55px; float: left" class="text-center">
+                        <span class="label label-success">D</span>
+                    </div>
+                    <div style="padding-bottom: 3px; float: left">
+                        &nbsp;<code>L/Pessoa/Dia</code>
+                    </div>
+                </div>
+                <div style="margin-bottom: 5px; margin-left:30px; clear:left">
+                    <span class="label label-warning">F</span> + <span class="label label-info">C</span>
+                </div>
+                <b><span class="label label-warning">F</span> - População Fixa</b>
+                <div style="margin-bottom: 5px; margin-left:30px; clear:left">
+                    <code><b>{POP_FIXA}</b> pessoas</code> <small>- Altere em Configurações</small>
+                </div>
+                
             </div>
         </div>
     </div>
