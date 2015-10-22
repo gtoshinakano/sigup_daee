@@ -237,6 +237,7 @@
             $tpl->POP_FIXA = $uc['pop_fixa'];
             
             $tpl->block('HISTORICO_MED');
+            $tpl->block('COMPARACAO_BLOCK');
             /*
              * Buscando nota
              */

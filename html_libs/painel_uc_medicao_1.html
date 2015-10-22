@@ -52,6 +52,46 @@
         chart.draw(data, options);
     }           
     
+     /*
+     * Gráfico de Comparação
+     * 
+     */
+    function drawComparacao(consumo){
+        
+        var data = google.visualization.arrayToDataTable([
+                ['Descricao', '', { role: 'style' }, { role: 'annotation' } ],
+                ['Sua média', consumo, '#00B2EC', '{REFERENCIA} - RGI {UCNOME} : '+ consumo + 'L '],
+                ['{A}', 0, '#fff', '' ],
+                ['NTS 181', 50, '#ABC7F0', 'Edifícios públicos, comerciais, escritórios (1) : 50L ( 8h )' ],
+                ['ONU', 110, '#0086CD', 'Organizações das Nações Unidas : 110L ( 24h )' ],
+                ['NTS 181', 120, '#00A853', 'Casas populares ou rurais (2) : 120L ( 24h )' ],
+                ['NTS 181', 150, 'gold', 'Residências (2) : 150L ( 24h )' ],
+                ['NTS 181', 200, 'orange', 'Apartamentos (2) : 200L ( 24h )' ],
+                ['NTS 181', 300, '#E62117', 'Residências de luxo (3) : 300L ( 24h )' ]
+                
+        ]);
+        var options = {
+                title: "",
+                width: "70%",
+                height: 400,
+                bar: {groupWidth: "97%"},
+                legend: { position: "none" },
+                hAxis: {gridlines : {count : 10}},
+                annotations: {
+                    //highContrast: false,
+                    alwaysOutside: false,
+                    textStyle: {
+                        fontSize: 15,
+                        color: '#666',
+                        
+
+                    }
+                }
+            };
+        var chart = new google.visualization.BarChart(document.getElementById('compara_chart'));
+        chart.draw(data, options);
+        
+    }
     
     $(document).ready(function(){
         
@@ -63,7 +103,6 @@
             $('#conteudo').load(href, function(){
                 drawChart();
                 drawChart2();
-       
             });
         
         });
@@ -106,7 +145,7 @@
             var med_pes = med_dia/(fixa + flut);
             $('#TR-D'+ index).html(Math.round(med_dia * 100) / 100);
             $('#TR-P'+ index).html(Math.round(med_pes * 100) / 100);
-            atualizaTotal();
+           atualizaTotal();
             
         });
         
@@ -139,6 +178,9 @@
             var med_pes = med_dia / (fixa + flut);
             $('#med-l-dia').text(Math.round(med_dia * 100) / 100);
             $('#med-p-dia').text(Math.round(med_pes * 100) / 100);
+            
+            //drawComparacao(Math.round(med_pes * 100) / 100);
+            drawComparacao(Math.round(med_pes * 100) / 100);
             
         }
         
@@ -177,8 +219,11 @@
 
     <!-- BEGIN NORESULTS -->
     <div class="alert alert-danger">
-        Não foram encontradas medições para o este período. <strong><a href="src/painel_uc/medicao.php" class="muda-periodo">Clique aqui para voltar</a></strong>
+        Não foram encontradas medições para o este período. <strong><a href="src/painel_uc/medicao.php" class="muda-periodo">Clique aqui para voltar para mais recente</a></strong>
     </div>
+    <div id="chart_med" class="hidden"></div>
+    <div id="chart_meta" class="hidden"></div>
+    <div id="compara_chart" class="hidden"></div>
     <!-- END NORESULTS -->
     <!-- BEGIN RESULTS -->
 <div class="row" id="grafico">

@@ -57,10 +57,10 @@
                             <td class="text-center" id="modal-med-{TR_INDEX}"><b>{TR_MEDICAO} {TIPOMEDIDA}</b></td>
                             <td class="text-center" id="modal-con-{TR_INDEX}">{TR_CONSUMO} L<input type="hidden" class="litros" name='litros-{TR_INDEX}' value="{TR_CONSUMO_T}" ><input type="hidden" name='modal-obs-{TR_INDEX}' value="{TR_OBS}" ></td>
                             <td class="text-center">
-                                <input type="number" min="1" max="{TR_DIAS_UT}" value="{TR_DIAS_UT}" data-toggle="tooltip" data-placement="left" title="Máximo de dia(s) {TR_DIAS_UT}" class="form-control input-sm dias-ut" z-index="{TR_INDEX}" />
+                                <input type="number" min="1" max="{TR_DIAS_UT}" value="{TR_DIAS_UT}" data-toggle="tooltip" data-placement="top" title="Máximo de dia(s) {TR_DIAS_UT}" class="form-control input-sm dias-ut" z-index="{TR_INDEX}" />
                             </td>
                             <td class="text-center">
-                                <input type="number" min="0" value="{TR_POP_FLU}" data-toggle="tooltip" data-placement="right" title="Estimativa média de pessoas por dia desde a medição anterior" class="form-control input-sm pop-flu" z-index='{TR_INDEX}' />
+                                <input type="number" min="0" value="{TR_POP_FLU}" data-toggle="tooltip" data-placement="top" title="Estimativa média de pessoas por dia desde a medição anterior" class="form-control input-sm pop-flu" z-index='{TR_INDEX}' />
                             </td>
                             <td class="text-center">
                                 <code id="TR-D{TR_INDEX}">{TR_MED_DIA}</code>
@@ -117,8 +117,8 @@
                 </div>
                 <div style="margin-top: 15px">
                     <!--h4>Informações sobre o cálculo</h4-->
-                    <div class="alert alert-danger text-justify">
-                        A <strong>População Flutuante</strong> deve ser preenchida com uma <b>média diária</b>.<br /> <small>Por exemplo, se fazem <mark><b>7 dias</b></mark> desde a última medição e em apenas um dia houve uma reunião da qual compareceram <mark><b>14 pessoas</b></mark>, o valor a ser preenchido deverá ser <mark><b>2 pessoas</b></mark>, que corresponde à média de pessoas que passaram pela unidade por dia do período. </small>
+                    <div class="alert alert-success text-justify">
+                        A <strong>População Flutuante</strong> deve ser preenchida com uma <b>média diária</b>.<p style="margin-top:5px"><small>Por exemplo, se fazem <mark><b>7 dias</b></mark> desde a última medição e em apenas um dia houve uma reunião da qual compareceram <mark><b>14 pessoas</b></mark>, o valor a ser preenchido deverá ser <mark><b>2 pessoas</b></mark>, que corresponde à média de pessoas que passaram pela unidade por dia do período. </small></p>
                     </div>
                 </div>
             </div>
@@ -127,7 +127,32 @@
     </div>
 </div>
 <!-- END HISTORICO_MED -->
-
+<!-- BEGIN COMPARACAO_BLOCK -->
+<div class="row">
+    <div class="container">
+        <div class="row" style="margin-top:32px">
+            <div class="col-md-3" style="margin-top: 2px">
+                <a href="src/painel_uc/medicao.php?mes={MES_ANT}&ano={ANO_ANT}" class="btn btn-warning muda-periodo">
+                    <b>&Lt; MÊS ANTERIOR</b> <span class="badge">{MES_ANTERIOR}/{ANO_ANT}</span>                
+                </a>
+            </div>
+            <div class="col-md-6 text-center">
+                <h1 style="margin-top: 0">DADOS DE REFERÊNCIA</h1><mark>Média de consumo em {REFERENCIAC} <strong>(Litros/Dia)</strong></mark>
+            </div>
+            <div class="col-md-3" align="right"  style="margin-top: 2px">
+                <a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="btn btn-warning muda-periodo" id="posterior"> 
+                    <b>MÊS POSTERIOR <span class="badge">{MES_POSTERIOR}/{ANO_POS}</span> &Gt;</b>
+                </a>
+            </div>
+        </div>
+        <div class="row" style="margin-top:32px">
+            <div class="col-md-12">
+                <div id="compara_chart"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END COMPARACAO_BLOCK -->
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
