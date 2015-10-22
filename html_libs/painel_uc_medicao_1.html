@@ -77,10 +77,10 @@
         $('.dias-ut').change(function(){
             
             var dias = $(this).val();
-            var index= $(this).attr('title');
+            var index= $(this).attr('z-index');
             var cons = parseInt($('input[name=litros-' + index + ']').val());
             var fixa = parseInt($('#fixa').val());
-            var flut = parseInt($('.pop-flu[title=' + index + ']').val());
+            var flut = parseInt($('.pop-flu[z-index=' + index + ']').val());
             var med_dia = (dias > 0 ) ? cons/dias : cons;
             var med_pes = med_dia/(fixa + flut);
             $('#TR-D'+ index).html(Math.round(med_dia * 100) / 100);
@@ -91,8 +91,8 @@
         
         $('.pop-flu').change(function(){
             
-            var index= $(this).attr('title');
-            var dias = parseInt($('.dias-ut[title=' + index + ']').val());
+            var index= $(this).attr('z-index');
+            var dias = parseInt($('.dias-ut[z-index=' + index + ']').val());
             var cons = parseInt($('input[name=litros-' + index + ']').val());
             var fixa = parseInt($('#fixa').val());
             var flut = parseInt($(this).val());

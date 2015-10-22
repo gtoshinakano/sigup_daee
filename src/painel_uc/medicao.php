@@ -96,7 +96,7 @@
             $tpl->MES_POS   = $mes_pos = ($getMes == 12) ? 1 : $getMes+1;
             $tpl->ANO_POS   = ($getMes == 12 && $getAno < Date('Y')) ? $getAno+1 : $getAno;
             
-            $sqlPontos = "SELECT m.* FROM sys_medicao m WHERE m.uc = $ucid AND m.data_leitura BETWEEN '$data_inicial' AND '$data_final' ORDER BY m.data_leitura";
+            $sqlPontos = "SELECT m.* FROM sys_medicao m WHERE m.uc = $ucid AND m.data_leitura >= '$data_inicial' AND m.data_leitura < '$data_final' ORDER BY m.data_leitura";
             $queryPontos = mysql_query($sqlPontos);
             /*
              * Mostrar TABLEROW_FIXO e Primeiro ponto do gráfico
@@ -107,7 +107,8 @@
             $tpl->TR_MEDICAO    = $med_ini;
             $tpl->TR_CONSUMO    = "--";
             $tpl->TR_DIAS_UT    = "--";
-            $tpl->TR_POP_FLU    = "--";
+            $tpl->TR_DIA_SEM    = getDiaSemana($data_inicial);
+            //$tpl->TR_POP_FLU    = "--";
             $tpl->block('TABLEROW_FIXO');
             $chart_data = "[" . convertDateToGoogle($data_inicial) . ", " . $med_ini . ", '". getMesNome($mesAnt) . "/" . $anoAnt ."', '<b>Leitura feita pela empresa em:</b> " . setDateDiaMesAno($data_inicial) . "<br />Inicial: <b>$med_ini {TIPOMEDIDA}</b><br />Consumo do período: $consumo_ini {TIPOMEDIDA}'],";
             if(mysql_num_rows($queryPontos) > 0){
@@ -152,6 +153,7 @@
                     $tpl->TR_CONSUMO    = tratarValor($litros);
                     $tpl->TR_CONSUMO_T  = $litros;
                     $tpl->TR_DIAS_UT    = $diff_dias;
+                    $tpl->TR_DIA_SEM    = getDiaSemana($linha['data_leitura']);
                     $tpl->TR_POP_FLU    = $linha['pop_flut'];
                     $tpl->TR_MED_DIA    = $med_Litro_dia;
                     $tpl->TR_MED_PES    = round($med_Litro_dia / ($uc['pop_fixa'] + $linha['pop_flut']) * 100) / 100;
@@ -177,8 +179,9 @@
                     $tpl->TR_CONSUMO    = tratarValor(($med_fin - $med_ant) * 1000);
                     $tpl->TR_CONSUMO_T  = ($med_fin - $med_ant) * 1000;
                     $tpl->TR_DIAS_UT    = $d = (int)floor( (strtotime($data_final) - $data_ant) / (60 * 60 * 24));
+                    $tpl->TR_DIA_SEM    = getDiaSemana($data_final);
                     $tpl->TR_POP_FLU    = 0;
-                    $tpl->TR_MED_DIA    = $m = round(($med_fin - $med_ant) * 1000 / $d * 100) / 100;
+                    $tpl->TR_MED_DIA    = $m = ($d > 0) ?  round(($med_fin - $med_ant) * 1000 / $d * 100) / 100 : round(($med_fin - $med_ant) * 1000 / 1 * 100) / 100;
                     $tpl->TR_MED_PES    = round($m / $uc['pop_fixa'] * 100) / 100;
                     $con_litros        += ($med_fin - $med_ant) * 1000;
                     $dias_tot          += $d;
@@ -204,6 +207,7 @@
                 $tpl->TR_CONSUMO    = tratarValor(($med_fin - $med_ini) * 1000);
                 $tpl->TR_CONSUMO_T  = ($med_fin - $med_ini) * 1000;
                 $tpl->TR_DIAS_UT    = $d = (int)floor( (strtotime($data_final) - strtotime($data_inicial)) / (60 * 60 * 24));
+                $tpl->TR_DIA_SEM    = getDiaSemana($data_final);
                 $tpl->TR_POP_FLU    = 0;
                 $tpl->TR_MED_DIA    = $m = round(($med_fin - $med_ini) * 1000 / $d * 100) / 100;
                 $tpl->TR_MED_PES    = round($m / $uc['pop_fixa'] * 100) / 100;
