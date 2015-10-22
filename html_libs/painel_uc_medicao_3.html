@@ -52,10 +52,10 @@
                         <!-- END TABLEROW_FIXO -->
                         <!-- BEGIN TABLEROW_INPUT -->
                         <tr>
-                            <td><kbd>{TR_INDEX}</kbd> {TR_DATA}</td>
-                            <td class="text-center"><span class="label label-warning">{TR_DIA_SEM}</span></td>
-                            <td class="text-center"><b>{TR_MEDICAO} {TIPOMEDIDA}</b></td>
-                            <td class="text-center">{TR_CONSUMO} L<input type="hidden" class="litros" name='litros-{TR_INDEX}' value="{TR_CONSUMO_T}" ></td>
+                            <td><kbd>{TR_INDEX}</kbd> <a href="{TR_INDEX}" class="open-modal" data-toggle="modal" data-target="#myModal">{TR_DATA}</a></td>
+                            <td class="text-center" id="dia-semana-{TR_INDEX}"><span class="label label-warning">{TR_DIA_SEM}</span></td>
+                            <td class="text-center" id="modal-med-{TR_INDEX}"><b>{TR_MEDICAO} {TIPOMEDIDA}</b></td>
+                            <td class="text-center" id="modal-con-{TR_INDEX}">{TR_CONSUMO} L<input type="hidden" class="litros" name='litros-{TR_INDEX}' value="{TR_CONSUMO_T}" ><input type="hidden" name='modal-obs-{TR_INDEX}' value="{TR_OBS}" ></td>
                             <td class="text-center">
                                 <input type="number" min="1" max="{TR_DIAS_UT}" value="{TR_DIAS_UT}" data-toggle="tooltip" data-placement="left" title="Máximo de dia(s) {TR_DIAS_UT}" class="form-control input-sm dias-ut" z-index="{TR_INDEX}" />
                             </td>
@@ -127,3 +127,42 @@
     </div>
 </div>
 <!-- END HISTORICO_MED -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="btn-group btn-group-justified">
+                            <div class="btn btn-default"><small><b>Medição : </b> <span id="modal-med"></span></small></div>
+                            <div class="btn btn-default"><small><b>Consumo : </b> <span id="modal-con"></span></small></div>
+                            <div class="btn btn-default"><small><b>Dias Úteis : </b> <span id="modal-dia"></span></small></div>
+                            <div class="btn btn-default"><small><b>População : </b> <span id="modal-pes"></span></small></div>
+                        </div>
+                    </div>                    
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3 text-center"></div>
+                    <div class="col-md-3 text-center"></div>
+                    <div class="col-md-3 text-center"></div>
+                </div>
+                <div class="row" style="margin-top:10px">
+                    <div class="col-md-12"><b>Observação: </b> <p>- <span id="modal-obs"></span></p></div>
+                </div>
+                <div class="row" style="margin-top:5px">
+                    <div class="col-md-6 text-center"><b>Média L/Dia </b><h2><span id="modal-mld"  class="label label-danger"></span></h2></div>
+                    <div class="col-md-6 text-center"><b>Média L/Pessoa/Dia </b><h2><span id="modal-mpd" class="label label-danger"></span></h2></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" id="modal-chart" style="height:300px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

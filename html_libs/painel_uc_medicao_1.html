@@ -67,11 +67,17 @@
             });
         
         });
+        /*
+         * Calcular médias ao alterar campos
+         * @file : html_libs/painel_uc_medicao_2.html
+         * 
+         */
         
         $('[data-toggle="tooltip"]').tooltip(); 
         
         /*
          * Calcular médias ao alterar campos
+         * @file : html_libs/painel_uc_medicao_3.html
          * 
          */
         $('.dias-ut').change(function(){
@@ -135,6 +141,35 @@
             $('#med-p-dia').text(Math.round(med_pes * 100) / 100);
             
         }
+        
+        /*
+         * Alterando conteúdo ao abrir Modal
+         */
+        $('.open-modal').click(function(){
+            
+            var index = $(this).attr('href');
+            $('#myModalLabel').html($('#dia-semana-' + index).html() + " " + $(this).html());
+            
+            var med = $('#modal-med-' + index).text();
+            $('#modal-med').html(med);
+            
+            var obs = $('input[name=modal-obs-'+ index +']').val();
+            obs = (obs != "") ? obs: "Nada consta";
+            $('#modal-obs').html(obs);
+            
+            var con = $('#modal-con-' + index).text();
+            $('#modal-con').html(con);
+            
+            var dia = $('.dias-ut[z-index=' + index + ']').val();
+            $('#modal-dia').html(dia);
+            
+            var pes = $('.pop-flu[z-index=' + index + ']').val();
+            $('#modal-pes').html( $('#fixa').val() + " + " + pes);
+            
+            $('#modal-mld').html($('#TR-D' + index).text());
+            $('#modal-mpd').html($('#TR-P' + index).text());
+            
+        });
         
     });
 
