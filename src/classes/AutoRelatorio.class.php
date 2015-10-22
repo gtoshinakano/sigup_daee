@@ -15,7 +15,7 @@
 								'Valores maiores que R$10.000'=>'n.valor > 10000','Consumo menor que 100'=>"n.consumo < 100",
 								'Consumo maior que 100'=>"n.consumo > 100", 'Consumo maior que 1000'=>"n.consumo > 1000"
 								);						
-		public $uo;
+		public  $uo;
 		private $mes;
 		private $ano;
 		private $sigla;

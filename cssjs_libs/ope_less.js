@@ -80,13 +80,23 @@ $(document).ready(function () {
     });
     $("input[name=prevButton]").click(function(){
         $('.simple-table').show();
-        $('.info').hide();
+      //  $('.info').hide();
     });
     
+    
+    $('#info').click(function(){
+      //  alert('teste');
+      //  $('#texto_info').val("<p style='text-align: center;'>teste</p>");
+    });
+  tinymce.init({
+      selector:'#texto_info',
+       language: "pt_BR"
+  });
+
+
  
    
 });
-
 
 function tratarValor(val, dinheiro) {
     if (!dinheiro) {

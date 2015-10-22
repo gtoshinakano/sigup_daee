@@ -256,6 +256,41 @@ margin:20px 0 0;
   background-color:#a9f5a9!important;
 }
 
+.cabecalho  {
+   font-weight: bold;
+   color:#000000;
+   font-family:arial;
+    text-align: center;
+}
+.cabecalho .brasao{
+    width: auto;
+    float: left;
+    padding-left: 50px;
+}
+.cabecalho #texto{
+    padding-top:  15px;
+}
+.cabecalho #titulo{
+    font-size:2em;
+}
+.cabecalho #subtitulo{
+    font-size:1.5em;
+}
+.texto{
+    color:#000000;
+    padding: 0 80px 0 70px;
+}
+.info_left{
+     width: 50%;
+    float: left;
+}
+.info_right{
+    width: 50%;
+    float: right;
+    box-shadow: -1px 0px 10px black;
+    padding-top: 50px;
+}
+
 /**************  ****************/
 
 

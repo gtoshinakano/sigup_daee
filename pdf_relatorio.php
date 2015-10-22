@@ -43,7 +43,7 @@
 	//$mpdf->WriteHTML("asa");
 	
 	
-	$filename = "Relatorio " . $insta->get("sigla") . " - " . $ano . " " . getMesNome($mes) ;
+	$filename = "Relatorio " . $insta->get("sigla") . " - " . $ano . " " . getMesNome($mes).".pdf" ;
 	$mpdf->Output($filename, "D");
 
 ?>

@@ -3,20 +3,42 @@
         <h2>Emitir Quadro/Informação</h2>
 
         <!-- BEGIN PRIMEIRO_FORM -->
-        <form name="contas" method="get"  class="container" >
+        <div class="container">
+            <form name="contas" method="get"  class="container form-horizontal" >
+                <div class="form-group">
+                    
+                    <label for="inputEmail3" class="col-sm-3 ">Mês</label>
+                    <label for="inputEmail3" class="col-sm-7 ">Ano</label>
+                    <div class="col-sm-3">
+                        <select name="mes_ref" class="data_ref form-control " >
+                            <!-- BEGIN EACH_MESREF -->
+                            <option value="{MES}">{MESNOME}</option>
+                            <!-- END EACH_MESREF -->
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select name="ano_ref" class="data_ref form-control" >
+                            <!-- BEGIN EACH_ANOREF -->
+                            <option value="{ANO}">{ANO}</option>
+                            <!-- END EACH_ANOREF -->
+                        </select>
+                    </div>
 
-            <select name="mes_ref" class="data_ref" >
-                <!-- BEGIN EACH_MESREF -->
-                <option value="{MES}">{MESNOME}</option>
-                <!-- END EACH_MESREF -->
-            </select>
-            <select name="ano_ref" class="data_ref" >
-                <!-- BEGIN EACH_ANOREF -->
-                <option value="{ANO}">{ANO}</option>
-                <!-- END EACH_ANOREF -->
-            </select>
-            <input type="submit" value="Próximo" class="btn btn-primary"/>
-        </form>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-7 ">Empresa</label>
+                    <div class="col-sm-12">
+                        <select name="emp_id" class="data_ref form-control" >
+                            <!-- BEGIN EACH_EMP -->
+                            <option value="{EMP_ID}" >{EMP}</option>
+                            <!-- END EACH_EMP -->
+                        </select>
+                    </div>
+                </div>
+                <BR/>
+                <input type="submit" value="Próximo" class="btn btn-primary"/>
+            </form>
+        </div>
         <!-- END PRIMEIRO_FORM -->
 
 
@@ -47,7 +69,7 @@
                             <td align="center"><input type="checkbox" name="notas[]" value="{NID}" id="{LANCTO}" class="notas-select marcar"  title="{NVALOR}"/><label for="mantem-data_ref" ></label></td>
                             <td align="center">{NNUMERO}</td>
                             <td align="center">{NUNIDADE}</td>
-                            <td align="center">{NMUNICIPIO}</td>
+                            <td align="center">{NID} {NMUNICIPIO}</td>
                             <td align="center">{NVENCIMENTO}</td>
                             <td align="center">{LANCTO2}</td>
                             <td align="center">{NEMPRESA}</td>
@@ -74,8 +96,9 @@
             </div>
 
             <!-- END TABELA -->
-            <div class="container">
-                <div class="info ">
+            <div class="info ">
+                <div class="info_left">
+
                     <h3>RELAÇÃO DE CONTAS {NMES_REF}/{NANO_REF}</h3>
                     <div class="form-group">
                         <label for="autos" class="col-sm-4 control-label">Autos: </label>
@@ -107,26 +130,101 @@
                             <input type="text" id="natestado" name="natestado" placeholder="Nº do atestado">
                         </div>
                     </div>
-                   
-                   <div class="form-group">
+                    <div class="form-group">
+                        <label for="natest2" class="col-sm-4 control-label"></label>
+                        <div class="col-sm-8">
+                            <br/> <br/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="natestado" class="col-sm-2 control-label"> Apreciação </label>
+                        <div class="col-sm-10">
+                            <textarea id="texto_info" name="texto_info" title="texto_info" >
+                                <p>Ás fls. [Nº fls] autuamos as Planilhas de consumo e o Atestado de Pagamento ADA n.º [Nº atestado], 
+                                    relativos ao fornecimento de energia alta e baixa tensão pela [empresa], para diversas unidades do DAEE, 
+                                    referente ao mês de [mes] de [ano], com vencimento nas datas [dd/mm/yyyy] e [dd/mm/yyyy], 
+                                    no valor total de [R$ valor ] de acordo com as contas originais em apenso.</p>
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="natest2" class="col-sm-4 control-label"></label>
                         <div class="col-sm-8">
                             <br/> <br/> <br/> <br/>
                         </div>
                     </div>
-                    
-                    
                     <input type="button" value="Voltar" name="prevButton" class="btn btn-primary"/>
-               <button type="submit" class="btn btn-primary ">Enviar</button>
-                  
+                    <button type="button" id="info" class="btn btn-primary ">Enviar</button>
+
                 </div>
-               
-            </div>
-              
+
+
+
+
         </form>
 
-        <!-- BEGIN PDF -->
-        <H1>hI {HI}</H1>
-        <!-- END PDF -->
-        
+        <div class="info_right">
+            <div class="info">
+                <div class="cabecalho">
+                    <div class="brasao"><img src="images/relatorio_brasao.png" alt=""  ></div>
+                    <div id="texto"> 
+                        <span id="titulo">SECRETARIA DE  SANEAMENTO E RECURSOS HÍDRICOS</span><br/>
+                        <span id="subtitulo">DEPARTAMENTO DE ÁGUAS E ENERGIA ELÉTRICA</span><br/>
+                        <span id="endereco">Rua:Boa Vista,170/175-telefone 011-3293-8200/8201- CEP 01014-000 – Centro – São Paulo-SP</span><br/>
+                        <span id="site"> www.daee.sp.gov.br</span>
+                    </div>
+
+                </div>
+                <br/><br/><br/>
+                <div class="texto">
+
+                    <p><strong>AUTOS: [Nº] - PROV. [Nº]</strong></p>
+                    <p><strong>INTERESSADO: ADA</strong></p>
+                    <br/>
+                    <p><strong><u>INFORMAÇÃO ADA/[Nº]/[ANO]</u></strong></p>
+                    <p><strong>Senhor Responsável pela ADA:</strong></p>
+                    <p>Ás fls. [Nº fls] autuamos as Planilhas de consumo e o Atestado de Pagamento ADA n.º [Nº atestado], relativos ao fornecimento de energia alta e baixa tensão pela [empresa], para diversas unidades do DAEE, referente ao mês de [mes] de [ano], com vencimento nas datas [dd/mm/yyyy] e [dd/mm/yyyy], no valor total de [R$ valor ] de acordo com as contas originais em apenso.</p>
+                    <p class="text-center">Assim sendo, proponho o envio da presente à DOF, para o devido pagamento</p>
+                    <p class="text-center"><strong> ADA</strong>, [dd] de [mes] de [ano].</p>
+
+
+                    <p class="text-center"> <strong> [Usuario]</strong></p>
+                    <p class="text-center"><strong>  [Cargo I]</strong></p>
+                    <p class="text-center"> <strong> [PRONT]</strong></p>
+                    <p><strong>Senhor Diretor da DSD:</strong></p>
+                    <p>1 - Ciente e de acordo</p>
+                    <p> 2 - Propondo o envio à <strong>DOF</strong>, para pagamento.</p>
+
+                    <p class="text-center"> <strong>ADA</strong>, [dd] de [mes] de [ano].</p>
+
+                    <br/><br/>
+                    <p class="text-center"> <strong>RENALDO DO AMARAL</strong><br/>
+                        <strong>  RESPONSÁVEL PELA ADA</strong><br/>
+                        <strong>  PRONT. 9396</strong></p>
+
+                    <p><strong>À DOF</strong></p>
+
+                    <p class="text-center">  <strong>DSD</strong>, de [mes] de [ano].</p>
+
+                    <br/><br/>
+                    <p class="text-center"> <strong>NELSON GARBELOTTO</strong>,<br/>
+                        <strong> DIRETOR DA DSD</strong>,<br/>
+                        <strong>PRONT. 3973</strong>,</p>
+                    <br/><br/><br/> <br/><br/><br/>
+
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- BEGIN PDF -->
+    <H1> </H1>
+    <!-- END PDF -->
+
+
+</div>
+
+
+
+
+
+</div>
