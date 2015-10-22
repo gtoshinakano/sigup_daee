@@ -114,6 +114,9 @@
 
                 $med_ant = $med_ini;
                 $con_periodo = 0;
+                $con_litros  = 0;
+                $pop_flut_tot= 0;
+                $dias_tot    = 0;
                 $data_ant    = strtotime($data_inicial);
                 $i = 1;
                 /*
@@ -124,6 +127,7 @@
                     $diferenca  = round(($linha['leitura'] - $med_ant) * 100) / 100; // Diferença entre leituras
                     $con_periodo += $diferenca;
                     $litros     = $diferenca * 1000;
+                    $con_litros += $litros;
                     /*
                      * Calcular média de litros por dia
                      */
@@ -135,6 +139,9 @@
                     $chart_data.= "[" . convertDateToGoogle($linha['data_leitura']) . ", " . $linha['leitura'] . ", '" . $con_periodo . " {TIPOMEDIDA}', '$tooltip'],";
                     $med_ant    = $linha['leitura'];
                     $med_fin    = ($linha['leitura'] > $med_fin) ? $linha['leitura'] : $med_fin;
+                    
+                    $pop_flut_tot+= $linha['pop_flut'];
+                    $dias_tot    += $diff_dias;
                     
                     /* 
                      * Mostrar Medições a Tabela
@@ -158,6 +165,7 @@
                 $diff = $med_fin - $med_ini;
                 $tpl->CON_PERIODO = round($diff * 100) / 100;
                 $tpl->VAR_PERIODO = getPorcentagem(($diff * 100 / $consumo_ini) - 100);
+                
                 /* 
                  * Mostrar Ultima nota na Tabela
                  */
@@ -172,10 +180,18 @@
                     $tpl->TR_POP_FLU    = 0;
                     $tpl->TR_MED_DIA    = $m = round(($med_fin - $med_ant) * 1000 / $d * 100) / 100;
                     $tpl->TR_MED_PES    = round($m / $uc['pop_fixa'] * 100) / 100;
+                    $con_litros        += ($med_fin - $med_ant) * 1000;
+                    $dias_tot          += $d;
                     $i++;
                     $tpl->block('TABLEROW_INPUT');
                     
                 }
+                /*
+                 * Mostrar Totais na tabela
+                 */
+                $tpl->TF_TOTAL      = tratarValor($con_litros);
+                $tpl->POP_FLUT_SUM  = $pop_flut_tot;
+                $tpl->TOT_DIAS  = $dias_tot;
                 
             }elseif($med_fin > 0){
                 
@@ -191,7 +207,9 @@
                 $tpl->TR_POP_FLU    = 0;
                 $tpl->TR_MED_DIA    = $m = round(($med_fin - $med_ini) * 1000 / $d * 100) / 100;
                 $tpl->TR_MED_PES    = round($m / $uc['pop_fixa'] * 100) / 100;
-                $tpl->block('TABLEROW_INPUT');                
+                $tpl->block('TABLEROW_INPUT');
+                $tpl->TF_TOTAL      = tratarValor(($med_fin - $med_ini) * 1000);
+                $tpl->POP_FLUT_SUM  = 0;
                 
             }else{
 

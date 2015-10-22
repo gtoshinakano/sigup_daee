@@ -8,7 +8,7 @@
                 </a>
             </div>
             <div class="col-md-6 text-center">
-                <h1 style="margin-top: 0">CALCULADORA</h1>
+                <h1 style="margin-top: 0">DIÁRIO DE CONSUMO</h1>
             </div>
             <div class="col-md-3" align="right"  style="margin-top: 2px">
                 <a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="btn btn-warning muda-periodo" id="posterior"> 
@@ -45,14 +45,14 @@
                             <td class="text-center" width="10%">{TR_DIAS_UT}</td>
                             <td class="text-center" width="10%">{TR_POP_FLU}</td>
                             <td class="text-center" width="10%"><code>L/Dia</code></td>
-                            <td class="text-center" width="10%"><code>L/Pessoa/Dia</code</td>
+                            <td class="text-center" width="10%"><code>L/Pessoa/Dia</code></td>
                         </tr>
                         <!-- END TABLEROW_FIXO -->
                         <!-- BEGIN TABLEROW_INPUT -->
                         <tr>
                             <td><kbd>{TR_INDEX}</kbd> - {TR_DATA}</td>
                             <td class="text-center"><b>{TR_MEDICAO} {TIPOMEDIDA}</b></td>
-                            <td class="text-center">{TR_CONSUMO} L<input type="hidden" name='{TR_INDEX}' value="{TR_CONSUMO_T}" ></td>
+                            <td class="text-center">{TR_CONSUMO} L<input type="hidden" class="litros" name='litros-{TR_INDEX}' value="{TR_CONSUMO_T}" ></td>
                             <td class="text-center">
                                 <input type="number" min="1" max="{TR_DIAS_UT}" value="{TR_DIAS_UT}" class="form-control input-sm dias-ut" title="{TR_INDEX}" />
                             </td>
@@ -69,7 +69,15 @@
                         <!-- END TABLEROW_INPUT -->
                     </tbody>
                     <tfoot>
-                        
+                        <tr class="bg-primary">
+                            <td><kbd>TOTAL</kbd></td>
+                            <td></td>
+                            <td align='center'><b>{TF_TOTAL} L</b></td>
+                            <td align='center'><b><span id='tot-dias'>{TOT_DIAS}</span> dias</b></td>
+                            <td align='center'><b><span id='tot-flut'>{POP_FLUT_SUM}</span></b></td>
+                            <td align='center'><code><span id='med-l-dia'></span></code></td>
+                            <td align='center'><code><span id='med-p-dia'></span></code></td>
+                        </tr>
                     </tfoot>
                 </table>
             </div>
