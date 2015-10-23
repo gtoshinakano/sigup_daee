@@ -67,13 +67,16 @@
                 ['NTS 181', 120, '#00A853', 'Casas populares ou rurais (2) : 120L ( 24h )' ],
                 ['NTS 181', 150, 'gold', 'Residências (2) : 150L ( 24h )' ],
                 ['NTS 181', 200, 'orange', 'Apartamentos (2) : 200L ( 24h )' ],
-                ['NTS 181', 300, '#E62117', 'Residências de luxo (3) : 300L ( 24h )' ]
+                ['NTS 181', 300, '#E62117', 'Residências de luxo (3) : 300L ( 24h )' ],
+                ['EUA', 350, '#D41E1B', 'Média do Norte Americano : 350L ( 24h )' ],
+                ['EUR', 200, '#30368A', 'Média do Europeu : 200L ( 24h )' ],
+                ['BRA', 187, '#117539', 'Média do Brasileiro : 187L ( 24h )' ]
                 
         ]);
         var options = {
                 title: "",
                 width: "70%",
-                height: 400,
+                height: 600,
                 bar: {groupWidth: "97%"},
                 legend: { position: "none" },
                 hAxis: {gridlines : {count : 10}},
@@ -179,7 +182,6 @@
             $('#med-l-dia').text(Math.round(med_dia * 100) / 100);
             $('#med-p-dia').text(Math.round(med_pes * 100) / 100);
             
-            //drawComparacao(Math.round(med_pes * 100) / 100);
             drawComparacao(Math.round(med_pes * 100) / 100);
             
         }

@@ -96,7 +96,8 @@
             $tpl->MES_POS   = $mes_pos = ($getMes == 12) ? 1 : $getMes+1;
             $tpl->ANO_POS   = ($getMes == 12 && $getAno < Date('Y')) ? $getAno+1 : $getAno;
             
-            $sqlPontos = "SELECT m.* FROM sys_medicao m WHERE m.uc = $ucid AND m.data_leitura >= '$data_inicial' AND m.data_leitura < '$data_final' ORDER BY m.data_leitura";
+            $ultima_data    = ($data_final == Date('Y-m-d')) ? date('Y-m-d', strtotime("+1 day")) : $data_final;
+            $sqlPontos = "SELECT m.* FROM sys_medicao m WHERE m.uc = $ucid AND m.data_leitura >= '$data_inicial' AND m.data_leitura < '$ultima_data' ORDER BY m.data_leitura";
             $queryPontos = mysql_query($sqlPontos);
             /*
              * Mostrar TABLEROW_FIXO e Primeiro ponto do gráfico
