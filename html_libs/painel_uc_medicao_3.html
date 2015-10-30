@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <input type="hidden" id="fixa" value="{POP_FIXA}"/>
                 <table class="table table-striped">
                     <thead>
@@ -31,10 +31,11 @@
                             <th class="text-center">Dia</th>
                             <th class="text-center">Medição</th>
                             <th class="text-center">Consumo<br />no Período <br /><span class="label label-info">A</span></th>
-                            <th class="text-center">Dias Úteis <br /><span class="label label-info">B</span></th>
-                            <th class="text-center">População<br />Flutuante<br /><span class="label label-info">C</span></th>
-                            <th class="text-center">Média<br />L/Dia<br /><span class="label label-success">D</span></th> 
-                            <th class="text-center">Média<br />L/Pessoa/Dia<br /><span class="label label-success">E</span></th>
+                            <th class="text-center">Dias Úteis<br /><span class="label label-info">B</span></th>
+                            <th class="text-center">População<br />Flutuante<br /><span class="label label-warning">C</span></th>
+                            <th class="text-center">Permanência<br /><span class="label label-warning">D</span></th>
+                            <th class="text-center">Média<br />L/Dia<br /><span class="label label-success">E</span></th> 
+                            <th class="text-center">Média<br />L/Pessoa/Dia<br /><span class="label label-success">F</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,7 +46,8 @@
                             <td class="text-center"><b>{TR_MEDICAO} {TIPOMEDIDA}</b></td>
                             <td class="text-center">{TR_CONSUMO}</td>
                             <td class="text-center" width="10%">{TR_DIAS_UT}</td>
-                            <td class="text-center" width="10%"><code>Pessoas/Dia</code></td>
+                            <td class="text-center" width="10%"><code>Qtd. Pessoas</code></td>
+                            <td class="text-center" width="10%"><code>em Qtd. Dias</code></td>
                             <td class="text-center" width="10%"><code>L/Dia</code></td>
                             <td class="text-center" width="10%"><code>L/Pessoa/Dia</code></td>
                         </tr>
@@ -57,11 +59,29 @@
                             <td class="text-center" id="modal-med-{TR_INDEX}"><b>{TR_MEDICAO} {TIPOMEDIDA}</b></td>
                             <td class="text-center" id="modal-con-{TR_INDEX}">{TR_CONSUMO} L<input type="hidden" class="litros" name='litros-{TR_INDEX}' value="{TR_CONSUMO_T}" ><input type="hidden" name='modal-obs-{TR_INDEX}' value="{TR_OBS}" ></td>
                             <td class="text-center">
-                                <input type="number" min="1" max="{TR_DIAS_UT}" value="{TR_DIAS_UT}" data-toggle="tooltip" data-placement="top" title="Máximo de dia(s) {TR_DIAS_UT}" class="form-control input-sm dias-ut" z-index="{TR_INDEX}" />
+                                <div class="inner-addon left-addon">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                    <input type="number" min="1" max="{TR_DIAS_UT}" value="{TR_DIAS_UT}" 
+                                           data-toggle="tooltip" data-placement="top" title="Máximo de dia(s) {TR_DIAS_UT}" 
+                                           class="form-control input-sm dias-ut
+                                           " z-index="{TR_INDEX}" />
+                                </div>
                             </td>
                             <td class="text-center">
-                                <input type="number" min="0" value="{TR_POP_FLU}" data-toggle="tooltip" data-placement="top" title="Estimativa média de pessoas por dia desde a medição anterior" class="form-control input-sm pop-flu" z-index='{TR_INDEX}' />
+                                <div class="inner-addon right-addon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                    <input type="number" min="0" value="{TR_POP_FLU}" data-toggle="tooltip" data-placement="top" title="Estimativa média de pessoas por dia desde a medição anterior" class="form-control input-sm pop-flu" z-index='{TR_INDEX}' />
+                                </div>
                             </td>
+                            <td class="text-center">
+                                <div class="inner-addon right-addon">
+                                    <i class="glyphicon glyphicon-time"></i>
+                                    <input type="number" min="1" max="{TR_DIAS_UT}" value="{TR_DIAS_UT}" 
+                                           data-toggle="tooltip" data-placement="top" title="Máximo de dia(s) {TR_DIAS_UT}" 
+                                           class="form-control input-sm dias-ut
+                                           " z-index="{TR_INDEX}" />
+                                </div>
+                            </td>                            
                             <td class="text-center">
                                 <code id="TR-D{TR_INDEX}">{TR_MED_DIA}</code>
                             </td>
@@ -79,14 +99,17 @@
                             <td align='center'><b>{TF_TOTAL} L</b></td>
                             <td align='center'><b><span id='tot-dias'>{TOT_DIAS}</span> dias</b></td>
                             <td align='center'><b><span id='tot-flut'>{POP_FLUT_SUM}</span></b></td>
+                            <td></td>
                             <td align='center'><code><span id='med-l-dia'></span></code></td>
                             <td align='center'><code><span id='med-p-dia'></span></code></td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
-            <div class="col-md-3 rounded">
-                <h4>Fórmulas utilizadas</h4>
+            <div class="col-md-12 rounded" style="margin-top: 20px">
+                <div class="page-header">
+                    <h2>Observações</h2>
+                </div>
                 <b><span class="label label-success">D</span> - Média de Litros por Dia</b>
                 <div style="margin-left:30px">
                     <div style="padding-bottom: 3px; border-bottom:1px solid #333; width: 20px; float: left">
