@@ -16,6 +16,7 @@ CREATE TABLE sys_medicao(
 	uc INT(11) NOT NULL,
 	user VARCHAR(50) NOT NULL,
 	data_leitura DATE,
+	criado_em DATETIME NOW(),
 	leitura INT(11) NOT NULL,
 	pop_flut INT(11) NOT NULL DEFAULT 0,
 	permanencia INT(11) NOT NULL DEFAULT 0,

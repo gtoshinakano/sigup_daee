@@ -5,7 +5,7 @@ var simpleBaseName = baseName[baseName.length-1];
 $(document).ready(function(){
 
     //alert("aioo");
-    $('#conteudo').load("src/painel_uc/home.php", function(){
+    $('#conteudo').load("src/painel_uc/medicao.php", function(){
         drawChart();
         drawChart2();     
     });
