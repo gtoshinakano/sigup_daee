@@ -18,7 +18,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 page-header">
-                <p><kbd>{UCNOME}</kbd> (Seu histórico de medições em <b>{PERIODO} dias</b>)</p>
+                <p><kbd>{UCNOME}</kbd> (Seu histórico de leituras em <b>{PERIODO} dias</b>)</p>
             </div>
         </div>
         <div class="row">
@@ -27,15 +27,16 @@
                 <table class="table table-striped">
                     <thead>
                         <tr class="bg-primary">
-                            <th>Data de Medição</th>
+                            <th>Data de Leitura</th>
                             <th class="text-center">Dia</th>
-                            <th class="text-center">Medição</th>
-                            <th class="text-center">Consumo<br />no Período <br /><span class="label label-info">A</span></th>
-                            <th class="text-center">Dias Úteis<br /><span class="label label-info">B</span></th>
-                            <th class="text-center">População<br />Flutuante<br /><span class="label label-warning">C</span></th>
-                            <th class="text-center">Permanência<br /><span class="label label-warning">D</span></th>
-                            <th class="text-center">Média<br />L/Dia<br /><span class="label label-success">E</span></th> 
-                            <th class="text-center">Média<br />L/Pessoa/Dia<br /><span class="label label-success">F</span></th>
+                            <th class="text-center">Leitura</th>
+                            <th class="text-center">Consumo<br />no Período <br /><span class="label label-default">A</span></th>
+                            <th class="text-center">Pop. Fixa<br /><span class="label label-info">B</span></th>
+                            <th class="text-center">Dias Úteis<br /><span class="label label-info">C</span></th>
+                            <th class="text-center">População<br />Flutuante<br /><span class="label label-warning">D</span></th>
+                            <th class="text-center">Permanência<br /><span class="label label-warning">E</span></th>
+                            <th class="text-center">Média<br />L/Dia<br /><span class="label label-success">F</span></th> 
+                            <th class="text-center">Média<br />L/Pessoa/Dia<br /><span class="label label-success">G</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,6 +46,7 @@
                             <td class="text-center"><span class="label label-warning">{TR_DIA_SEM}</span></td>
                             <td class="text-center"><b>{TR_MEDICAO} {TIPOMEDIDA}</b></td>
                             <td class="text-center">{TR_CONSUMO}</td>
+                            <td class="text-center" width="10%">--</td>
                             <td class="text-center" width="10%">{TR_DIAS_UT}</td>
                             <td class="text-center" width="10%"><code>Qtd. Pessoas</code></td>
                             <td class="text-center" width="10%"><code>em Qtd. Dias</code></td>
@@ -54,10 +56,11 @@
                         <!-- END TABLEROW_FIXO -->
                         <!-- BEGIN TABLEROW_INPUT -->
                         <tr class="tr-{TR_INDEX}">
-                            <td><kbd>{TR_INDEX}</kbd> <a href="{TR_INDEX}" class="open-modal" data-toggle="modal" data-target="#myModal">{TR_DATA}</a></td>
+                            <td><kbd>{TR_INDEX}</kbd> <a href="{TR_INDEX}" class="open-modal" data-toggle="modal" data-target="#myModal">{TR_DATA} <i class="glyphicon glyphicon-dashboard"></i></a></td>
                             <td class="text-center" id="dia-semana-{TR_INDEX}"><span class="label label-warning">{TR_DIA_SEM}</span></td>
                             <td class="text-center" id="modal-med-{TR_INDEX}"><b>{TR_MEDICAO} {TIPOMEDIDA}</b></td>
                             <td class="text-center" id="modal-con-{TR_INDEX}">{TR_CONSUMO} L<input type="hidden" class="litros" name='litros-{TR_INDEX}' value="{TR_CONSUMO_T}" ><input type="hidden" name='modal-obs-{TR_INDEX}' value="{TR_OBS}" ></td>
+                            <td class="text-center" width="10%"><i class="fa fa-user-times" style="font-size: 17px;"></i> {POP_FIXA}</td>
                             <td class="text-center">
                                 <div class="inner-addon left-addon">
                                     <i class="glyphicon glyphicon-calendar"></i>
@@ -97,6 +100,7 @@
                             <td></td>
                             <td></td>
                             <td align='center'><b>{TF_TOTAL} L</b></td>
+                            <td></td>
                             <td align='center'><b><span id='tot-dias'>{TOT_DIAS}</span> dias</b></td>
                             <td align='center'><b><span id='tot-flut'>{POP_FLUT_SUM}</span></b></td>
                             <td></td>
@@ -106,43 +110,52 @@
                     </tfoot>
                 </table>
             </div>
-            <div class="col-md-12 rounded" style="margin-top: 20px">
+            <div class="col-md-12 rounded" style="margin-top: 20px; padding-bottom: 15px">
                 <div class="page-header">
                     <h2>Observações</h2>
                 </div>
-                <b><span class="label label-success">D</span> - Média de Litros por Dia</b>
+                <p>
+                    <b><span class="label label-default">A</span> - Consumo no período</b> - Diferença entre a leitura atual com a anterior. É a quantidade em litros de água fornecida pela concessionária de um período a outro.
+                </p>
+                <p>
+                    <b><span class="label label-info">B</span> - População Fixa</b> - Quantidade fixa de pessoas que usufruem diariamente da consumidora. <code><b>{POP_FIXA}</b> pessoas</code> <small>- Altere em Configurações</small>
+                </p>
+                <p>
+                    <b><span class="label label-info">C</span> - Dias Úteis</b> - Quantidade de dias passados de um período a outro. Preencha com a quantidade correta de dias úteis para que os cálculos sejam realizados corretamente.
+                </p>
+                <p>
+                    <b><span class="label label-warning">D</span> - População Flutuante</b> - Quantidade de pessoas (excetuando-se as fixas) que usufruíram da unidade durante o <b>período de permanência <span class="label label-warning">E</span></b>.
+                </p>
+                <p>
+                    <b><span class="label label-warning">E</span> - Permanência</b> - Quantidade de dias em que permaneceu a <b>Pop. Flutuante <span class="label label-warning">D</span></b>. Considerar permanência de um dia inteiro.
+                </p>
+                <p>
+                    <b><span class="label label-success">F</span> - Média de Litros por Dia </b> - Média de litros fornecidos / consumidos por dia.
+                </p>
                 <div style="margin-left:30px">
                     <div style="padding-bottom: 3px; border-bottom:1px solid #333; width: 20px; float: left">
-                        <span class="label label-info">A</span>
+                        <span class="label label-default">A</span>
                     </div>
                     <div style="padding-bottom: 3px; float: left">
                         &nbsp;<code>L/Dia</code>
                     </div>
                 </div>
                 <div style="margin-bottom: 5px; margin-left:30px; clear:left">
-                    <span class="label label-info">B</span>
+                    <span class="label label-info">C</span>
                 </div>
-                <b><span class="label label-success">E</span> - Média de Litros por Pessoa/Dia </b>
+                <p>
+                    <b><span class="label label-success">G</span> - Média de Litros por Pessoa/Dia </b> - Média de consumo em litros por pessoa por dia.
+                </p>
                 <div style="margin-left:30px">
-                    <div style="padding-bottom: 3px; border-bottom:1px solid #333; width: 55px; float: left" class="text-center">
-                        <span class="label label-success">D</span>
+                    <div style="padding-bottom: 3px; border-bottom:1px solid #333; width: 145px; float: left" class="text-center">
+                        <span class="label label-default">A</span>
                     </div>
                     <div style="padding-bottom: 3px; float: left">
                         &nbsp;<code>L/Pessoa/Dia</code>
                     </div>
                 </div>
                 <div style="margin-bottom: 5px; margin-left:30px; clear:left">
-                    <span class="label label-primary">F</span> + <span class="label label-info">C</span>
-                </div>
-                <b><span class="label label-primary">F</span> - População Fixa</b>
-                <div style="margin-bottom: 5px; margin-left:30px; clear:left">
-                    <code><b>{POP_FIXA}</b> pessoas</code> <small>- Altere em Configurações</small>
-                </div>
-                <div style="margin-top: 15px">
-                    <!--h4>Informações sobre o cálculo</h4-->
-                    <div class="alert alert-success text-justify">
-                        A <strong>População Flutuante</strong> deve ser preenchida com uma <b>média diária</b>.<p style="margin-top:5px"><small>Por exemplo, se fazem <mark><b>7 dias</b></mark> desde a última medição e em apenas um dia houve uma reunião da qual compareceram <mark><b>14 pessoas</b></mark>, o valor a ser preenchido deverá ser <mark><b>2 pessoas</b></mark>, que corresponde à média de pessoas que passaram pela unidade por dia do período. </small></p>
-                    </div>
+                    ( <span class="label label-info">B</span> x <span class="label label-info">C</span> + <span class="label label-warning">D</span> x <span class="label label-warning">E</span> )
                 </div>
             </div>
         </div>
