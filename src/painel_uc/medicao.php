@@ -145,6 +145,8 @@
                     $pop_flut_tot+= $linha['pop_flut'];
                     $dias_tot    += $diff_dias;
                     
+                    $med_pes    = ($linha['permanencia'] > $diff_dias) ? $litros / ($uc['pop_fixa'] * $diff_dias + $linha['pop_flut'] * $diff_dias) : $litros / ($uc['pop_fixa'] * $diff_dias + $linha['pop_flut'] * $linha['permanencia']);
+                    
                     /* 
                      * Mostrar Medições a Tabela
                      */
@@ -157,7 +159,8 @@
                     $tpl->TR_DIA_SEM    = getDiaSemana($linha['data_leitura']);
                     $tpl->TR_POP_FLU    = $linha['pop_flut'];
                     $tpl->TR_MED_DIA    = $med_Litro_dia;
-                    //$tpl->TR_MED_PES    = round($med_Litro_dia / ($uc['pop_fixa'] + $linha['pop_flut']) * 100) / 100;
+                    $tpl->TR_PERM       = ($linha['permanencia'] > $diff_dias) ? $diff_dias : $linha['permanencia'];
+                    $tpl->TR_MED_PES    = round($med_pes * 100) / 100;
                     $tpl->TR_OBS        = $linha['obs'];
                     $i++;
                     $tpl->block('TABLEROW_INPUT');                    
@@ -179,12 +182,14 @@
                     $tpl->TR_DATA       = setDateDiaMesAno($data_final) . " " . $mes_ref;
                     $tpl->TR_MEDICAO    = $med_fin;
                     $tpl->TR_CONSUMO    = tratarValor(($med_fin - $med_ant) * 1000);
-                    $tpl->TR_CONSUMO_T  = ($med_fin - $med_ant) * 1000;
+                    $tpl->TR_CONSUMO_T  = $l = ($med_fin - $med_ant) * 1000;
                     $tpl->TR_DIAS_UT    = $d = (int)floor( (strtotime($data_final) - $data_ant) / (60 * 60 * 24));
                     $tpl->TR_DIA_SEM    = getDiaSemana($data_final);
                     $tpl->TR_POP_FLU    = 0;
                     $tpl->TR_MED_DIA    = $m = ($d > 0) ?  round(($med_fin - $med_ant) * 1000 / $d * 100) / 100 : round(($med_fin - $med_ant) * 1000 / 1 * 100) / 100;
-                    //$tpl->TR_MED_PES    = round($m / $uc['pop_fixa'] * 100) / 100;
+                    $tpl->TR_PERM       = 0;
+                    $med_pes            = $l / ($uc['pop_fixa'] * $d);
+                    $tpl->TR_MED_PES    = round($med_pes * 100) / 100;
                     $tpl->TR_OBS        = "Data de leitura constante na Nota : " . setDateDiaMesAno($data_final) . " " . $mes_ref;
                     $con_litros        += ($med_fin - $med_ant) * 1000;
                     $dias_tot          += $d;
@@ -213,7 +218,8 @@
                 $tpl->TR_DIA_SEM    = getDiaSemana($data_final);
                 $tpl->TR_POP_FLU    = 0;
                 $tpl->TR_MED_DIA    = $m = round(($med_fin - $med_ini) * 1000 / $d * 100) / 100;
-                //$tpl->TR_MED_PES    = round($m / $uc['pop_fixa'] * 100) / 100;
+                $tpl->TR_PERM       = $d;
+                $tpl->TR_MED_PES    = round($m / $uc['pop_fixa'] * 100) / 100;
                 $tpl->TR_OBS        = "Data de leitura constante na Nota : " . setDateDiaMesAno($data_final) . " " . $mes_ref;
                 $tpl->block('TABLEROW_INPUT');
                 $tpl->TF_TOTAL      = tratarValor(($med_fin - $med_ini) * 1000);

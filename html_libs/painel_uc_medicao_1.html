@@ -15,7 +15,7 @@
         data.addColumn({type:'string', role:'tooltip', 'p': {'html': true}}); // annotationText col.
         data.addRows([{CHARTDATA}]);
         var options = {
-            title: 'Medições do Hidrômetro',
+            title: 'Leituras do Hidrômetro',
             legend: { position: "none" },
             hAxis: {title: 'Dias do período', titleTextStyle: {color: '#47A3DA'}, baselineColor: 'blue', format:'d MMM y', minValue: new Date({DATA_INIC})},
             vAxis: {titleTextStyle: {color: '#47A3DA'}}, pointSize: 5,
@@ -248,9 +248,9 @@
             </div>
             <div class="col-md-4" align="right">
                 <h4>
-                    <a href="src/painel_uc/medicao.php?mes={MES_ANT}&ano={ANO_ANT}" class="btn btn-warning muda-periodo">&Lt;</a> 
+                    <a href="src/painel_uc/medicao.php?mes={MES_ANT}&ano={ANO_ANT}" class="btn btn-warning muda-periodo"><i class="fa fa-2x fa-arrow-circle-left"></i></a> 
                     <span style="text-decoration: underline">{DATA_INI} a {DATA_FIN}</span> 
-                    <a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="btn btn-warning muda-periodo">&Gt;</a>
+                    <a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="btn btn-warning muda-periodo"><i class="fa fa-2x fa-arrow-circle-right"></i></a>
                 </h4>
             </div>
         </div>
