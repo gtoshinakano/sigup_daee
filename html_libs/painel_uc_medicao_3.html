@@ -30,7 +30,7 @@
                             <th>Data de Leitura</th>
                             <th class="text-center">Dia</th>
                             <th class="text-center">Leitura</th>
-                            <th class="text-center">Consumo<br />no Período <br /><span class="label label-default">A</span></th>
+                            <th class="text-center">Consumo<br />no Período <br /><span class="label label-danger">A</span></th>
                             <th class="text-center">Pop. Fixa<br /><span class="label label-info">B</span></th>
                             <th class="text-center">Dias Úteis<br /><span class="label label-info">C</span></th>
                             <th class="text-center">População<br />Flutuante<br /><span class="label label-warning">D</span></th>
@@ -100,10 +100,10 @@
                             <td></td>
                             <td></td>
                             <td align='center'><b>{TF_TOTAL} L</b></td>
-                            <td></td>
+                            <td align='center'><i class="fa fa-user-times" style="font-size: 17px;"></i> {POP_FIXA}</td>
                             <td align='center'><b><span id='tot-dias'>{TOT_DIAS}</span> dias</b></td>
-                            <td align='center'><b><span id='tot-flut'>{POP_FLUT_SUM}</span></b></td>
-                            <td></td>
+                            <td align='center'><b><span id='tot-flut'>{POP_FLUT_SUM}</span> pessoas</b></td>
+                            <td align="center"><b><span id='tot-perm'></span> dias</b></td>
                             <td align='center'><code><span id='med-l-dia'></span></code></td>
                             <td align='center'><code><span id='med-p-dia'></span></code></td>
                         </tr>
@@ -115,7 +115,7 @@
                     <h2>Observações</h2>
                 </div>
                 <p>
-                    <b><span class="label label-default">A</span> - Consumo no período</b> - Diferença entre a leitura atual com a anterior. É a quantidade em litros de água fornecida pela concessionária de um período a outro.
+                    <b><span class="label label-danger">A</span> - Consumo no período</b> - Diferença entre a leitura atual com a anterior. É a quantidade em litros de água fornecida pela concessionária de um período a outro.
                 </p>
                 <p>
                     <b><span class="label label-info">B</span> - População Fixa</b> - Quantidade fixa de pessoas que usufruem diariamente da consumidora. <code><b>{POP_FIXA}</b> pessoas</code> <small>- Altere em Configurações</small>
@@ -134,7 +134,7 @@
                 </p>
                 <div style="margin-left:30px">
                     <div style="padding-bottom: 3px; border-bottom:1px solid #333; width: 20px; float: left">
-                        <span class="label label-default">A</span>
+                        <span class="label label-danger">A</span>
                     </div>
                     <div style="padding-bottom: 3px; float: left">
                         &nbsp;<code>L/Dia</code>
@@ -148,7 +148,7 @@
                 </p>
                 <div style="margin-left:30px">
                     <div style="padding-bottom: 3px; border-bottom:1px solid #333; width: 145px; float: left" class="text-center">
-                        <span class="label label-default">A</span>
+                        <span class="label label-danger">A</span>
                     </div>
                     <div style="padding-bottom: 3px; float: left">
                         &nbsp;<code>L/Pessoa/Dia</code>
