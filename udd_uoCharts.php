@@ -33,7 +33,8 @@
 			$queryVerif = mysql_query("SELECT id FROM daee_udds WHERE SHA1(id) = '".$_GET['chave']."'");
 			if(mysql_num_rows($queryVerif) == 1)	{	
 
-				$id = mysql_fetch_array($queryVerif)['id'];			
+				$id = mysql_fetch_array($queryVerif);
+                                $id = $id['id'];
 				/*********************************
 				 MOSTRAR INFORMAÇÕES DO RELATÓRIO
 				**********************************/

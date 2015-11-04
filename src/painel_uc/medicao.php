@@ -266,6 +266,7 @@
             
             
             $tpl->block('RESULTS');
+            $tpl->block('OUTROS_DADOS');
             
             /*
              * Mostrar formulário
