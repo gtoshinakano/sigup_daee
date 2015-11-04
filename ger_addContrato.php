@@ -14,7 +14,7 @@
 	
 	$tpl = new Template('html_libs/template.html');
 	
-	$tpl->addFile('SECONDMENU','html_libs/ger_secondMenu.html');
+	$tpl->addFile('SECONDMENU','html_libs/udd_secondMenu.html');
 	
 	
 	if(!isset($_GET['form'])){

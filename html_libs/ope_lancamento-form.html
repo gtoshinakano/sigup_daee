@@ -12,9 +12,11 @@
 			<div class="aviso">
 				{AVISO}
 			</div>
-			<form name="addNota" method="post" action="ope_lancamento.php"id="lanc-form">
+                    
+                        <div class="col-md-8 col-md-offset-2" style="border:solid 1px #ccc">
+                            <form name="addNota" method="post" action="ope_lancamento.php" id="lanc-form" style="padding: 20px">
 				<fieldset>
-					<legend>Registro da Unidade Consumidora *</legend>
+                                    <p>Registro da Unidade Consumidora *</p>
 					<select name="rgi" {DISABLE_RGI}> 
 						<!-- BEGIN EACH_OPTGROUP -->
 							<optgroup label="{CONTNOME}">
@@ -28,16 +30,16 @@
 					<div id="combo"></div>
 				</fieldset>
 				<fieldset>
-					<legend>Número da Nota * e complemento</legend>
+					<p>Número da Nota * e complemento</p>
 					<input type="text" name="nota" value="{NOTAVAL}" maxlength="20" /> <small>Complemento :</small><input type="text" name="compl" value="{COMPLVAL}" maxlength="20" />
 				</fieldset>		
 				<fieldset>
-					<legend>Mês de Referência * e outras datas <em>dd/mm/aaaa</em></legend>
+					<p>Mês de Referência * e outras datas <em>dd/mm/aaaa</em></p>
 					
-					<table width="80%">
+					<table border="0" class="table table">
 						<tr>
-							<td width="18%">Referência*:</td>
-							<td width="45%">
+                                                    <td ><p>Referência*:</p></td>
+							<td>
 								<select name="mes_ref" class="data_ref" {DISABLE_DATAREF}>
 									<!-- BEGIN EACH_MESREF -->
 										<option value="{MES}">{MESNOME}</option>
@@ -53,43 +55,43 @@
 							<td><input type="checkbox" name="mantem-data_ref" id="mantem-data_ref" class="mantem-select" {CHECKED_DATA} /><label for="mantem-data_ref">manter mês de referência</label></td>
 						</tr>
 						<tr>
-							<td>Emissão*:</td>
+                                                    <td><p>Emissão*:</p></td>
 							<td><input type="text" value="{EMISSAO}" name="emissao" class="emissao" maxlength="10" size="10" {DISABLE_EMIS} /></td>
 							<td><input type="checkbox" name="mantem-emissao" id="mantem-emissao" class="mantem-text" {EMISCHK} /><label for="mantem-emissao">manter data de emissão</label></td>						</tr>
 						<tr>
-							<td>Vencimento*:</td>
+							<td><p>Vencimento*:</p></td>
 							<td><input type="text" value="{VENCTO}" name="vencto" class="vencto" maxlength="10" size="10" {DISABLE_VENC} /></td>
 							<td><input type="checkbox" name="mantem-vencto" id="mantem-vencto" class="mantem-text" {VENCCHK} /><label for="mantem-vencto">manter data de vencimento</label></td>
 						</tr>
 						<tr>
-							<td>Saída ADA:</td>
+                                                    <td><p>Saída ADA:</p></td>  
 							<td><input type="text" value="{SAIDA}" name="saida" class="saida" maxlength="10" size="10" {DISABLE_SAID} /></td>
 							<td><input type="checkbox" name="mantem-saida" id="mantem-saida" class="mantem-text" {SAIDACHK} /><label for="mantem-saida">manter data de saída</label></td>
 						</tr>
 					</table>
 				</fieldset>			
 				<fieldset>
-					<legend>Consumo e Valor *</legend>
-					Consumo: <input type="text" value="{CONSVAL}" name="consumo" />{TIPOCONS}
+                                    <p>Consumo e Valor *></p>
+                                    <p>Consumo:</p><input type="text" value="{CONSVAL}" name="consumo" />{TIPOCONS}
 					<br />
-					Valor*: R$ <input type="text" value="{VALORVAL}" name="valor" />
+                                        <p>Valor*: R$</p> <input type="text" value="{VALORVAL}" name="valor" />
 				</fieldset>
 				<fieldset>
-					<legend>Autuação</legend>
-					<table width="80%">
+                                    <p>Autuação</p>
+					<table border="0" class="table table">
 						<tr>
-							<td width="18%">Provisória:</td>
-							<td width="45%"><input type="text" value="{PROVISORIA}" name="prov" class="prov" size="10" {DISABLE_PROV} /></td>
+                                                    <td><p>Provisória:</p></td>
+							<td><input type="text" value="{PROVISORIA}" name="prov" class="prov" size="10" {DISABLE_PROV} /></td>
 							<td><input type="checkbox" name="mantem-prov" id="mantem-prov" class="mantem-text" {PROVCHK} /><label for="mantem-prov">manter número de provisória</label></td>
 						</tr>
 					</table>
 				</fieldset>
 				<fieldset>
-					<legend>Observações referentes à Nota</legend>
-					<table width="80%">
+                                    <p>Observações referentes à Nota</p>
+					<table border="0" class="table table">
 						<tr>
-							<td width="18%" valign="top">Obs:</td>
-							<td width="77%"><textarea name="obs" cols="50" rows="7" >{OBS}</textarea></td>
+                                                    <td valign="top"><p>Obs:</p></td>
+							<td><textarea name="obs" cols="50" rows="7" >{OBS}</textarea></td>
 							
 						</tr>
 					</table>
@@ -99,8 +101,9 @@
 					<input type="reset" value="Resetar" />
 				</div>
 			</form>
+                    </div>
 		</div>
 	</div>
 	<input type="hidden" id="hidden-val" />
-	</br>
+	
 </div>

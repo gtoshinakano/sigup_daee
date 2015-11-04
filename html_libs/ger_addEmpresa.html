@@ -1,39 +1,38 @@
 <div class="content">
 	<div class="inner-content">
-		<h2>Cadastrar Empresa</h2>
-		<ul>
-			<li>Antes de cadastrar uma nova empresa, verifique abaixo se a mesma já se encontra cadastrada no sistema.</li>
-		</ul>
+            <p class="text-success"> <strong style="font-size:25px">Cadastrar Empresa</strong></p>
+		
+			<p class="text-info">Antes de cadastrar uma nova empresa, verifique abaixo se a mesma já se encontra cadastrada no sistema.</p>
+		
 
 		<div id="simple-table">
-			<div class="prosseguir">
-				<a href="ger_addEmpresa.php?form">prosseguir ao formulário de cadastro >></a>
-			</div>		
-			<table class="borda-simples" width="100%">
-				<tr>
-					<th>
-						ID
-					</th>
-					<th>
-						NOME
-					</th>					
-					<th>
-						CNPJ
-					</th>
-					<th>
-						DESCRIÇÃO
-					</th>
-					<th>
-						REPRESENTANTE
-					</th>
-					<th>
-						CONTATO
-					</th>
+			
+				<!--a href="ger_addEmpresa.php?form">prosseguir ao formulário de cadastro >></a-->
+  <ul class="pager">
+  <li class="previous">
+    <a href="ger_addEmpresa.php?form">Prosseguir ao formulário de cadastro &rarr;</a>
+  </li>
+  </ul>
+					
+			 <table border="2" bordercolor="DarkSeaGreen" class="table table-hover">
+                            
+                            <tr class="success">
+					<th>ID</th>
+                                        
+					<th>NOME</th>
+                                        
+					<th>CNPJ</th>
+                                        
+					<th>DESCRIÇÃO</th>
+                                        
+					<th>REPRESENTANTE</th>
+                                        
+					<th>CONTATO</th>
 				</tr>
 				
 				<!-- BEGIN EACH_EMPRESA -->
 				<tr>	
-					<td align="center">{EMPID}</td>
+					<td>{EMPID}</td>
 					<td>{EMPNOME}</td>
 					<td>{EMPCNPJ}</td>
 					<td>{EMPDESC}</td>
@@ -42,9 +41,14 @@
 				<tr>
 				<!-- END EACH_EMPRESA -->
 			</table>
-			<div class="prosseguir">
-				<a href="ger_addEmpresa.php?form">prosseguir ao formulário de cadastro >></a>
-			</div>
+			
+				<!--a href="ger_addEmpresa.php?form">prosseguir ao formulário de cadastro >></a-->
+                                <ul class="pager">
+                                    <li class="previous">
+                                      <a href="ger_addEmpresa.php?form">Prosseguir ao formulário de cadastro &rarr;</a>
+                                    </li>
+                                </ul>
+			
 		</div>
 	</div>
 	</br>

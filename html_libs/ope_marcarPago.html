@@ -1,22 +1,25 @@
 <div class="content">
 	<div class="inner-content">
-		<h2>Marcar Notas como Pagas</h2>
-		<p><b>Escolha um outro período</b>:</p>
-		<ul class="side-list">
+		<p class="text-success">
+                    <strong style="font-size:25px">Marcar Notas como Pagas</strong>
+                </p>
+		<p class="text-info">Escolha um outro período:</p>
+		<ul class="nav nav-pills">
 			<!-- BEGIN EACH_MESLIST -->
 			<li><a href="ope_marcarPago.php?mes={MESLISTNUM}">{MESLIST}</a></li>
 			<!-- END EACH_MESLIST -->
 		</ul>
-		<br style="clear:both" />
-		<br />
-		<h2>Notas marcadas como não pagas de {PERIODO}:</h2>
-		<p><b>Digite a data de pagamento</b>: <input type="text" name="data" maxlength="10"></p>
+		
+		
+		<p class="text-success">
+                    <strong style="font-size:25px">Notas marcadas como não pagas de {PERIODO}:</strong></p>
+                <p class="text-info"><strong>Digite a data de pagamento</strong>: <input type="text" name="data" maxlength="10"></p>    
 		
 		<!-- BEGIN EACH_CONTRATO -->
-		<div class="separator">
+		
 			<h3>{AUTOS}</h3>{SQL}
-			<div class="simple-table">
-				<table class="tabela" width="100%">
+			
+				<table class="table table-hover" border="1" bordercolor="DarkSeaGreen">
 					<thead>
 						<tr>
 							<th>N° DA NOTA</th>
@@ -56,10 +59,10 @@
 					</tbody>					
 				</table>
 				
-			</div>
-		</div>
-		<!-- END EACH_CONTRATO -->
+			
 		
+		<!-- END EACH_CONTRATO -->
+	   <div class="row"><br style="clear:both" /></div>	
 	</div>
-	</br>
+ 	
 </div>

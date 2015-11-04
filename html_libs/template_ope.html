@@ -5,38 +5,84 @@
 		<meta charset="utf-8">
 		
 		<title>Sistema DAEE - ADA</title>
-		<link type="text/css" rel="stylesheet" href="cssjs_libs/geral.css" />
+		<link type="text/css" rel="stylesheet" href="cssjs_libs/bootstrap.min.css" />
+                <link type="text/css" rel="stylesheet" href="cssjs_libs/bootstrap.css" />
+                
+               <!--menu dropdown--><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+                <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script><!--menu dropdown-->
+
+		<script language="javascript" src="cssjs_libs/bootstrap.min.js"></script>
+                <script language="javascript" src="cssjs_libs/bootstrap.js"></script>
+		<!--script language="javascript" src="cssjs_libs/less.js"></script-->
 		<script language="javascript" src="cssjs_libs/jquery.js"></script>
-		<script language="javascript" src="cssjs_libs/ope_less.js"></script>
+		<!--script language="javascript" src="cssjs_libs/ope_less.js"></script-->
+                
 		{JSCRIPT}
+      
 	</head>
 	<body>
-		<div id="header">
-			<div class="inner">
-                            <h1><img src="images/logo-sigup.jpg"></h1>
-				<a href="udd_relatorioUO.php"><img src="images/logo-daee.png" width="117" height="150"></a>
+            <div class="content">
+
+                  <div class="container-fluid" style="border-bottom:#0077b3 solid 0px; padding-bottom: 8px">
+			<div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                
+                                <div class="col-md-2">
+                                    <img src="images/logo-daee.png" width="117" height="150">
+                                </div>
+                                
+                                <div class="col-md-6"style="border-bottom:#0077b3 solid 0px;">
+                                    <h1><font size="6"><center>Sistema de Gerenciamento de despesas com Utilidade Públicas</center></font></h1>
+                                </div>
+                                        <div class="col-md-2" align="right">
+                                            <img src="images/logo-sigup.jpg">
+                                        </div>
+                                            <div class="col-md-2">
+                                                <img src="images/desperdicio-zero.jpg" width="150">
+                                            </div>
+                            </div>
 			</div>
-		</div>
-		<div id="menu">
-			<ul>
-				<ul>
-					<li style="width:20%"><a href="ope_index.php">PRINCIPAL</a></li>
-					<li style="width:20%"><a href="ope_lancamento.php">LANÇAMENTO POR LISTA</a></li>
-					<li style="width:20%"><a href="ope_assistente.php">ASSISTENTE DE LANÇAMENTO</a></li>
-					<li style="width:20%"><a href="ope_marcarPago.php">EDIÇÃO DE NOTAS</a></li>
-					<li style="width:20%"><a href="logout.php">SAIR</a></li>
-				</ul>
-			</ul>
-		</div>		
+                </div>
+      
+		    <div class="container-fluid" style="border: solid 1px #0077b3;background:#0077b3">
+                    <div class="row">
+                               <div class="col-md-10 col-md-offset-1" style="font-size: 14px;margin-bottom:2px;margin-top: 2px;">
+                                 
+                    <ul class="nav nav-pills">
+				
+					<li><a href="ope_index.php"><font color="#FFF">Principal</font></a></li>
+                                        <li><a href="ope_lancamento.php"><font color="#FFF">Lançamento por lista</font></a></li>
+                                        <li><a href="ope_assistente.php"><font color="#FFF">Assitente de lançamento</font></a></li>
+                                                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><font color="#FFF">Edição de notas</font><b class="caret"></b></a>
+                             <!-- inicio dropdown--><ul class="dropdown-menu">
+                                                          <li><a href="ope_marcarPago.php">Marcar pago</a></li>
+                                                          <li><a href="ope_editarNota.php">Editar notas</a></li>
+                                                          <li><a href="ope_apagarNota.php">Apagar notas</a></li>
+                                                    </ul>
+                                                </li><!-- fim dropdown-->
+                                                                    
+                                        <!--li><a href="ope_marcarPago.php"><font color="#FFF">Contas não lançadas</font></a></li-->
+                                        <li><a href="ope_lancamento.php?limpar"><font color="#FFF">Limpar valores mantidos no formulário</font></a></li>
+                                        <li><a href="logout.php"><font color="#FFF">Sair</font></a></li>
+				
+                    </ul>
+                            </div>
+                       
+                    </div>
+                    </div>
 			{MENU}
-		<div>
+		
 			{SECONDMENU}
-			<div id="conteudo">
+			<div class="content">
+                            <div class="col-md-10 col-md-offset-1">
 				
 				{CONTEUDO}
 			
-			</div>
-		</div>
-		{EXECTIME}
-	</body>
+                            </div>
+                        </div>
+                        
+            </div>
+            {EXECTIME}
+            </body>
 </html>

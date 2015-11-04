@@ -2,22 +2,25 @@
 	<div class="inner-content">
 		
 		<!-- BEGIN TABLE_BODY -->
-		<h2>Editar Notas</h2>
-		<p><b>Escolha um outro período</b>:</p>
-		<ul class="side-list">
+		<p class="text-success">
+                    <strong style="font-size:25px">Editar Notas</strong>
+                </p>
+		<p class="text-info">Escolha um outro período:</p>
+		<ul class="nav nav-pills">
 			<!-- BEGIN EACH_MESLIST -->
 			<li><a href="ope_editarNota.php?mes={MESLISTNUM}">{MESLIST}</a></li>
 			<!-- END EACH_MESLIST -->
 		</ul>
 		<br style="clear:both" />
 		<br />
-		<h2>Notas marcadas como não pagas de {PERIODO}:</h2>
-		
+		<p class="text-success">
+                    <strong style="font-size:25px">Notas marcadas como não pagas de {PERIODO}:</strong>
+                </p>
 		<!-- BEGIN EACH_CONTRATO -->
 		<div class="separator">
 			<h3>{AUTOS}</h3>{SQL}
 			<div class="simple-table">
-				<table class="tabela" width="100%">
+				<table class="table table-hover" border="1" bordercolor="DarkSeaGreen">
 					<thead>
 						<tr>
 							<th>N° DA NOTA</th>
@@ -65,7 +68,7 @@
 
 		<p>Por motivos de segurança é possível editar apenas um campo por vez. Se necessário clique novamente em <b>Editar Notas</b> e escolha a nota que deseja alterar.</p>
 		<h3>Informações Atuais da Nota</h3>
-		<table class="tabela" width="100%">
+		<table class="table table-hover" border="1" bordercolor="DarkSeaGreen">
 			<thead>
 				<tr>
 					<th>N° DA NOTA</th>

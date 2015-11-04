@@ -1,40 +1,27 @@
 <div class="content">
 	<div class="inner-content">
-		<h2>Cadastrar Novo Autos Processo</h2>
-		<ul>
-			<li>Antes de cadastrar um novo Autos/Processo, verifique abaixo se o mesmo já se encontra cadastrado no sistema.</li>
-		</ul>
+            <p class="text-success"> <strong style="font-size:25px">Cadastrar Novo Autos Processo</strong></p>
+		
+            <p class="text-info">Antes de cadastrar um novo Autos/Processo, verifique abaixo se o mesmo já se encontra cadastrado no sistema.</p>
+		
 
-		<div id="simple-table">
-			<div class="prosseguir">
-				<a href="ger_addContrato.php?form">prosseguir ao formulário de cadastro >></a>
-			</div>		
-			<table class="borda-simples" width="100%">
-				<tr>
-					<th>
-						ID
-					</th>
-					<th>
-						TÍTULO
-					</th>					
-					<th>
-						UDD
-					</th>
-					<th>
-						CONTRATO
-					</th>
-					<th>
-						EMPRESA
-					</th>
-					<th>
-						LICITAÇÃO
-					</th>
-					<th>
-						VIGÊNCIA
-					</th>
-					<th>
-						CADASTRADO EM
-					</th>
+		
+			<ul class="pager">
+                            <li class="previous">
+				<a href="ger_addContrato.php?form">Prosseguir ao formulário de cadastro &rarr;</a>
+                            </li>
+                        </ul>
+			 <table border="2" bordercolor="DarkSeaGreen" class="table table-hover">
+                            
+                            <tr class="success">
+					<th>ID</th>
+					<th>TÍTULO</th>
+					<th>UDD</th>
+					<th>CONTRATO</th>
+					<th>EMPRESA</th>
+					<th>LICITAÇÃO</th>
+					<th>VIGÊNCIA</th>
+					<th>CADASTRADO EM</th>
 				</tr>
 				
 				<!-- BEGIN EACH_CONTRATO -->
@@ -50,10 +37,12 @@
 				<tr>
 				<!-- END EACH_CONTRATO -->
 			</table>
-			<div class="prosseguir">
-				<a href="ger_addContrato.php?form">prosseguir ao formulário de cadastro >></a>
-			</div>
+			
+            <ul class="pager">
+                            <li class="previous">
+				<a href="ger_addContrato.php?form">Prosseguir ao formulário de cadastro &rarr;</a>
+                            </li>
+            </ul>
 		</div>
 	</div>
-	</br>
-</div>
+	
