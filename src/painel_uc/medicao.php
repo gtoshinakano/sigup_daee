@@ -69,7 +69,16 @@
             $nota_id      = $ret[1][4];
             $continue = true;
         }else{
-            $continue = false;
+            $sql_ultimo = "SELECT mes_ref, ano_ref FROM daee_notas WHERE uc=$ucid AND data_medicao IS NOT NULL ORDER BY data_medicao DESC LIMIT 1";
+            $queryUltimo = mysql_query($sql_ultimo);
+            if(mysql_num_rows($queryUltimo) == 1){
+                $linha      = mysql_fetch_array($queryUltimo);
+                $mes_ref    = (intval($linha['mes_ref']) == 12) ? 1 : $linha['mes_ref'] + 1;
+                $ano_ref    = (intval($linha['mes_ref']) == 12) ? $linha['ano_ref'] + 1 : $linha['ano_ref'];
+                //$continue = true;
+                header("Location: medicao.php?mes=$mes_ref&ano=$ano_ref");
+            }else
+                $continue = false;
         }
         $time_inicial   = strtotime($data_inicial);
         $time_final     = strtotime($data_final);
