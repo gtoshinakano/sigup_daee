@@ -68,7 +68,7 @@
             $consumo_fin  = $ret[1][2];
             $nota_id      = $ret[1][4];
             $continue = true;
-        }else{ 
+        }else{
             $continue = false;
         }
         $time_inicial   = strtotime($data_inicial);
@@ -97,7 +97,7 @@
             $tpl->ANO_POS   = ($getMes == 12 && $getAno < Date('Y')) ? $getAno+1 : $getAno;
             
             $ultima_data    = ($data_final == Date('Y-m-d')) ? date('Y-m-d', strtotime("+1 day")) : $data_final;
-            $sqlPontos = "SELECT m.* FROM sys_medicao m WHERE m.uc = $ucid AND m.data_leitura >= '$data_inicial' AND m.data_leitura < '$ultima_data' ORDER BY m.data_leitura";
+            $sqlPontos = "SELECT m.* FROM sys_medicao m WHERE m.uc = $ucid AND m.data_leitura > '$data_inicial' AND m.data_leitura <= '$ultima_data' ORDER BY m.data_leitura";
             $queryPontos = mysql_query($sqlPontos);
             /*
              * Mostrar TABLEROW_FIXO e Primeiro ponto do gráfico
@@ -120,6 +120,7 @@
                 $pop_flut_tot= 0;
                 $dias_tot    = 0;
                 $data_ant    = strtotime($data_inicial);
+                $ultima_data;
                 $i = 1;
                 /*
                  * Mostrar pontos no Gráfico
@@ -136,6 +137,7 @@
                     $diff_dias  = (int)floor( (strtotime($linha['data_leitura']) - $data_ant) / (60 * 60 * 24)); // Dias decorridos entre pontos
                     $med_Litro_dia= ($diff_dias > 0) ? round($litros / $diff_dias * 100) / 100 : round($litros / 1 * 100) / 100;
                     $data_ant   = strtotime($linha['data_leitura']);
+                    $ultima_data= $linha['data_leitura'];
                     
                     $tooltip    = "<b>" . setDateDiaMesAno($linha['data_leitura']) . "</b> Leitura <b>" . $linha['leitura'] . " {TIPOMEDIDA}</b><br />" . " Consumo desde a última medição<br />$diff_dias dias.<br /><b>" . $diferenca. "{TIPOMEDIDA} = " . $litros . " L ( $med_Litro_dia L/dia )</b><br /><b>". $linha['user'] .":</b> " . $linha['obs'];
                     $chart_data.= "[" . convertDateToGoogle($linha['data_leitura']) . ", " . $linha['leitura'] . ", '" . $con_periodo . " {TIPOMEDIDA}', '$tooltip'],";
@@ -145,7 +147,7 @@
                     $pop_flut_tot+= $linha['pop_flut'];
                     $dias_tot    += $diff_dias;
                     
-                    $med_pes    = ($linha['permanencia'] > $diff_dias) ? $litros / ($uc['pop_fixa'] * $diff_dias + $linha['pop_flut'] * $diff_dias) : $litros / ($uc['pop_fixa'] * $diff_dias + $linha['pop_flut'] * $linha['permanencia']);
+                    $med_pes    = ($diff_dias > 0) ? $litros / ($uc['pop_fixa'] * $diff_dias + $linha['pop_flut'] * $diff_dias) : $litros / ($uc['pop_fixa'] * $diff_dias + $linha['pop_flut'] * $linha['permanencia']);
                     
                     /* 
                      * Mostrar Medições a Tabela
@@ -167,7 +169,7 @@
 
                 }
                 $tpl->CHARTDATA = substr($chart_data, 0, -1) ;//Sem vírgula no final
-                $tpl->CHARTDATA.= ($consumo_fin > 0) ? ",[" . convertDateToGoogle($data_final) . ", " . $med_fin . ", '". tratarValor($med_fin - $med_ini) ."{TIPOMEDIDA}', '<b>$mes_ref</b><br />Leitura constante na nota " . setDateDiaMesAno($data_final) . "<br />Final: $med_fin {TIPOMEDIDA}<br />Consumido: ". tratarValor($med_fin - $med_ini) ." {TIPOMEDIDA} ']" : "";
+                $tpl->CHARTDATA.= ($consumo_fin > 0 && $data_final != $ultima_data) ? ",[" . convertDateToGoogle($data_final) . ", " . $med_fin . ", '". tratarValor($med_fin - $med_ini) ."{TIPOMEDIDA}', '<b>$mes_ref</b><br />Leitura constante na nota " . setDateDiaMesAno($data_final) . "<br />Final: $med_fin {TIPOMEDIDA}<br />Consumido: ". tratarValor($med_fin - $med_ini) ." {TIPOMEDIDA} ']" : "";
                  
                 $diff = $med_fin - $med_ini;
                 $tpl->CON_PERIODO = round($diff * 100) / 100;
@@ -176,7 +178,7 @@
                 /* 
                  * Mostrar Ultima nota na Tabela
                  */
-                if($consumo_fin > 0){
+                if($consumo_fin > 0 && $data_final != $ultima_data){
                     
                     $tpl->TR_INDEX      = $i;
                     $tpl->TR_DATA       = setDateDiaMesAno($data_final) . " " . $mes_ref;
