@@ -96,6 +96,42 @@
         
     }
     
+    /*
+     * Desenhar Gráfico de Datas
+     */
+    function drawModalChart(begin, end, value) {
+        
+        var dataTable = new google.visualization.DataTable();
+        dataTable.addColumn({ type: 'date', id: 'Date' });
+        dataTable.addColumn({ type: 'number', id: 'Periodo' });
+        
+        for(var i = 0; i < end; i++){
+             
+            var tmp_date = new Date(begin.getTime() - (i * 24 * 60 * 60 * 1000));
+            
+            dataTable.addRow( [tmp_date, value] );
+               
+        }
+
+        var chart = new google.visualization.Calendar(document.getElementById('modal-chart'));
+
+        var options = {
+            title: "Dias do período",
+            noDataPattern: {
+                backgroundColor: '#fff',
+                color: '#D9EDF7'
+            },
+            calendar: {
+                daysOfWeek: 'DSTQQSS',
+            },
+            colorAxis: {
+                colors: ['#47A3DA', '#47A3DA']
+            }
+       };
+
+       chart.draw(dataTable, options);
+       
+   }
       
     $(document).ready(function(){
         
@@ -171,7 +207,6 @@
            atualizaTotal();
             
         });
-        atualizaTotal();
         
         function atualizaTotal(){
             
@@ -212,6 +247,12 @@
             
         }
         
+        function runMiddlewares(){
+            
+            atualizaTotal();
+            
+        }
+        
         /*
          * Alterando conteúdo ao abrir Modal
          */
@@ -239,9 +280,19 @@
             $('#modal-mld').html($('#TR-D' + index).text());
             $('#modal-mpd').html($('#TR-P' + index).text());
             
-            drawModalChart();
+            var end = $('.dias-ut[z-index=' + index + ']').attr('max');
+            var begin = new Date( $('input[name=begin-date-' + index + ']').val() );
+            var value = parseFloat($('#TR-P' + index).text());
+            drawModalChart(begin, end, value);
+            
+            $('#show-chart').html($('#modal-chart').html());
+            
+            $('#modal-chart').html("");
             
         });
+        
+        
+        runMiddlewares();
         
     });
 

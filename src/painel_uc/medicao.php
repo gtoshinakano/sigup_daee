@@ -163,6 +163,7 @@
                      */
                     $tpl->TR_INDEX      = $i;
                     $tpl->TR_DATA       = ExplodeDateTime($linha['criado_em']);
+                    $tpl->TR_BDATA      = date("Y", strtotime($linha['data_leitura'])) . ', ' . date("n", strtotime($linha['data_leitura'])) . ', ' . date("j", strtotime($linha['data_leitura']));
                     $tpl->TR_MEDICAO    = $linha['leitura'];
                     $tpl->TR_CONSUMO    = tratarValor($litros);
                     $tpl->TR_CONSUMO_T  = $litros;
@@ -191,6 +192,7 @@
                     
                     $tpl->TR_INDEX      = $i;
                     $tpl->TR_DATA       = setDateDiaMesAno($data_final) . " " . $mes_ref;
+                    $tpl->TR_BDATA      = date("Y", strtotime($data_final)) . ', ' . date("n", strtotime($data_final)) . ', ' . date("j", strtotime($data_final));
                     $tpl->TR_MEDICAO    = $med_fin;
                     $tpl->TR_CONSUMO    = tratarValor(($med_fin - $med_ant) * 1000);
                     $tpl->TR_CONSUMO_T  = $l = ($med_fin - $med_ant) * 1000;
@@ -222,6 +224,7 @@
                 $tpl->VAR_PERIODO = getPorcentagem((($med_fin - $med_ini) * 100 / $consumo_ini) - 100); 
                 $tpl->TR_INDEX      = 1;
                 $tpl->TR_DATA       = setDateDiaMesAno($data_final) . " " . $mes_ref;
+                $tpl->TR_BDATA      = date("Y", strtotime($data_final)) . ', ' . date("n", strtotime($data_final)) . ', ' . date("j", strtotime($data_final));
                 $tpl->TR_MEDICAO    = $med_fin;
                 $tpl->TR_CONSUMO    = tratarValor(($med_fin - $med_ini) * 1000);
                 $tpl->TR_CONSUMO_T  = ($med_fin - $med_ini) * 1000;
