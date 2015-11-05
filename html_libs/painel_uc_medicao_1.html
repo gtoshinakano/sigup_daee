@@ -275,7 +275,9 @@
             $('#modal-dia').html(dia);
             
             var pes = $('.pop-flu[z-index=' + index + ']').val();
-            $('#modal-pes').html( $('#fixa').val() + " + " + pes);
+            var perm = $('.dias-perm[z-index=' + index + ']').val();
+            $('#modal-pes').html( $('#fixa').val());
+            $('#modal-flu').html( pes + " em " + perm + " dias"); //CONTINUA?
             
             $('#modal-username').html($('input[name=modal-user-' + index + ']').val());
             $('#modal-mld').html($('#TR-D' + index).text());

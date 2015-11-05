@@ -237,7 +237,7 @@
                 $tpl->TR_MED_DIA    = $m = round(($med_fin - $med_ini) * 1000 / $d * 100) / 100;
                 $tpl->TR_PERM       = $d;
                 $tpl->TR_MED_PES    = round($m / $uc['pop_fixa'] * 100) / 100;
-                $tpl->TR_OBS        = "Data de leitura constante na Nota : " . setDateDiaMesAno($data_final) . " " . $mes_ref;
+                $tpl->TR_OBS        = "Data de leitura constante na Nota : " . setDateDiaMesAno($data_final) ;
                 $tpl->block('TABLEROW_INPUT');
                 $tpl->TF_TOTAL      = tratarValor(($med_fin - $med_ini) * 1000);
                 $tpl->POP_FLUT_SUM  = 0;
