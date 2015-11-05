@@ -56,7 +56,7 @@
                         <!-- END TABLEROW_FIXO -->
                         <!-- BEGIN TABLEROW_INPUT -->
                         <tr class="tr-{TR_INDEX}">
-                            <td><kbd>{TR_INDEX}</kbd> <a href="{TR_INDEX}" class="open-modal" data-toggle="modal" data-target="#myModal">{TR_DATA} <i class="glyphicon glyphicon-dashboard"></i></a></td>
+                            <td><kbd>{TR_INDEX}</kbd> <a href="{TR_INDEX}" class="open-modal" data-toggle="modal" data-target="#myModal">{TR_DATA}</a></td>
                             <td class="text-center" id="dia-semana-{TR_INDEX}"><span class="label label-warning">{TR_DIA_SEM}</span></td>
                             <td class="text-center" id="modal-med-{TR_INDEX}"><b>{TR_MEDICAO} {TIPOMEDIDA}</b></td>
                             <td class="text-center" id="modal-con-{TR_INDEX}">
@@ -64,6 +64,7 @@
                                 <input type="hidden" class="litros" name='litros-{TR_INDEX}' value="{TR_CONSUMO_T}" />
                                 <input type="hidden" name='modal-obs-{TR_INDEX}' value="{TR_OBS}" />
                                 <input type="hidden" name='begin-date-{TR_INDEX}' value="{TR_BDATA}" />
+                                <input type="hidden" name='modal-user-{TR_INDEX}' value="{TR_USERNAME}" />
                             </td>
                             <td class="text-center" width="10%"><i class="fa fa-user-times" style="font-size: 17px;"></i> {POP_FIXA}</td>
                             <td class="text-center">
@@ -217,7 +218,7 @@
         <div class="row" style="margin-top:32px">
             <div class="col-md-10 col-md-offset-1">
                 <div class='rounded' style="padding:10px">
-                    <h4>cada usuário, diariamente :</h4>
+                    <h4>Cada usuário, diariamente :</h4>
                     <table class="table table-striped">
                         <tr>
                             <th width="30%">Consome <code id="cons-hora"></code> litros por hora</th>
@@ -249,7 +250,7 @@
                         </tr>
                         <tr>
                             <th>Lava <code id="kg-roupas"></code> kg de roupas</th>
-                            <td>com uma máquina de lavar com capacidade para 5kg de roupas e consumo de <input type="number" value="135" id="vazao-lava-roupa" style="width:60px" step="0.1" class="input-sm" /> L/lavagem</td>
+                            <td>com máquina de lavar com capacidade para 5kg de roupas e consumo de <input type="number" value="135" id="vazao-lava-roupa" style="width:60px" step="0.1" class="input-sm" /> L/lavagem; ou</td>
                         </tr>
                         <tr>
                             <th>Rega <code id="qtd-jardim"></code> m² de jardim</th>
@@ -302,12 +303,23 @@
                     </div>
                 </div>                
                 <div class="row">
-                    <div class="col-md-4 col-md-offset-2 text-center"><b>Média L/Dia </b><h2><span id="modal-mld"  class="label label-danger"></span></h2></div>
-                    <div class="col-md-4 text-center"><b>Média L/Pessoa/Dia </b><h2><span id="modal-mpd" class="label label-danger"></span></h2></div>
-                </div>
-                <div class="row" style="margin-top:10px">
-                    <div class="col-md-10 col-md-offset-1"><b>Observação: </b> <p>- <span id="modal-obs"></span></p></div>
-                </div>                
+                    <div class="col-md-6">
+                        <h4>Observação: </h4>
+                        <p style="padding-left: 21px"><strong>@<span id="modal-username"></span></strong> <span id="modal-obs"></span></p>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="alert alert-success">
+                            <b>Média L/Dia </b>
+                            <h2><span class="label label-danger"><span id="modal-mld"></span> <i class="fa fa-tint"></i> / <i class="fa fa-sun-o"></i></span></h2>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="alert alert-success">
+                            <b>Média L/Pessoa/Dia </b>
+                            <h2><span class="label label-danger"><span id="modal-mpd"></span> <i class="fa fa-tint"></i> / <i class="fa fa-user"></i> / <i class="fa fa-sun-o"></i></span></h2>
+                        </div>
+                    </div>
+                </div>           
             </div>
         </div>
     </div>

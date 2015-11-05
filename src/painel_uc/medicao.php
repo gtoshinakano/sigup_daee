@@ -164,6 +164,7 @@
                     $tpl->TR_INDEX      = $i;
                     $tpl->TR_DATA       = ExplodeDateTime($linha['criado_em']);
                     $tpl->TR_BDATA      = date("Y", strtotime($linha['data_leitura'])) . ', ' . date("n", strtotime($linha['data_leitura'])) . ', ' . date("j", strtotime($linha['data_leitura']));
+                    $tpl->TR_USERNAME   = $linha['user'];
                     $tpl->TR_MEDICAO    = $linha['leitura'];
                     $tpl->TR_CONSUMO    = tratarValor($litros);
                     $tpl->TR_CONSUMO_T  = $litros;
@@ -193,6 +194,7 @@
                     $tpl->TR_INDEX      = $i;
                     $tpl->TR_DATA       = setDateDiaMesAno($data_final) . " " . $mes_ref;
                     $tpl->TR_BDATA      = date("Y", strtotime($data_final)) . ', ' . date("n", strtotime($data_final)) . ', ' . date("j", strtotime($data_final));
+                    $tpl->TR_USERNAME   = $mes_ref;
                     $tpl->TR_MEDICAO    = $med_fin;
                     $tpl->TR_CONSUMO    = tratarValor(($med_fin - $med_ant) * 1000);
                     $tpl->TR_CONSUMO_T  = $l = ($med_fin - $med_ant) * 1000;
@@ -203,7 +205,7 @@
                     $tpl->TR_PERM       = 0;
                     $med_pes            = $l / ($uc['pop_fixa'] * $d);
                     $tpl->TR_MED_PES    = round($med_pes * 100) / 100;
-                    $tpl->TR_OBS        = "Data de leitura constante na Nota : " . setDateDiaMesAno($data_final) . " " . $mes_ref;
+                    $tpl->TR_OBS        = "Data de leitura constante na Nota : " . setDateDiaMesAno($data_final) ;
                     $con_litros        += ($med_fin - $med_ant) * 1000;
                     $dias_tot          += $d;
                     $i++;
@@ -225,6 +227,7 @@
                 $tpl->TR_INDEX      = 1;
                 $tpl->TR_DATA       = setDateDiaMesAno($data_final) . " " . $mes_ref;
                 $tpl->TR_BDATA      = date("Y", strtotime($data_final)) . ', ' . date("n", strtotime($data_final)) . ', ' . date("j", strtotime($data_final));
+                $tpl->TR_USERNAME   = $mes_ref;
                 $tpl->TR_MEDICAO    = $med_fin;
                 $tpl->TR_CONSUMO    = tratarValor(($med_fin - $med_ini) * 1000);
                 $tpl->TR_CONSUMO_T  = ($med_fin - $med_ini) * 1000;

@@ -277,6 +277,7 @@
             var pes = $('.pop-flu[z-index=' + index + ']').val();
             $('#modal-pes').html( $('#fixa').val() + " + " + pes);
             
+            $('#modal-username').html($('input[name=modal-user-' + index + ']').val());
             $('#modal-mld').html($('#TR-D' + index).text());
             $('#modal-mpd').html($('#TR-P' + index).text());
             
