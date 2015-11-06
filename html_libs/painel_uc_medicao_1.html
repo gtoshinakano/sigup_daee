@@ -297,6 +297,92 @@
         
         runMiddlewares();
         
+        /*
+         * Enviando POST do form de leituras
+         */
+        $("#form-leitura").submit(function(e){
+            
+            e.preventDefault();
+            
+            var invalid  = 0;
+            var alert_txt= "";
+            var leitura  = $('#hidrometro');
+            var flutuante= $('#flutuante');
+            var permanencia = $('#permanencia');
+            var observacao  = $('#obs-leitura').val();
+            var user        = $('#username').val();
+            var ucid        = $('#ucid').val();
+            
+            if( leitura.val() <= leitura.attr('min') || leitura.val() == "" ){
+                
+                invalid++;
+                alert_txt += invalid + " - A medição digitada deve ser maior que " + leitura.attr('min') + ".<br />";
+                
+            }
+            if(flutuante.val() == ""){
+                
+                flutuante.val(0);
+                
+            }
+            if( (flutuante.val() > 0 && permanencia.val() < 1) || (flutuante.val() < 1 && permanencia.val() > 0) ){
+                
+                invalid++;
+                alert_txt += invalid + " - Se a Pop. Flutuante for maior que 1, deve-se preencher o campo Permanência e vice e versa.<br />";
+                
+            }
+            
+            if(invalid > 0){
+                
+                $('#leitura-alert-message').html(alert_txt);
+                $('#form-leitura-alert').show();
+                
+            }else{
+
+                $.post('actions.php', 
+                    {action: "salvar-leitura", 
+                     leitura: leitura.val(), 
+                     user: user, 
+                     ucid:ucid,
+                     flutuante: flutuante.val(),
+                     permanencia: permanencia.val(),
+                     observacao: observacao
+                    }, //Callback
+                function(data){
+                        
+                    //$('#callback').html(data);
+                    if(data == 1){
+                        
+                        $('#conteudo').load('src/painel_uc/medicao.php', function(){
+                            drawChart();
+                            drawChart2();
+                        });
+                        
+                    }else{
+                        
+                        $('#leitura-alert-message').html(data);
+                        $('#form-leitura-alert').show();
+                
+                    }
+                        
+                });
+                
+            }
+            
+        });
+        
+        /*
+         * Verifica se arquivo existe
+         */ /*
+        $.ajax({
+            url:'actions.php',
+            type:'HEAD',
+            success: function() {
+                alert('sim');
+            },
+            error: function() {
+                alert('nao');
+            }
+        }); */
     });
 
 </script>

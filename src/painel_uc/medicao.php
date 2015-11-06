@@ -19,7 +19,9 @@
     
     if(isset($_SESSION['uc'])){
         
-        $ucid = (int) $_SESSION['uc'];
+        $ucid           = (int) $_SESSION['uc'];
+        $tpl->USERNAME  = $_SESSION['usuario'];
+        $tpl->UCID      = $ucid;
         /*
          * Buscando dados da Consumidora no BD
          */
@@ -39,6 +41,7 @@
         $queryDatas = mysql_query($sqlDatas);
         $data_inicial= "";
         $data_final = "";
+        $ultima_data;
         $med_ini    = 0;
         $med_fin    = 0;
         $consumo_ini= 0;
@@ -129,7 +132,6 @@
                 $pop_flut_tot= 0;
                 $dias_tot    = 0;
                 $data_ant    = strtotime($data_inicial);
-                $ultima_data;
                 $i = 1;
                 /*
                  * Mostrar pontos no Gráfico
@@ -288,7 +290,7 @@
             /*
              * Mostrar formulário
              */
-            if($getMes == Date('n') || $getMes == Date('n') - 1 && $quantDias > 31  ){
+            if($getMes == Date('n') || $getMes == Date('n') - 1 && $quantDias > 31 && $ultima_data != Date('Y-m-d') ){
                 
                 $tpl->MED_FIN = $med_fin;
                 $tpl->block('FORM_BLOCK');

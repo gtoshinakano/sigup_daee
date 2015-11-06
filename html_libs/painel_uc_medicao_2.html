@@ -4,13 +4,20 @@
         <div class="page-header">
             <h3>Leituras Independentes</h3>
         </div>
+        <div class="alert alert-danger fade in" id="form-leitura-alert" style="display: none">
+            <strong><span class="glyphicon glyphicon-warning-sign" style="font-size: 26px; margin-right:12px"></span> Atenção! Foram encontrados os seguintes erros:</strong>
+            <p id="leitura-alert-message" style="margin-top:12px; padding-left: 45px"></p>
+            <div id="callback"></div>
+        </div>        
             <p>Realize o seu controle por esta ferramenta para verificar vazamentos, picos de consumo e realizar testes de eficiência. Preencha periodicamente para ter um controle efetivo de sua consumidora. 
             Mais abaixo constam informações da <u>NTS 181 (Norma Técnica da SABESP)</u> e outros como parâmetros de comparação.</p>
         <div style="margin-top:32px;">    
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" id="form-leitura">
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="hidrometro">Medição do Hidrômetro:</label>
-                    <div class="col-sm-2"> 
+                    <div class="col-sm-2">
+                        <input type="hidden" id="username" value="{USERNAME}" />
+                        <input type="hidden" id="ucid" value="{UCID}" />
                         <input type="number" class="form-control" id="hidrometro" min="{MED_FIN}" step="0.01" placeholder="Maior que {MED_FIN}" />
                     </div>
                     <div class="col-sm-8">
@@ -36,23 +43,23 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="flutuante">Permanência:</label>
+                    <label class="control-label col-sm-2" for="permanencia">Permanência:</label>
                     <div class="col-sm-2">
-                        <input type="number" class="form-control"  min="0" max="30" id="flutuante" placeholder="Qtd em Dias" />
+                        <input type="number" class="form-control"  min="0" max="30" id="permanencia" placeholder="Qtd em Dias" />
                     </div>
                     <div class="col-sm-8">
-                        <span style="padding-top: 7px; display: block" data-toggle="tooltip" data-placement="left" title="Permanência em dias da população flutuante"><small><i>* Quantidade média de pessoas que passaram pela unidade por dia <b>desde a última medição</b>.</i></small></span>
+                        <span style="padding-top: 7px; display: block" data-toggle="tooltip" data-placement="left" title="Permanência em dias da população flutuante"><small><i>* Quantidade em dias de <b>permanência da Pop. Flutuante</b>.</i></small></span>
                     </div>
                 </div>                
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="fixa">Observação:</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" placeholder="Digite informações úteis para serem consideradas em posteriores análises (Ex: Reparo de Vazamento)"/>
+                        <input type="text" class="form-control" id="obs-leitura" placeholder="Digite informações úteis para serem consideradas em posteriores análises (Ex: Reparo de Vazamento)"/>
                     </div>
                 </div>                
                 <div class="form-group"> 
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success">Salvar Medição</button>
+                        <button type="submit" class="btn btn-success">Salvar Leitura</button>
                     </div>
                 </div>
             </form>
