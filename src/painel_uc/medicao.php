@@ -290,7 +290,7 @@
             /*
              * Mostrar formulário
              */
-            if($getMes == Date('n') || $getMes == Date('n') - 1 && $quantDias > 31 && $ultima_data != Date('Y-m-d') ){
+            if( $nota_id == 0 && $ultima_data != Date('Y-m-d') ){
                 
                 $tpl->MED_FIN = $med_fin;
                 $tpl->block('FORM_BLOCK');

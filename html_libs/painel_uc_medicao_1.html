@@ -109,7 +109,8 @@
              
             var tmp_date = new Date(begin.getTime() - (i * 24 * 60 * 60 * 1000));
             
-            dataTable.addRow( [tmp_date, value] );
+            var val = (i == 0) ? value : value - 100;
+            dataTable.addRow( [tmp_date, val] );
                
         }
 
@@ -125,7 +126,7 @@
                 daysOfWeek: 'DSTQQSS',
             },
             colorAxis: {
-                colors: ['#47A3DA', '#47A3DA']
+                colors: ['#ABC7F0', '#47A3DA']
             }
        };
 
@@ -316,7 +317,7 @@
             if( leitura.val() <= leitura.attr('min') || leitura.val() == "" ){
                 
                 invalid++;
-                alert_txt += invalid + " - A medição digitada deve ser maior que " + leitura.attr('min') + ".<br />";
+                alert_txt += invalid + " - A medição do hidrômetro deve ser maior que " + leitura.attr('min') + ".<br />";
                 
             }
             if(flutuante.val() == ""){

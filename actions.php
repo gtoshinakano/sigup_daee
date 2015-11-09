@@ -78,13 +78,13 @@ if (getenv("REQUEST_METHOD") == "POST") {
                         
                     }else{
                         
-                        echo 0;
+                        echo "ERRO: Medição inválida";
                         
                     }
                     
                 }else{
                     
-                    echo 0;
+                    echo "ERRO: Faltam argumentos";
                     
                 }
                 break;
