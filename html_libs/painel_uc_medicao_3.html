@@ -4,7 +4,7 @@
         <div class="row" style="margin-top:32px">
             <div class="col-md-3" style="margin-top: 2px">
                 <a href="src/painel_uc/medicao.php?mes={MES_ANT}&ano={ANO_ANT}" class="btn btn-warning muda-periodo">
-                    <b>&Lt; MÊS ANTERIOR</b> <span class="badge">{MES_ANTERIOR}/{ANO_ANT}</span>                
+                    <i class="fa fa-arrow-circle-left"></i><b> MÊS ANTERIOR</b> <span class="badge">{MES_ANTERIOR}/{ANO_ANT}</span>                
                 </a>
             </div>
             <div class="col-md-6 text-center">
@@ -12,7 +12,7 @@
             </div>
             <div class="col-md-3" align="right"  style="margin-top: 2px">
                 <a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="btn btn-warning muda-periodo" id="posterior"> 
-                    <b>MÊS POSTERIOR <span class="badge">{MES_POSTERIOR}/{ANO_POS}</span> &Gt;</b>
+                    <b>MÊS POSTERIOR <span class="badge">{MES_POSTERIOR}/{ANO_POS}</span> </b><i class="fa fa-arrow-circle-right"></i>
                 </a>
             </div>
         </div>
@@ -108,8 +108,8 @@
                             <td align='center'><b>{TF_TOTAL} L</b></td>
                             <td align='center'><i class="fa fa-user-times" style="font-size: 17px;"></i> {POP_FIXA}</td>
                             <td align='center'><b><span id='tot-dias'>{TOT_DIAS}</span> dias</b></td>
-                            <td align='center'><b><span id='tot-flut'>{POP_FLUT_SUM}</span> pessoas</b></td>
-                            <td align="center"><b><span id='tot-perm'></span> dias</b></td>
+                            <td align='center'><b><span id='tot-flut'>{POP_FLUT_SUM}</span></b></td>
+                            <td align="center"><b><span id='tot-perm'></span></b></td>
                             <td align='center'><code><span id='med-l-dia'></span></code></td>
                             <td align='center'><code><span id='med-p-dia'></span></code></td>
                         </tr>
@@ -175,7 +175,7 @@
         <div class="row" style="margin-top:32px">
             <div class="col-md-3" style="margin-top: 2px">
                 <a href="src/painel_uc/medicao.php?mes={MES_ANT}&ano={ANO_ANT}" class="btn btn-warning muda-periodo">
-                    <b>&Lt; MÊS ANTERIOR</b> <span class="badge">{MES_ANTERIOR}/{ANO_ANT}</span>                
+                    <i class="fa fa-arrow-circle-left"></i><b> MÊS ANTERIOR</b> <span class="badge">{MES_ANTERIOR}/{ANO_ANT}</span>                
                 </a>
             </div>
             <div class="col-md-6 text-center">
@@ -183,7 +183,7 @@
             </div>
             <div class="col-md-3" align="right"  style="margin-top: 2px">
                 <a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="btn btn-warning muda-periodo" id="posterior"> 
-                    <b>MÊS POSTERIOR <span class="badge">{MES_POSTERIOR}/{ANO_POS}</span> &Gt;</b>
+                    <b>MÊS POSTERIOR <span class="badge">{MES_POSTERIOR}/{ANO_POS}</span> </b><i class="fa fa-arrow-circle-right"></i>
                 </a>
             </div>
         </div>

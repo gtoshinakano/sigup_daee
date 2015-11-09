@@ -212,35 +212,44 @@
         function atualizaTotal(){
             
             var fixa = parseInt($('#fixa').val());
-            var flut = 0;
+            var flut = [];
             var dias = 0;
-            var perm = 0
+            var perm = [];
             var litros = 0;
-            $('.pop-flu').each(function(){
-                
-                flut += parseInt($(this).val());
-                
-            });
+
             $('.dias-ut').each(function(){
                 
                 dias += parseInt($(this).val());
                 
             });
-            $('.dias-perm').each(function(){
-                
-                perm += parseInt($(this).val());
-                
-            });
+
             $('.litros').each(function(){
                 
                 litros += parseInt($(this).val());
                 
             });
+            $('.pop-flu').each(function(){
+                
+                flut.push( parseInt($(this).val()) );
+                
+            });            
+            $('.dias-perm').each(function(){
+                
+                perm.push( parseInt($(this).val()) );
+                
+            });     
+            
             $('#tot-dias').text(dias);
-            $('#tot-perm').text(perm);
-            $('#tot-flut').text(flut);
+            //$('#tot-perm').text(perm);
+            //$('#tot-flut').text(flut);
+            var flut_formula = 0;
+            for (var i = 0; i < flut.length; i++){
+                
+                flut_formula += flut[i] * perm[i];
+                
+            }
             var med_dia = (dias > 0 ) ? litros/dias : litros;
-            var med_pes = litros / (fixa * dias + flut * perm); //TODO verificar maneira adequada de realizar esta conta
+            var med_pes = litros / (fixa * dias + flut_formula); //TODO verificar maneira adequada de realizar esta conta
             $('#med-l-dia').text(Math.round(med_dia * 100) / 100);
             $('#med-p-dia').text(Math.round(med_pes * 100) / 100);
             
@@ -431,13 +440,13 @@
         <div class="row" style="margin-top:10px;" >
             <div class="col-md-3 col-md-offset-1">
                 <a href="src/painel_uc/medicao.php?mes={MES_ANT}&ano={ANO_ANT}" class="btn btn-warning muda-periodo">
-                    <b>&Lt; MÊS ANTERIOR</b> <span class="badge">{MES_ANTERIOR}/{ANO_ANT}</span>                
+                    <i class="fa fa-arrow-circle-left"></i><b> MÊS ANTERIOR</b> <span class="badge">{MES_ANTERIOR}/{ANO_ANT}</span>                
                 </a>
             </div>
             <div class="col-md-4" id="chart_meta" style="height: 200px"></div>
             <div class="col-md-3" align="right">
                 <a href="src/painel_uc/medicao.php?mes={MES_POS}&ano={ANO_POS}" class="btn btn-warning muda-periodo" id="posterior"> 
-                    <b>MÊS POSTERIOR <span class="badge">{MES_POSTERIOR}/{ANO_POS}</span> &Gt;</b>
+                    <b>MÊS POSTERIOR <span class="badge">{MES_POSTERIOR}/{ANO_POS}</span></b> <i class="fa fa-arrow-circle-right"></i>
                 </a>
             </div>
         </div>

@@ -129,7 +129,6 @@
                 $med_ant = $med_ini;
                 $con_periodo = 0;
                 $con_litros  = 0;
-                $pop_flut_tot= 0;
                 $dias_tot    = 0;
                 $data_ant    = strtotime($data_inicial);
                 $i = 1;
@@ -155,7 +154,6 @@
                     $med_ant    = $linha['leitura'];
                     $med_fin    = ($linha['leitura'] > $med_fin) ? $linha['leitura'] : $med_fin;
                     
-                    $pop_flut_tot+= $linha['pop_flut'];
                     $dias_tot    += $diff_dias;
                     
                     $med_pes    = ($diff_dias > 0) ? $litros / ($uc['pop_fixa'] * $diff_dias + $linha['pop_flut'] * $diff_dias) : $litros / ($uc['pop_fixa'] * $diff_dias + $linha['pop_flut'] * $linha['permanencia']);
@@ -218,7 +216,6 @@
                  * Mostrar Totais na tabela
                  */
                 $tpl->TF_TOTAL      = tratarValor($con_litros);
-                $tpl->POP_FLUT_SUM  = $pop_flut_tot;
                 $tpl->TOT_DIAS  = $dias_tot;
                 
             }elseif($med_fin > 0){
@@ -242,7 +239,6 @@
                 $tpl->TR_OBS        = "Data de leitura constante na Nota : " . setDateDiaMesAno($data_final) ;
                 $tpl->block('TABLEROW_INPUT');
                 $tpl->TF_TOTAL      = tratarValor(($med_fin - $med_ini) * 1000);
-                $tpl->POP_FLUT_SUM  = 0;
                 
             }else{
 
