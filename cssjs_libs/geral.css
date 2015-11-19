@@ -291,6 +291,15 @@ margin:20px 0 0;
     padding-top: 50px;
 }
 
+.emp{
+    visibility: hidden;
+}
+
+.panel-body{
+    padding:10px 0 0 0;
+}
+
+
 /**************  ****************/
 
 
@@ -513,4 +522,13 @@ ul.ano-block li a{
 }
 ul.ano-block li a:hover{
 	background-color:#ccc;
+}
+
+
+@font-face {
+    font-family: "arial1";
+    src: url("fonts/arial.ttf") format("truetype");
+}
+.paragrafo{
+     font-family: "Verdana";
 }

@@ -1,23 +1,75 @@
-		body { font-family: serif; font-size: 10pt;  }
-		p { 	text-indent:30px; text-align: justify; margin-bottom: 6pt;  margin-top:6pt; font-family: serif; padding-left: 5px; line-height:19pt}
+@font-face {
+    font-family: "arial1";
+    src: url("fonts/arial.ttf") format("truetype");
+}
+@font-face {
+    font-family: "verdana1";
+    src: url("fonts/verdana.ttf") format("truetype");
+}
 
-		h2{font-family: serif;}
-		h3{font-family: serif;}
-		
-		hr {	width: 70%; height: 1px; 
-			text-align: center; color: #999999; 
-			margin-top: 8pt; margin-bottom: 8pt; }
 
-		a {	color: #000066; font-style: normal; text-decoration: underline; 
-			font-weight: normal; }
 
-		ul {	text-indent: 5mm; margin-bottom: 9pt; }
-		ol {	text-indent: 5mm; margin-bottom: 9pt; }
+body { font-family: serif; font-size: 10pt;  }
+p { 	text-indent:30px; text-align: justify; margin-bottom: 6pt;  margin-top:6pt; font-family: serif; padding-left: 5px; line-height:19pt}
 
-		th{ font-family: arial; text-align:left; padding-left:8px; font-size: 11pt;}
-		td{ font-family: arial; padding-left:8px}
-		small{ font-family: serif;}
-		
-		.serif-small{font-family: serif; font-size: 8pt;}
-		.bold-blue{color:#00b2ec; font-weight:bold}
+h2{font-family: serif;}
+h3{font-family: serif;}
 
+hr {	width: 70%; height: 1px; 
+     text-align: center; color: #999999; 
+     margin-top: 8pt; margin-bottom: 8pt; }
+
+a {	color: #000066; font-style: normal; text-decoration: underline; 
+    font-weight: normal; }
+
+ul {	text-indent: 5mm; margin-bottom: 9pt; }
+ol {	text-indent: 5mm; margin-bottom: 9pt; }
+
+th{ font-family: arial; text-align:left; padding-left:8px; font-size: 11pt;}
+td{ font-family: arial; padding-left:8px}
+small{ font-family: serif;}
+
+.serif-small{font-family: serif; font-size: 8pt;}
+.bold-blue{color:#00b2ec; font-weight:bold}
+
+
+.cabecalho{
+    color:#000000;
+    font-family:arial;
+}
+.cabecalho .brasao{
+    background: blue;
+    float: left;
+    width: 100px;
+}
+.cabecalho #texto{
+    float: right;
+    text-align: center;
+    padding-top:  15px;
+}
+.cabecalho #titulo{
+    font-size:13pt;
+    font-weight: bold;
+}
+.cabecalho #subtitulo{
+    font-size:11pt;
+    font-weight: bold;
+}
+.cabecalho #endereco, cabecalho #site {
+    font-size:8pt;
+}
+.texto{
+    color:#000000;
+    padding: 145px 10px 0 10px;
+}
+.texto p{
+    text-indent:0px; 
+    text-align: left; 
+   // font-family: "arial1";
+    padding-left: 0px; 
+    line-height:19pt
+}
+.paragrafo{
+     font-family: "verdana1";
+}
+.text-center{text-align:center}

@@ -6,7 +6,7 @@
         <div class="container">
             <form name="contas" method="get"  class="container form-horizontal" >
                 <div class="form-group">
-                    
+
                     <label for="inputEmail3" class="col-sm-3 ">Mês</label>
                     <label for="inputEmail3" class="col-sm-7 ">Ano</label>
                     <div class="col-sm-3">
@@ -43,12 +43,17 @@
 
 
 
-        <form name="rel_contas" method="get"  >
+        <form name="rel_contas" method="get" action="pdf_notas.php" >
             <!-- BEGIN TABELA -->
             <div class="simple-table notas" id="simple-table notas" >
+                
+                <p class="paragrafo">Hi Assim sendo, proponho o envio da presente à DOF, para o devido pagamento</p>
+                <p class="">Hi Assim sendo, proponho o envio da presente à DOF, para o devido pagamento</p>
 
-                <h3>RELAÇÃO DE CONTAS {NMES_REF}/{NANO_REF}</h3>
-                <table class="borda-simples " width="100%">
+                <h3>RELAÇÃO DE CONTAS <span class="mes" >{NMES_REF}</span> / <span class="ano" >{NANO_REF} </span></h3>
+               <!-- <label class="emp" >{NRAZAO} </label>-->
+                 <span class="emp" >{NRAZAO} </span>
+                <table class="borda-simples "  width="100%">
                     <tr>
                         <th width="3%" rowspan="2"><input type="checkbox" id="marcar-todos" name="marcar-todos" class="notas-select" /> <label for="tudo" ></label> </th>
                         <th width="5%" rowspan="2">{NTH_RGI}</th>
@@ -67,9 +72,10 @@
                         <!-- BEGIN EACH_NO -->
                         <tr>	
                             <td align="center"><input type="checkbox" name="notas[]" value="{NID}" id="{LANCTO}" class="notas-select marcar"  title="{NVALOR}"/><label for="mantem-data_ref" ></label></td>
+                           
                             <td align="center">{NNUMERO}</td>
                             <td align="center">{NUNIDADE}</td>
-                            <td align="center">{NID} {NMUNICIPIO}</td>
+                            <td align="center">{NMUNICIPIO}</td>
                             <td align="center">{NVENCIMENTO}</td>
                             <td align="center">{LANCTO2}</td>
                             <td align="center">{NEMPRESA}</td>
@@ -78,11 +84,12 @@
                             <!-- END EACH_CONSUMO -->
                             <td align="center"><input type="TEXT" name="{NINDICE}" value="{NVALOR}" hidden="">R$ {NVALOR_C}</td>
                         </tr>
+                      
                         <!-- END EACH_NO -->
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="2" align="center"><h4><input type="checkbox" name="in" value="1" id="notas_ref" class="notas-select marcar"  title="{NVALOR}"/> Tem Atestado </h4></td>
+                            <td colspan="2" align="center"><h4><input type="checkbox" name="tem_atestado" value="1" id="notas_ref" class="notas-select marcar"  title="{NVALOR}"/> Tem Atestado </h4></td>
                             <td align="center"><!--{UCTOTAL}--></td>
                             <td colspan="3"><span class="div-extenso"></span></td>
                             <td  align="center"><h4>TOTAL GERAL SELECIONADO</h4></td>
@@ -90,138 +97,147 @@
                         </tr>
                     </tfoot>
                 </table>
+                
                 <div class="submitter">
                     <input type="button" value="Próximo" name="nextButton" class="btn btn-primary" />
                 </div>
             </div>
 
             <!-- END TABELA -->
-            <div class="info ">
-                <div class="info_left">
 
-                    <h3>RELAÇÃO DE CONTAS {NMES_REF}/{NANO_REF}</h3>
-                    <div class="form-group">
-                        <label for="autos" class="col-sm-4 control-label">Autos: </label>
-                        <div class="col-sm-8">
-                            <input type="number" id="autos" name="autos" placeholder="Nº Autos"  min="0">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="prov" class="col-sm-4 control-label">Prov.: </label>
-                        <div class="col-sm-8">
-                            <input type="number" id="prov" name="prov" placeholder="Prov" min="0">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="ninfo" class="col-sm-4 control-label">INFORMAÇÃO ADA </label>
-                        <div class="col-sm-8">
-                            <input type="text" id="ninfo" name="ninfo" placeholder="Nº da informação">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="nfls" class="col-sm-4 control-label">Planilhas de consumo: </label>
-                        <div class="col-sm-8">
-                            <input type="text" id="nfls" name="nfls" placeholder="nº das fls">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="natestado" class="col-sm-4 control-label"> Atestado de Pagamento  </label>
-                        <div class="col-sm-8">
-                            <input type="text" id="natestado" name="natestado" placeholder="Nº do atestado">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="natest2" class="col-sm-4 control-label"></label>
-                        <div class="col-sm-8">
-                            <br/> <br/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="natestado" class="col-sm-2 control-label"> Apreciação </label>
-                        <div class="col-sm-10">
-                            <textarea id="texto_info" name="texto_info" title="texto_info" >
-                                <p>Ás fls. [Nº fls] autuamos as Planilhas de consumo e o Atestado de Pagamento ADA n.º [Nº atestado], 
-                                    relativos ao fornecimento de energia alta e baixa tensão pela [empresa], para diversas unidades do DAEE, 
-                                    referente ao mês de [mes] de [ano], com vencimento nas datas [dd/mm/yyyy] e [dd/mm/yyyy], 
-                                    no valor total de [R$ valor ] de acordo com as contas originais em apenso.</p>
-                            </textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="natest2" class="col-sm-4 control-label"></label>
-                        <div class="col-sm-8">
-                            <br/> <br/> <br/> <br/>
-                        </div>
-                    </div>
-                    <input type="button" value="Voltar" name="prevButton" class="btn btn-primary"/>
-                    <button type="button" id="info" class="btn btn-primary ">Enviar</button>
+            
+         
+                
+                <div class="container">    
+                    <div class="info   ">
+                        <h3>RELAÇÃO DE CONTAS {NMES_REF}/{NANO_REF}</h3>
+                        
 
+                        <div class="form-group col-sm-12">
+                            <div class="col-md-offset-2 col-sm-2 text-right">
+                                <select class="form-control " id="selec">
+                                    <option value="0">Processo</option>
+                                    <option value="1">Autos</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4 input_autos">
+                                <input type="number" class="form-control" id="autos" name="autos" placeholder="Nº Autos"  ng-model="autos" min="0">
+                            </div>
+                        </div>
+
+                       
+                        
+                        <div class="form-group col-sm-12">
+                            <label for="autos" class="col-sm-4 control-label text-right ">Autos: </label>
+                            <div class="col-sm-4">
+                                <input type="number" class="form-control" id="autos" name="autos" placeholder="Nº Autos"  ng-model="autos" min="0">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="prov" class="col-sm-4 control-label text-right">Prov.: </label>
+                            <div class="col-sm-4">
+                                <input type="number" class="form-control"  id="prov" name="prov" ng-model="prov" placeholder="Prov" min="0">
+                            </div>
+                        </div>
+                       <!-- <div class="form-group col-sm-12">
+                            <label for="ninfo" class="col-sm-4 control-label text-right">INFORMAÇÃO ADA </label>
+                            <div class="col-sm-4">
+                                <input type="text"class="form-control"  id="ninfo" name="ninfo" ng-model="ninfo" placeholder="Nº da informação">
+                            </div>
+                        </div>-->
+                        
+                        <div class="form-group col-sm-12">
+                            <label for="ninfo" class="col-sm-4 control-label text-right">INFORMAÇÃO ADA </label>
+                            <div class="col-sm-4">
+                                <div class="row">
+                                     <div class="col-xs-8">
+                                        <input type="text" class="form-control" placeholder="Nº da informação">
+                                    </div>
+                                    <div class="col-xs-4">
+                                       <!-- <input type="text" class="form-control" value="/2015">-->
+                                       <strong>  <input class="form-control" type="text" placeholder="/2015" readonly></strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group col-sm-12">
+                            <label for="nfls" class="col-sm-4 control-label text-right">Planilhas de consumo: </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control"  id="nfls" name="nfls" ng-model="nfls" placeholder="nº das fls">
+                            </div>
+                        </div>
+                       <!-- <div class="form-group col-sm-12">
+                            <label for="natestado" class="col-sm-4 control-label text-right"> Atestado de Pagamento  </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control"  id="natestado" name="natestado" ng-model="natestado" placeholder="Nº do atestado">
+                            </div>
+                        </div>-->
+                       <div class="form-group col-sm-12">
+                            <label for="ninfo" class="col-sm-4 control-label text-right">Atestado de Pagamento </label>
+                            <div class="col-sm-4">
+                                <div class="row">
+                                     <div class="col-xs-8">
+                                        <input type="text" class="form-control" placeholder="Nº do atestado">
+                                    </div>
+                                    <div class="col-xs-4">
+                                       <!-- <input type="text" class="form-control" value="/2015">-->
+                                       <strong>  <input class="form-control" type="text" placeholder="/2015" readonly></strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br/><br/><br/><br/>
+
+                        <ul class="pager">
+                            <li class="previous" ><a href="#"><span aria-hidden="true" >&larr;</span> Voltar</a></li>
+                            <li class="next "><a href="#">Próximo <span aria-hidden="true">&rarr;</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tiny">
+                        <div class="form-group atestado ">
+                            <div class="col-sm-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading"><strong> <span class="glyphicon glyphicon-edit" ></span> Atestado</strong> </div>
+                                    <div class="panel-body">
+                                        <textarea id="texto_atest" name="texto_atest" class="tinyMCE" title="texto_atest" >
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group infor">
+                            <div class="col-sm-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading"><strong> <span class="glyphicon glyphicon-edit" ></span> Infomação</strong> </div>
+                                    <div class="panel-body">
+                                        <textarea id="texto_info" name="texto_info" class="tinyMCE" title="texto_info" >
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="pager">
+                            <li class="previous" ><a href="#"><span aria-hidden="true" >&larr;</span> Voltar</a></li>
+                            <li class="next "><a href="#">Próximo <span aria-hidden="true">&rarr;</span></a></li>
+                            <li class="next "><button class="btn btn-default" type="submit">Button</button></li>
+                        </ul>
+                    </div>
                 </div>
-
-
-
-
+       
         </form>
 
-        <div class="info_right">
-            <div class="info">
-                <div class="cabecalho">
-                    <div class="brasao"><img src="images/relatorio_brasao.png" alt=""  ></div>
-                    <div id="texto"> 
-                        <span id="titulo">SECRETARIA DE  SANEAMENTO E RECURSOS HÍDRICOS</span><br/>
-                        <span id="subtitulo">DEPARTAMENTO DE ÁGUAS E ENERGIA ELÉTRICA</span><br/>
-                        <span id="endereco">Rua:Boa Vista,170/175-telefone 011-3293-8200/8201- CEP 01014-000 – Centro – São Paulo-SP</span><br/>
-                        <span id="site"> www.daee.sp.gov.br</span>
-                    </div>
 
-                </div>
-                <br/><br/><br/>
-                <div class="texto">
-
-                    <p><strong>AUTOS: [Nº] - PROV. [Nº]</strong></p>
-                    <p><strong>INTERESSADO: ADA</strong></p>
-                    <br/>
-                    <p><strong><u>INFORMAÇÃO ADA/[Nº]/[ANO]</u></strong></p>
-                    <p><strong>Senhor Responsável pela ADA:</strong></p>
-                    <p>Ás fls. [Nº fls] autuamos as Planilhas de consumo e o Atestado de Pagamento ADA n.º [Nº atestado], relativos ao fornecimento de energia alta e baixa tensão pela [empresa], para diversas unidades do DAEE, referente ao mês de [mes] de [ano], com vencimento nas datas [dd/mm/yyyy] e [dd/mm/yyyy], no valor total de [R$ valor ] de acordo com as contas originais em apenso.</p>
-                    <p class="text-center">Assim sendo, proponho o envio da presente à DOF, para o devido pagamento</p>
-                    <p class="text-center"><strong> ADA</strong>, [dd] de [mes] de [ano].</p>
+        <!-- BEGIN PDF -->
+        <H1> </H1>
+        <!-- END PDF -->
 
 
-                    <p class="text-center"> <strong> [Usuario]</strong></p>
-                    <p class="text-center"><strong>  [Cargo I]</strong></p>
-                    <p class="text-center"> <strong> [PRONT]</strong></p>
-                    <p><strong>Senhor Diretor da DSD:</strong></p>
-                    <p>1 - Ciente e de acordo</p>
-                    <p> 2 - Propondo o envio à <strong>DOF</strong>, para pagamento.</p>
-
-                    <p class="text-center"> <strong>ADA</strong>, [dd] de [mes] de [ano].</p>
-
-                    <br/><br/>
-                    <p class="text-center"> <strong>RENALDO DO AMARAL</strong><br/>
-                        <strong>  RESPONSÁVEL PELA ADA</strong><br/>
-                        <strong>  PRONT. 9396</strong></p>
-
-                    <p><strong>À DOF</strong></p>
-
-                    <p class="text-center">  <strong>DSD</strong>, de [mes] de [ano].</p>
-
-                    <br/><br/>
-                    <p class="text-center"> <strong>NELSON GARBELOTTO</strong>,<br/>
-                        <strong> DIRETOR DA DSD</strong>,<br/>
-                        <strong>PRONT. 3973</strong>,</p>
-                    <br/><br/><br/> <br/><br/><br/>
-
-                </div>
-            </div>
-        </div>
     </div>
-    <!-- BEGIN PDF -->
-    <H1> </H1>
-    <!-- END PDF -->
-
-
-</div>
 
 
 

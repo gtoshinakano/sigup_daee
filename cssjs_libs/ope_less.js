@@ -3,37 +3,27 @@ var baseName = url.split("/");
 var simpleBaseName = baseName[baseName.length - 1];
 
 $(document).ready(function () {
+    var atestado = false;
+    var extenso;
 
     $(".mantem-text").change(function () {
         //ope_assistente lancamento
         var inputClass = $(this).attr('name').replace('mantem-', '');
         if ($(this).is(':checked')) {
-
             $('.' + inputClass).attr('readonly', true);
-
         } else {
-
             $('.' + inputClass).attr('readonly', false);
-
         }
-
     });
 
     $(".mantem-select").change(function () {
-
         var inputClass = $(this).attr('name').replace('mantem-', '');
         if ($(this).is(':checked')) {
-
             $('.' + inputClass).attr('disabled', true);
-
         } else {
-
             $('.' + inputClass).attr('disabled', false);
-
         }
-
     });
- 
 
     $(".simple-table tbody tr:odd").css("background-color", "#C6D3EE");
 
@@ -48,20 +38,20 @@ $(document).ready(function () {
 
     //somar valores
     $("input[name='notas[]']").change(function () {
-      //  $('.info').show();
+        //  $('.info').show();
         var soma = 0;
         $("input[name='notas[]']:checked").each(function () {
             soma += parseFloat($(this).attr("title"));
         });
         $(".div-total").html(tratarValor(soma.toFixed(2), true));
-    //   $(".div-extenso").html(ValorPorExtenso(soma));
+            extenso = ValorPorExtenso(soma);
+        //   $(".div-extenso").html(ValorPorExtenso(soma));
     });
-    
+
     $("input[name=marcar-todos]").change(function () {
         if (this.checked) {
             $("input[name='notas[]']").each(function () {
                 this.checked = true;
-              
             });
             $("input[name='notas[]']").change();
         }
@@ -72,30 +62,90 @@ $(document).ready(function () {
             });
         }
     });
-    
-     $('.info').hide();
-     $("input[name=nextButton]").click(function(){
-      $('.simple-table').hide();
-        $('.info').show();
-    });
-    $("input[name=prevButton]").click(function(){
-        $('.simple-table').show();
-      //  $('.info').hide();
-    });
-    
-    
-    $('#info').click(function(){
-      //  alert('teste');
-      //  $('#texto_info').val("<p style='text-align: center;'>teste</p>");
-    });
-  tinymce.init({
-      selector:'#texto_info',
-       language: "pt_BR"
-  });
 
+  ////  $('.info').hide();
+    $("input[name=nextButton]").click(function () {
+   ////     $('.simple-table').hide();
+   ////     $('.info').show();
+    });
+    $("input[name=prevButton]").click(function () {
+   ////     $('.simple-table').show();
+   ////     $('.info').hide();
+    });
 
- 
-   
+  //  $('#info').click(function () {
+        //  alert('teste');
+        //  $('#texto_info').val("<p style='text-align: center;'>teste</p>");
+  //  });
+    tinymce.init({
+        theme: "modern",
+        skin: 'light',
+        selector: 'textarea.tinyMCE',
+        language: "pt_BR",
+        plugins: [
+            "advlist lists image charmap",
+            "searchreplace visualblocks",
+            "insertdatetime media table contextmenu paste colorpicker autoresize"
+        ],
+        toolbar: "insertfile undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | image",
+        content_style: "p{font-size:14px;font-family:Arial;color:#555}"
+    });
+
+  ////  $('.atestado').hide();
+  ////  $('.infor').hide();
+   //// $('.tiny').hide();
+    $('input[name=tem_atestado]').change(function () {
+        if (this.checked) {
+            atestado = true;
+        } else {
+            atestado = false;
+        }
+    });
+    
+    $('#selec').change(function () {
+        $("#selec option:selected").each(function () {
+            alert($(this).text() + " ");
+        });
+    });
+  
+    $('.next').click(function () {
+        var nfls = $("input[name=nfls]").val();
+        var natestado = $("input[name=natestado]").val();
+        var empresa = $(".emp").html();
+        var mes = $(".mes").html();
+        var ano = $(".ano").html();
+        var total = $(".div-total").html();
+
+    ////    $('.info').hide();
+     ////   $('.tiny').show();
+     ////   $('.infor').show();
+
+        var ates = "";
+        if (atestado === true) {
+            //  alert(atestado);
+            ates = "Atestamos para fins de pagamento, que a <strong>" + empresa + "</strong>" +
+                    "faz jus ao recebimento da importância de <strong>R$ " + total + " ( " + extenso + " )</strong>," +
+                    "correspondente ao fornecimento de energia elétrica para diversas unidades do <strong>DAEE</strong>, " +
+                    "durante o mês de <strong>" + mes + " de " + ano + "</strong>, com vencimento nas datas [dd/mm/yyyy] a [dd/mm/yyyy]. " +
+                    "As contas originais encontram-se em apenso.";
+            $('.atestado').show();
+        }
+        else {
+            $('.atestado').hide();
+            ates = "";
+        }
+
+        tinymce.editors[0].setContent(ates);
+        var informacao = "Ás fls " + nfls +
+                " autuamos as Planilhas de consumo e o Atestado de Pagamento ADA n.º  " + natestado + "," +
+                " relativos ao fornecimento de energia alta e baixa tensão pela <strong>" + empresa +
+                "</strong>, para diversas unidades do DAEE, " +
+                "referente ao mês de <strong>" + mes + " de " + ano + "</strong>, com vencimento nas datas [dd/mm/yyyy] a [dd/mm/yyyy]," +
+                " no valor total de <strong>R$ " + total + "</strong>" +
+                "  de acordo com as contas originais em apenso.";
+
+        tinymce.editors[1].setContent(informacao);
+    });
 });
 
 function tratarValor(val, dinheiro) {
@@ -134,67 +184,61 @@ function number_format(number, decimals, dec_point, thousands_sep) {
     return s.join(dec);
 }
 
-
-
 function ValorPorExtenso(valor) {
 
-if (!valor) return 'Zero';
+    if (!valor)
+        return 'Zero';
 
-var singular = ["centavo", "real", "mil", "milhão", "bilhão", "trilhão", "quatrilhão"];
-var plural = ["centavos", "reais", "mil", "milhões", "bilhões", "trilhões", "quatrilhões"];
+    var singular = ["centavo", "real", "mil", "milhão", "bilhão", "trilhão", "quatrilhão"];
+    var plural = ["centavos", "reais", "mil", "milhões", "bilhões", "trilhões", "quatrilhões"];
+    var c = ["", "cento", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"];
+    var d = ["", "dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"];
+    var d10 = ["dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezesete", "dezoito", "dezenove"];
+    var u = ["", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove"];
+    var z = 0;
 
-var c = ["", "cento", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"];
-var d = ["", "dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"];
-var d10 = ["dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezesete", "dezoito", "dezenove"];
-var u = ["", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove"];
+    valor = valor.toString();
+    valor = number_format(valor, 2, '.', '.');
 
-var z = 0;
+    var inteiro = valor.split(/\./);
 
-valor = valor.toString();
-valor = number_format(valor, 2, '.', '.');
+    for (var i = 0; i < inteiro.length; i++) {
+        inteiro[i] = inteiro[i].toString();
+        for (var ii = inteiro[i].length; ii < 3; ii++) {
+            inteiro[i] = '0' + inteiro[i];
+        }
+    }
 
-var inteiro = valor.split(/\./);
+    var fim = inteiro.length - (inteiro[inteiro.length - 1] > 0 ? 1 : 2);
+    var rc, rd, ru;
+    var r, t;
+    var rt = "";
+    var valor_split;
+    for (var i = 0; i < inteiro.length; i++) {
 
-for (var i = 0; i < inteiro.length; i++) {
-inteiro[i] = inteiro[i].toString();
-for (var ii = inteiro[i].length; ii < 3; ii++) {
-inteiro[i] = '0' + inteiro[i];
-}
-}
+        valor = inteiro[i];
+        valor_split = valor.match(/./g);
 
-var fim = inteiro.length -( inteiro[inteiro.length-1] > 0 ? 1 : 2 );
+        rc = ((valor > 100) && (valor < 200)) ? "cento" : c[valor_split[0]];
+        rd = (valor_split[1] < 2) ? "" : d[valor_split[1]];
+        ru = (valor > 0) ? ((valor_split[1] == 1) ? d10[valor_split[2]] : u[valor_split[2]]) : "";
 
-var rc, rd, ru;
-var r, t;
-var rt = "";
-var valor_split;
-for (var i = 0; i < inteiro.length; i++) {
+        r = rc + ((rc && (rd || ru)) ? " e " : "") + rd + ((rd && ru) ? " e " : "") + ru;
+        t = inteiro.length - 1 - i;
 
-valor = inteiro[i];
-valor_split = valor.match(/./g);
-
-rc = ((valor > 100) && (valor < 200)) ? "cento" : c[valor_split[0]];
-rd = (valor_split[1] < 2) ? "" : d[valor_split[1]];
-ru = (valor > 0) ? ((valor_split[1] == 1) ? d10[valor_split[2]] : u[valor_split[2]]) : "";
-
-r = rc + ((rc && (rd || ru)) ? " e " : "") + rd + ((rd && ru) ? " e " : "") + ru;
-t = inteiro.length - 1 - i;
-
-r = r + (r ? " " + (valor > 1 ? plural[t] : singular[t]) : "");
-if (valor == "000") z++;
-else if (z > 0) z--;
-
-if ((t==1) && (z>0) && (inteiro[0] > 0)) {
-r = r + ((z>1) ? " de " : "") + plural[t];
-}
-if (r) {
-rt = rt + (((i > 0) && (i <= fim) && (inteiro[0] > 0) && (z < 1)) ? ( (i < fim) ? ", " : " e ") : " ") + r;
-}
-
-}
-
-return (rt ? rt : "zero");
-
+        r = r + (r ? " " + (valor > 1 ? plural[t] : singular[t]) : "");
+        if (valor == "000")
+            z++;
+        else if (z > 0)
+            z--;
+        if ((t == 1) && (z > 0) && (inteiro[0] > 0)) {
+            r = r + ((z > 1) ? " de " : "") + plural[t];
+        }
+        if (r) {
+            rt = rt + (((i > 0) && (i <= fim) && (inteiro[0] > 0) && (z < 1)) ? ((i < fim) ? ", " : " e ") : " ") + r;
+        }
+    }
+    return (rt ? rt : "zero");
 }
 
 

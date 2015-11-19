@@ -64,12 +64,12 @@ if (!isset($_GET['notas'])) {
         $tpl->NANO_REF = $ano_ref;
 
         if ($nivel != 1) {
-            $sql = "SELECT  n.*, uo.unidade, uc.compl, emp.nome emp_nome, uc.rgi
+            $sql = "SELECT  n.*, uo.unidade, uc.compl, emp.nome emp_nome, uc.rgi, emp.razao_social emp_rz
                 FROM daee_notas n, daee_uddc uc, daee_udds uo, daee_contratos c, sys_cidade cid, sys_empresas emp 
                 WHERE n.uc=uc.id AND uc.contrato=c.id AND uc.cidade=cid.id AND c.empresa=emp.id  AND uc.uo=uo.id AND c.permissao=$nivel AND emp.id=$emp_id
                 AND n.mes_ref=$mes_ref AND n.ano_ref=$ano_ref AND uc.ativo=1 AND n.pagto='0000-00-00' order by  n.criado DESC ";
         } else {
-            $sql = "SELECT  n.*, uo.unidade, uc.compl, emp.nome emp_nome, uc.rgi
+            $sql = "SELECT  n.*, uo.unidade, uc.compl, emp.nome emp_nome, uc.rgi, emp.razao_social emp_rz
                 FROM daee_notas n, daee_uddc uc, daee_udds uo, daee_contratos c, sys_cidade cid, sys_empresas emp 
                 WHERE n.uc=uc.id AND uc.contrato=c.id AND uc.cidade=cid.id AND c.empresa=emp.id  AND uc.uo=uo.id AND emp.id=$emp_id
                 AND n.mes_ref=$mes_ref AND n.ano_ref=$ano_ref AND uc.ativo=1 AND n.pagto='0000-00-00' order by  n.criado DESC ";
@@ -81,6 +81,9 @@ if (!isset($_GET['notas'])) {
         $count = 0;
         $temConsumo = false;
         switch ($nivel) {
+             case 1:$tpl->NTH_RGI = "NUMERO";
+                $temConsumo = true;
+                break;
             case 2:$tpl->NTH_RGI = "RGI";
                 $temConsumo = true;
                 break;
@@ -104,9 +107,13 @@ if (!isset($_GET['notas'])) {
             $tpl->NMUNICIPIO = $res['compl'];
             $tpl->NVENCIMENTO = date("d/m/Y", strtotime($res['vencto']));
             $tpl->NEMPRESA = $res['emp_nome'];
+            $tpl->NRAZAO = $res['emp_rz'];
             $tpl->LANCTO = $res['criado'];
             $tpl->LANCTO2 = date("d/m/Y", strtotime($res['criado']));
-            ;
+            
+         
+
+          
 
             if ($temConsumo == true) {
                 $tpl->block('EACH_CONSUMO');
