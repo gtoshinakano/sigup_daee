@@ -4,32 +4,32 @@
 		
                 <p class="text-info">Os campos marcados com * devem ser preenchidos obrigatoriamente.</p>
 		
-		<div class="col-md-8 col-md-offset-2" style="border:solid 0px #0078ae; padding:20px;">
+		<div class="col-md-8 col-md-offset-2" style="padding:20px;">
 			<div class="text-error">
 				{ALERTA}
 			</div>
 			<div class="aviso">
 				{AVISO}
 			</div>
-                
-			<form name="addEmpresa" method="post" action="ger_addEmpresa.php?form">
+                <div class="control-group info" style="color:#004499; border: solid 1px #eee; border-left: solid 1px #eee;padding:10px">
+			<form name="addEmpresa" method="post" action="ger_addEmpresa.php?form" >
 				<fieldset>
-                                    <p>Nome da Empresa *</p>
+                                    <p>Nome da Empresa </p>
 					<input type="text" name="nome" />
-				</fieldset>
-				<fieldset>
-                                    <p>CNPJ*<em> Apenas números</em></p>
+				
+				
+                                        <p>CNPJ*<em> Apenas números</em></p>
 					<input type="text" name="cnpj" maxlength="14" />
-				</fieldset>
-				<fieldset>
+				
+				
                                     <p>Descrição *<em> Informações Gerais</em></p>
 					<input type="text" name="desc" />
-				</fieldset>				
-				<fieldset>
+								
+			
                                     <p>Nome de Representante</p>
 					<input type="text" name="represent" />
-				</fieldset>
-				<fieldset>
+				
+			
                                     <p>Contato<em> Número de telefone e/ou endereço de email</em></p>
 					<input type="text" name="contato" />
 				</fieldset>
@@ -38,6 +38,9 @@
 					<input type="reset" value="Resetar" />
 				</div>
 			</form>
+                    
+                </div>
+ 
                 </div>	
 	</div>
 	

@@ -5,71 +5,75 @@
 			<p class="text-info">Os campos marcados com * devem ser preenchidos obrigatoriamente.</p>
 		<div class="col-md-8 col-md-offset-2" style="border:solid 0px #ccc">
 		
-			<div class="alerta">
+			<div class="text-error">
 				{ALERTA}
 			</div>
 			<div class="aviso">
 				{AVISO}
 			</div>
+                    <div class="control-group info" style="color:#004499">
 			<form name="addEmpresa" method="post" action="ger_addContrato.php?form">
-                            <fieldset style="border:solid 1px #eee; padding:20px;">
-                            <fieldset>
+				
+                            <div class="controls" style="border: solid 1px #eee; border-left: solid 1px #eee;padding:3px">
 					<p>Tipo *</p>
 					<input type="radio" name="tipo" value="0" id="id-autos" /> <label for="id-autos">Autos</label>
 					<input type="radio" name="tipo" value="1" id="id-proce" /> <label for="id-proce">Processo</label>
-				</fieldset>
-				<fieldset>
+                            </div>
+                        
+                        <div class="controls" style="border: solid 1px #eee; border-left: solid 1px #eee;padding:3px">
+				
 					<p>Número *</p>
 					<input type="text" name="numero" /> <small>Ex: 43.567 ou 01/2013</small>
-				</fieldset>
-				<fieldset>
+				
+                        </div>
+			 <div class="controls" style="border: solid 1px #eee; border-left: solid 1px #eee;padding:3px">
 					<p>Título do Autos/Processo *</p>
 					<input type="text" name="titulo" />
-				</fieldset>
-				<fieldset>
+			</div>
+			<div class="controls" style="border: solid 1px #eee; border-left: solid 1px #eee;padding:3px">
 					<p>Com Licitação? *</p>
 					<input type="radio" name="licit-bool" value="0" id="s-licit" /> <label for="s-licit">Sem licitação</label>
 					<input type="radio" name="licit-bool" value="1" id="c-licit" /> <label for="c-licit">Com Licitação</label>
-				</fieldset>				
-				<fieldset>
+			</div>				
+			 <div class="controls" style="border: solid 1px #eee; border-left: solid 1px #eee;padding:3px">
 					<p>Empresa *</p>
-					<select name="empresa">
+					<select name="empresa" class="form-control">
 						<!-- BEGIN EACH_EMP -->
 						<option value="{EMPID}">{EMPNOME} - CNPJ {CNPJ}</option>
 						<!-- END EACH_EMP -->
 					</select>	
-				</fieldset>
-				<fieldset>
+                        </div>
+			<div class="controls" style="border: solid 1px #eee; border-left: solid 1px #eee;padding:3px">
 					<p>Serviço Prestado *</p>
 					<input type="radio" name="radioserv" value="0" id="radio-list" checked="checked" /> <label for="radio-list">O serviço já se encontra cadastrado na lista: </label>
-					<select name="servico-list">
+					<select name="servico-list" class="form-control">
 						<!-- BEGIN EACH_SERV -->
 						<option value="{SERVVAL}">{SERVNOME} - {SERVDESC}</option>
 						<!-- END EACH_SERV -->
 					</select>
 					<br />
 					<input type="radio" name="radioserv" value="1" id="radio-new" /> <label for="radio-new">Adicionar novo tipo de serviço: </label>
-					<div class="hidden" id="serv-form" style="background-color:#f2f2f2; margin:5px 10px; padding: 4px">
+					<div class="hidden" id="serv-form" style="background-color:#f2f2f2; margin:5px 10px; padding: 3px">
 						Nome do Serviço <input type="text" name="nome-serv" maxlength="20" /> 
 						<br />
 						Descrição <input type="text" name="desc-serv" size="80" /> 
 					</div>
-				</fieldset>
-				<fieldset>
+                        </div>
+			<div class="controls" style="border: solid 1px #eee; border-left: solid 1px #eee;padding:3px">
 					<p>Unidade Operacional</p>
-					<select name="udd">
+					<select name="udd" class="form-control">
 						<!-- BEGIN EACH_UDD -->
 						<option value="{UDDID}">{UDDSIGLA} - {UDDNOME}</option>
 						<!-- END EACH_UDD -->
 					</select>
 					<small>Caso seja diversas unidades, selecione DAEE</small>
-				</fieldset>				
-				<fieldset>
+			</div>				
+			<div class="controls" style="border: solid 1px #eee; border-left: solid 1px #eee;padding:3px">
 					<p>N° do Contrato</p>
 					<input type="text" name="contrato" /> <small>Ex: 2010/01/001.00 ou Sem Contrato</small>
-				</fieldset>
-				<fieldset>
-					<p>Vigência<em>Início e término de contrato</em></p>
+			</div>
+			<div class="controls" style="border: solid 1px #eee; border-left: solid 1px #eee;padding:3px">
+					<p>Vigência<em> Início e término de contrato</em></p>
 					De: <input type="text" name="vig-de" size="4" maxlength="5"/>
 					/ <select name="de-ano">
 						<!-- BEGIN EACH_ANO1 -->
@@ -77,16 +81,15 @@
 						<!-- END EACH_ANO1 -->
 					</select>
 					<small>Formato: dd/mm / aaaa</small>
-					<br />
+					<br /><br />
 					Até: <input type="text" name="vig-ate" size="4" maxlength="5"/>
 					/ <select name="ate-ano">
 						<!-- BEGIN EACH_ANO2 -->
 						<option value="{ANOVAL}">{ANOVAL}</option>
 						<!-- END EACH_ANO2 -->
 					</select>
-                                       
-				</fieldset>
-				<fieldset>
+			</div>
+			<div class="controls" style="border: solid 1px #eee; border-left: solid 1px #eee;padding:3px">
 					<p>Permissão *</p>
 					<select name="permissao">
 						<!--option value="0">0 - Somente Leitura</option>
@@ -95,14 +98,17 @@
 						<option value="3">3 - Notas de Energia</option>
 						<option value="4">4 - Notas de Telefonia</option>
 						<option value="5">5 - Contratos em Geral</option>
-                                        </select>
-				</fieldset><br/>					
-				<div class="submitter">
+					</select>
+                        </div>
+                            
+			<div class="controls" style="border-bottom: solid 1px #eee; border-left: solid 1px #eee;padding:3px">
 					<input type="submit" value="Enviar" />
 					<input type="reset" value="Resetar" />
-				</div>	
-                            </fieldset>
+			</div>				
 			</form>
+                    </div>
+             
 		</div>
+        </div>
 	
 </div>

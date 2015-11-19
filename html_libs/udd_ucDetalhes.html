@@ -1,5 +1,6 @@
-<div class="content">
-	<div class="inner-content">
+
+    <div class="row">
+	
             <p class="text-success">
                 <strong style="font-size:25px">
                         Unidade Consumidora &rarr; {RGI} de {TIPONOME}</strong>
@@ -10,12 +11,27 @@
                     </select>
                 
                 </p>
-		
-		<div class="right-subcontent">
-			<p class="text-info" style="font-size:20px">Histórico de {ANO}:</p>
-                        <table class="table table-hover" border="3" bordercolor="DarkSeaGreen">
-					<thead>
-						<tr class="success">
+    <div class="row">
+                <div class="col-lg-5" style="border:solid 0px #000">
+			<p class="text-info" style="font-size:20px; text-align:center;">Informações:</p>
+                        <ul style="list-style:none;">
+                            <li>&rarr; <b>RGI/INSTALAÇÃO/NÚMERO:</b> {RGI}</li>
+                            <li>&rarr; <b>Nome Cadastrado:</b> {NOME}</li>
+                            <li>&rarr; <b>Tipo de Conta:</b> {TIPONOME}</li>
+                            <li>&rarr; <b>Empresa:</b> {EMPRESA}</li>
+                            <li>&rarr; <b>Endereço:</b> {ENDERECO}</li>
+                            <li>&rarr; <b>Autos/Processo:</b> {CONTRATO}</li>
+                            <li>&rarr; <b>Unidade:</b> {UNIDADE}</li>
+                            <li>&rarr; <b>Média de {ANO}:</b> R$ {MEDIA} p/ mês</li>
+                            <li>&rarr; <b>Variação do último mês sobre média total:</b> {AUMENTO}</li>
+			</ul>
+		</div>
+                
+         <div class="col-lg-4 col-md-offset-1" style="width:50%;border:solid 0px #000"> 
+                        <p class="text-info" style="font-size:20px; text-align:center">Histórico de {ANO}:</p>
+                        <table class="table table-striped">
+				<thead>
+					<tr>
 						<td rowspan="2" width="5%"></td>
 						<th colspan="3">PAGAMENTOS {ANO}</th>
 					</tr>
@@ -24,7 +40,7 @@
 						<th>VALOR</th>
 						<th>VARIAÇÃO R$</th>
 					</tr>
-				<thead>
+				</thead>
 				<tbody>
 					<!-- BEGIN EACH_MENSAL -->
 					<tr>
@@ -43,29 +59,20 @@
 						<td align="right"><b>{PAGOTOTAL}</b></td>
 						<td align="right"></td>
 					</tr>				
-				<tfoot>
+				</tfoot>
 			</table>
-		</div>
-		<div class="left-content">
-			<p class="text-info" style="font-size:20px">Informações:</p>
-                        <ul style="list-style:none;">
-                            <li>&rarr; <b>RGI/INSTALAÇÃO/NÚMERO:</b> {RGI}</li>
-                            <li>&rarr; <b>Nome Cadastrado:</b> {NOME}</li>
-                            <li>&rarr; <b>Tipo de Conta:</b> {TIPONOME}</li>
-                            <li>&rarr; <b>Empresa:</b> {EMPRESA}</li>
-                            <li>&rarr; <b>Endereço:</b> {ENDERECO}</li>
-                            <li>&rarr; <b>Autos/Processo:</b> {CONTRATO}</li>
-                            <li>&rarr; <b>Unidade:</b> {UNIDADE}</li>
-                            <li>&rarr; <b>Média de {ANO}:</b> R$ {MEDIA} p/ mês</li>
-                            <li>&rarr; <b>Variação do último mês sobre média total:</b> {AUMENTO}</li>
-			</ul>
-		</div>
-		<div id="simple-table" style="clear:both">
+             </div>
+ <p class="text-info" style="font-size:20px">Histórico Financeiro Geral</p>	
+    <div class="row" style="width:50%;border:solid 1px #F00">                    
+           
+        <div id="simple-table" style="clear:both"></div>
+  
 		
-			<p class="text-info" style="font-size:20px">Histórico Financeiro Geral</p>
 			<div class="separator">
 				<div class="hidden" id="hist-financ">
-					<table class="table table-hover" border="3" bordercolor="DarkSeaGreen">
+                <div class="col-lg-6" style="width:50%;border:solid 1px #F00">          
+                                   
+					<table class="table table-striped">
 					<thead>
 						<tr class="success">
 								<th width="5%">MÊS DE <br />REFERÊNCIA</th>
@@ -79,7 +86,7 @@
 								<th>PAGO EM</th>
 								<th>LANÇADO<br /> POR</th>
 							</tr>
-						<thead>
+					</thead>
 						<tbody>
 							<!-- BEGIN EACH_FINANCEIRO -->
 							<tr>
@@ -110,12 +117,18 @@
 						</tfoot>
 					</table>
 				</div>
-			</div>
-			<p class="text-info" style="font-size:20px">Relatório Analítico de Consumo</p>
-			<div class="separator">
-				<div class="right-content" id="chart_div" style="height:500px">
+                        </div>
+    
+       
+                    <div class="col-lg-8" style="border:solid 1px #000">
+			<p class="text-info" style="font-size:20px; text-align:center">Relatório Analítico de Consumo</p>
+			
+				<div class="right-content" id="chart_div">
 				
 				</div>	
+                           
+                    </div>
+                             </div>
 				<div class="left-subcontent">
 					<table class="table table-hover" border="3" bordercolor="DarkSeaGreen">
 					<thead>
@@ -142,6 +155,8 @@
 					</table>
 				</div>
 			</div>
+                        
+                
 			<p class="text-info" style="font-size:20px">Relatório Analítico em Reais</p>
 			<div class="separator">
 				<div class="right-content" id="chart_div2" style="height:500px">
@@ -173,7 +188,7 @@
 					</table>
 				</div>
 			</div>			
-		</div>
+		
 		<center>
 			<input type="button" value="Mostrar Resumo Geral" id="show-resumo">
 		</center>
@@ -181,6 +196,6 @@
 		</div>			
 		<br style="clear:both" />
 		<br />
-	</div>
+</div>          
+            
 	</br>
-</div>

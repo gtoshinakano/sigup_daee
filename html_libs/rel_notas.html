@@ -34,36 +34,38 @@
                                     </select>
                                 </label>
                                 <p style="font-size:20px">Ordenar resultados por</p>
-			<table border="0" class="table table">	
-                                <tr>
-                                    <td><input type="radio" id="criado" name="order_by" value="n.criado" checked="checked" /><label for="criado">Data de lancto.</label></td>
-					
-                                    <td><input type="radio" id="emissao" name="order_by" value="n.emissao" /><label for="emissao">Data de emissão</label></td>
 				
-                                    <td><input type="radio" id="vencto" name="order_by" value="n.vencto" /><label for="vencto">Data de vencto.</label></td>
-                                </tr>  
-                                  <tr>
-                                      <td><input type="radio" id="saida" name="order_by" value="n.saida" /><label for="saida">Data de saída da ADA</label></td>
+                              
+                                <label class="checkbox"><input type="radio" id="criado" name="order_by" value="n.criado" checked="checked" /><label for="criado">Data de lancto.</label></label>
 					
-                                      <td><input type="radio" id="pagto" name="order_by" value="n.pagto" /><label for="pagto">Data de pagto</label></td>
+                                <label class="checkbox"><input type="radio" id="emissao" name="order_by" value="n.emissao" /><label for="emissao">Data de emissão</label></label>
+				
+                                <label class="checkbox"><input type="radio" id="vencto" name="order_by" value="n.vencto" /><label for="vencto">Data de vencto.</label></label>
+                                 
+                                  
+                                <label class="checkbox"><input type="radio" id="saida" name="order_by" value="n.saida" /><label for="saida">Data de saída da ADA</label></label>
 					
-                                      <td><input type="radio" id="consumo" name="order_by" value="n.consumo" /><label for="consumo">Consumo</label></td>
+                                <label class="checkbox"><input type="radio" id="pagto" name="order_by" value="n.pagto" /><label for="pagto">Data de pagto</label></label>
+					
+                                <label class="checkbox"><input type="radio" id="consumo" name="order_by" value="n.consumo" /><label for="consumo">Consumo</label></label>
   
-                                    </tr>               
-						<input type="radio" id="valor" name="order_by" value="n.valor" /><label for="valor">Valor</label>
+                                        
+                                
+                                
+                                <label class="checkbox"><input type="radio" id="valor" name="order_by" value="n.valor" /><label for="valor">Valor</label></label>
 										
-						<input type="radio" id="tipo" name="order_by" value="c.tipo" /><label for="tipo">Tipo de Consumo</label>
+                                <label class="checkbox"><input type="radio" id="tipo" name="order_by" value="c.tipo" /><label for="tipo">Tipo de Consumo</label></label>
 					
-						<input type="radio" id="contrato" name="order_by" value="n.contrato ASC, n.prov" /><label for="contrato">ID de Autos</label>
+                                <label class="checkbox"><input type="radio" id="contrato" name="order_by" value="n.contrato ASC, n.prov" /><label for="contrato">ID de Autos</label></label>
                                     
                             
-						<input type="radio" id="uc" name="order_by" value="n.uc" /><label for="uc">ID de Unidade Consumidora</label>
+                                <label class="checkbox"><input type="radio" id="uc" name="order_by" value="n.uc" /><label for="uc">ID de Unidade Consumidora</label></label>
 					
-						<input type="radio" id="usuario" name="order_by" value="n.usuario" /><label for="usuario">ID de Usuário</label>
+                                <label class="checkbox"><input type="radio" id="usuario" name="order_by" value="n.usuario" /><label for="usuario">ID de Usuário</label></label>
 					
-						<input type="radio" id="uo" name="order_by" value="c.uo" /><label for="uo">ID de Udd. Operacional</label>
+                                <label class="checkbox"><input type="radio" id="uo" name="order_by" value="c.uo" /><label for="uo">ID de Udd. Operacional</label></label>
 			<center style="clear:both">
-                        </table>
+                      
 					<h3>Orientação</h3>
 					<select name="orientacao">
 						<option value="cresc">Crescente</option>
@@ -77,7 +79,7 @@
 						<option value="{FILTER_QUERY}">{FILTER_NAME}</option>
 						<!-- END FILTER_TIPO -->
 					</select>
-					<br />
+					
 					<h3>Data de Lançamento:</h3>
 					<select name="dia-lanc">
 						<option value="">Dia (nulo)</option>
