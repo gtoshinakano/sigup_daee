@@ -189,7 +189,7 @@
                         
                         $data_leitura = $_POST['data-leitura'];
                         $data_leitura = (strlen($data_leitura) == 10) ? getTransformDate($data_leitura) : "";
-                        $leitura      = (int) $_POST['data-leitura'];
+                        $leitura      = (int) $_POST['leitura'];
 					
 			if($invalidos > 0){
 			
