@@ -255,11 +255,25 @@
             
             drawComparacao(Math.round(med_pes * 100) / 100);
             
+            
+            
         }
         
+        /*
+         * Rodar funções após carregar página
+         */
         function runMiddlewares(){
             
             atualizaTotal();
+            $('#hora-diaria').change();
+            $('#vazao-torneira').change();
+            $('#volume-copo').change();
+            $('#vazao-descarga').change();
+            $('#vazao-chuveiro').change();
+            $('#vazao-escova').change();
+            $('#vazao-hidromecanico').change();
+            $('#vazao-lava-roupa').change();
+            $('#volume-rega').change();
             
         }
         
@@ -305,7 +319,6 @@
         });
         
         
-        runMiddlewares();
         
         /*
          * Enviando POST do form de leituras
@@ -381,18 +394,111 @@
         });
         
         /*
-         * Verifica se arquivo existe
-         */ /*
-        $.ajax({
-            url:'actions.php',
-            type:'HEAD',
-            success: function() {
-                alert('sim');
-            },
-            error: function() {
-                alert('nao');
-            }
-        }); */
+         * Funções para cálculos com resultados da sessão
+         * Em outras palavras..
+         */
+        $('#hora-diaria').change(function pegarLitroHora (){
+                
+            var media_lpd = document.getElementById('med-p-dia').innerText;
+            var horas = $(this).val();
+            var litro_hora = parseFloat(media_lpd)/parseInt(horas);
+            var convertido = Math.round(litro_hora*100)/100;
+                
+            document.getElementById("cons-hora").innerHTML = convertido;
+            
+        });
+
+        $('#vazao-torneira').change(function calculaVazaoTorneira (input) {
+               
+            var media_lpd = document.getElementById('med-p-dia').innerText;
+            var vazao = $(this).val();
+            var torneira_aberta = parseFloat(media_lpd)/parseFloat(vazao);
+            var convertido = Math.round(torneira_aberta*100)/100;
+            
+            document.getElementById("tempo-torneira").innerHTML = convertido;
+                
+        });
+            
+        $('#volume-copo').change(function calculaCopos (input) {
+            
+            var media_lpd = document.getElementById('med-p-dia').innerText;
+            var copo = $(this).val();
+            var qnt_copos = parseFloat(media_lpd)/(parseFloat(copo)/1000);
+            var convertido = Math.round(qnt_copos*100)/100;
+            
+            document.getElementById("qtd-copos").innerHTML = convertido;
+            
+        });
+         
+        $('#vazao-descarga').change(function calculaDescargas (input) {
+            
+            var media_lpd = document.getElementById('med-p-dia').innerText;
+            var descarga = $(this).val();
+            var qnt_descargas = parseFloat(media_lpd)/parseFloat(descarga);
+            var convertido = Math.round(qnt_descargas*100)/100;
+            
+            document.getElementById("qtd-descargas").innerHTML = convertido;
+                
+        });
+            
+        $('#vazao-chuveiro').change(function calculaBanhos (input) {
+               
+            var media_lpd = document.getElementById('med-p-dia').innerText;
+            var banho = $(this).val();
+            var qnt_banhos = parseFloat(media_lpd)/(parseFloat(banho) * 15);
+            var convertido = Math.round(qnt_banhos*100)/100;
+                
+            document.getElementById("qtd-banhos").innerHTML = convertido;
+                
+        });
+            
+        $('#vazao-escova').change(function calculaEscovada (input) {
+                
+            var media_lpd = document.getElementById('med-l-dia').innerText;
+            var escovada = $(this).val();
+            var qnt_escovadas = parseFloat(media_lpd)/(parseFloat(escovada) * 5);
+            var convertido = Math.round(qnt_escovadas*100)/100;
+               
+            document.getElementById("qtd-escova").innerHTML = convertido;
+                
+        });
+            
+        $('#vazao-hidromecanico').change(function calculaAcionamento (input) {
+                
+            var media_lpd = document.getElementById('med-p-dia').innerText;
+            var acionamento = $(this).val();
+            var qnt_acionamentos = parseFloat(media_lpd)/parseFloat(acionamento);
+            var convertido = Math.round(qnt_acionamentos*100)/100;
+                
+            document.getElementById("qtd-hidromecanico").innerHTML = convertido;
+                
+        });
+            
+        $('#vazao-lava-roupa').change(function calculaLavaRoupas (input) {
+                
+            var media_lpd = document.getElementById('med-p-dia').innerText;
+            var consumoMaquina = $(this).val();
+            var qnt_lavagem = parseFloat(media_lpd)/parseFloat(consumoMaquina);
+            var kg_roupas = qnt_lavagem*5
+            var convertido = Math.round(kg_roupas*100)/100;
+                
+            document.getElementById("kg-roupas").innerHTML = convertido;
+                
+        });
+            
+        $('#volume-rega').change(function calculaRegaJardim (input) {
+                
+            var media_lpd = document.getElementById('med-p-dia').innerText;
+            var consumoRegada = $(this).val();
+            var qnt_metroQuadrado = parseFloat(media_lpd)/parseFloat(consumoRegada);
+            var convertido = Math.round(qnt_metroQuadrado*100)/100;
+              
+            document.getElementById("qtd-jardim").innerHTML = convertido;
+                
+        });
+        
+        runMiddlewares();
+        
     });
 
 </script>
