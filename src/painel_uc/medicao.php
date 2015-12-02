@@ -273,6 +273,7 @@
                 $tpl->NLEITURA      = $nota['medicao'];
                 $tpl->NCONSUMO      = $nota['consumo'];
                 $tpl->NVALOR        = tratarValor($nota['valor'],true);
+                $tpl->NOBS          = $nota['desc'];
                 
                 $tpl->block('NOTA_BLOCK');
                 
