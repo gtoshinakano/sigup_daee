@@ -65,9 +65,16 @@
 				</fieldset>			
 				<fieldset>
 					<legend>Consumo e Valor *</legend>
-					Consumo: <input type="text" value="{CONSVAL}" id="consumo-input" name="consumo" tabindex="2" />{TIPOCONS}
-					<br />
-					Valor*: R$ <input type="text" value="{VALORVAL}" name="valor" tabindex="3" />
+                                        <table>
+                                            <tr>
+                                                <td>Consumo:</td><td><input type="text" value="{CONSVAL}" id="consumo-input" name="consumo" tabindex="2" />{TIPOCONS}</td>
+                                                <td>Data de leitura: </td><td><input type="text" maxlength="10" name="data-leitura" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Valor*: R$</td><td><input type="text" value="{VALORVAL}" name="valor" tabindex="3" /></td>
+                                                <td>Leitura: </td><td><input type="text" name="leitura" /></td>
+                                            </tr>
+                                        </table>
 				</fieldset>
 				<fieldset>
 					<legend>Autuação</legend>

@@ -462,9 +462,9 @@
             
         $('#vazao-escova').change(function calculaEscovada (input) {
                 
-            var media_lpd = document.getElementById('med-l-dia').innerText;
-            var escovada = $(this).val();
-            var qnt_escovadas = parseFloat(media_lpd)/(parseFloat(escovada) * 5);
+            var media_lpd = document.getElementById('med-p-dia').innerText;
+            var escovada = parseFloat($(this).val()) * 5;
+            var qnt_escovadas = parseFloat(media_lpd)/ escovada;
             var convertido = Math.round(qnt_escovadas*100)/100;
                
             document.getElementById("qtd-escova").innerHTML = convertido;

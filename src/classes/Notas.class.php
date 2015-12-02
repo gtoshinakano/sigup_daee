@@ -34,24 +34,35 @@
 		private $ultimovencto;
 		public  $sql;
 		
-		function __construct($id,$tipo=null,$numero=null,$nome=null,$sequencia=null,$emissao=null,$mes_ref=null,$ano_ref=null,$consumo=null,$valor=null,$contrato=null,$usuario=null,$uc=null,$saida=null,$pagto=null,$prov=null,$desc=null,$vencto=null){
+		function __construct($id,$tipo=null,$numero=null,$nome=null,$sequencia=null,$emissao=null,$mes_ref=null,$ano_ref=null,$consumo=null,$valor=null,$contrato=null,$usuario=null,$uc=null,$saida=null,$pagto=null,$prov=null,$desc=null,$vencto=null, $data_leitura=null, $leitura=null){
 		
 			if($id == ""){
 			
-				//if(!$this->verificaDuplicidade($numero)){
-				
-					$sql = ("INSERT INTO daee_notas(id,numero,nome,sequencia,tipo,emissao,mes_ref,ano_ref,consumo,valor,contrato,provisoria,usuario,uc,vencto,saida,pagto,criado,`desc`)VALUES('','$numero','$nome',$sequencia,$tipo,'$emissao',$mes_ref,$ano_ref,$consumo,$valor,$contrato,'$prov',$usuario,$uc,'$vencto','$saida','$pagto',NOW(),'$desc')");
-                                        $this->sql = $sql;
-					$this->ultimovencto = ($numero == "Indefinido") ? $vencto : "";
-					$this->uc = $uc;
-					$this->contrato = $contrato;
-					$this->numero = $numero;
-					$this->mes_ref = $mes_ref;
-					$this->ano_ref = $ano_ref;
-					$this->uc = $uc;
-					//mysql_query($sql);
-					
-				//}
+                            // Verificar data de leitura e medição.
+                            if($consumo > 0 && ($leitura == 0 || $data_leitura == "") ){
+                                
+                                // HACK: Vulgo Gambiarra. Esta query pega a ultima data e leitura que existem no banco de dados e o resultado é colocado como segue.
+                                $mesAnt     = ($mes_ref == 1) ? 12 : $mes_ref-1 ;
+                                $anoAnt     = ($mes_ref == 1) ? $ano_ref-1 : $ano_ref ;
+                                $nota_ant_query = mysql_query("SELECT data_medicao, medicao FROM daee_notas WHERE uc=$uc AND mes_ref=$mesAnt AND medicao>0 AND ano_ref=$anoAnt LIMIT 1");
+                                if(mysql_num_rows($nota_ant_query) == 1){
+                                    $medicoes = mysql_fetch_assoc($nota_ant_query);
+                                    $data_inicio  = strtotime($medicoes['data_medicao']);
+                                    $data_leitura = date('Y-m-d', strtotime("+30 day", $data_inicio));
+                                    $leitura = $medicoes['medicao'] + $consumo;
+                                }
+                                
+                            }
+                            $sql = "INSERT INTO daee_notas(id,numero,nome,sequencia,tipo,emissao,mes_ref,ano_ref,consumo,valor,contrato,provisoria,usuario,uc,vencto,saida,pagto,criado,`desc`,data_medicao,medicao)";
+                            $sql.= "VALUES('','$numero','$nome',$sequencia,$tipo,'$emissao',$mes_ref,$ano_ref,$consumo,$valor,$contrato,'$prov',$usuario,$uc,'$vencto','$saida','$pagto',NOW(),'$desc','$data_leitura', $leitura)";
+                            $this->sql = $sql;
+                            $this->ultimovencto = ($numero == "Indefinido") ? $vencto : "";
+                            $this->uc = $uc;
+                            $this->contrato = $contrato;
+                            $this->numero = $numero;
+                            $this->mes_ref = $mes_ref;
+                            $this->ano_ref = $ano_ref;
+                            $this->uc = $uc;
 			
 			}elseif($id > 0){
 			

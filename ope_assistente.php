@@ -186,6 +186,10 @@
 				$alerta.= $invalidos . " - Número de provisória digitado inválido.<br />";	
 			
 			}
+                        
+                        $data_leitura = $_POST['data-leitura'];
+                        $data_leitura = (strlen($data_leitura) == 10) ? getTransformDate($data_leitura) : "";
+                        $leitura      = (int) $_POST['data-leitura'];
 					
 			if($invalidos > 0){
 			
@@ -211,7 +215,7 @@
 				$uc			= new UnidadeConsumidora($rgi);
 				$contrato	= $uc->get('contrato')->get('id');
 				$obs		= nl2br(mysql_real_escape_string($_POST['obs']));
-				$nota		= new Nota("",0,$nota,$compl,0,$emissao,$mes_ref,$ano_ref,$consumo,$valor,$contrato,$user->get('id'),$uc->get('id'),$saida,'',$prov,$obs,$vencto);
+				$nota		= new Nota("",0,$nota,$compl,0,$emissao,$mes_ref,$ano_ref,$consumo,$valor,$contrato,$user->get('id'),$uc->get('id'),$saida,'',$prov,$obs,$vencto, $data_leitura, $leitura);
 				
 				if($nota->saveNew()){
 				
