@@ -43,14 +43,15 @@
 
 
 
-        <form name="rel_contas" method="get" action="pdf_notas.php" >
+        <form name="rel_contas" method="get" action="pdf_notas.php?" >
             <!-- BEGIN TABELA -->
             <div class="simple-table notas" id="simple-table notas" >
                 
-                <p class="paragrafo">Hi Assim sendo, proponho o envio da presente à DOF, para o devido pagamento</p>
-                <p class="">Hi Assim sendo, proponho o envio da presente à DOF, para o devido pagamento</p>
-
+              
                 <h3>RELAÇÃO DE CONTAS <span class="mes" >{NMES_REF}</span> / <span class="ano" >{NANO_REF} </span></h3>
+                <input type="text"  class="hide" id="mes" name="mes" value="{NMES_REF} " readonly>
+                 <input type="text" class="hide" id="ano" name="ano" value="{NANO_REF}" readonly>
+                  <input type="text" class="hide" id="emp_id" name="emp_id" value="{EMP_ID}" readonly>
                <!-- <label class="emp" >{NRAZAO} </label>-->
                  <span class="emp" >{NRAZAO} </span>
                 <table class="borda-simples "  width="100%">
@@ -115,25 +116,25 @@
 
                         <div class="form-group col-sm-12">
                             <div class="col-md-offset-2 col-sm-2 text-right">
-                                <select class="form-control " id="selec">
+                                <select class="form-control " id="selec" name="selec">
                                     <option value="0">Processo</option>
                                     <option value="1">Autos</option>
                                 </select>
                             </div>
                             <div class="col-sm-4 input_autos">
-                                <input type="number" class="form-control" id="autos" name="autos" placeholder="Nº Autos"  ng-model="autos" min="0">
+                                <input type="number" class="form-control" id="autos" name="autos" placeholder="Nº Autos/Processo"  ng-model="autos" min="0">
                             </div>
                         </div>
 
                        
                         
-                        <div class="form-group col-sm-12">
+                        <!--<div class="form-group col-sm-12">
                             <label for="autos" class="col-sm-4 control-label text-right ">Autos: </label>
                             <div class="col-sm-4">
                                 <input type="number" class="form-control" id="autos" name="autos" placeholder="Nº Autos"  ng-model="autos" min="0">
                             </div>
-                        </div>
-                        <div class="form-group col-sm-12">
+                        </div>-->
+                        <div class="form-group col-sm-12 prov">
                             <label for="prov" class="col-sm-4 control-label text-right">Prov.: </label>
                             <div class="col-sm-4">
                                 <input type="number" class="form-control"  id="prov" name="prov" ng-model="prov" placeholder="Prov" min="0">
@@ -151,11 +152,11 @@
                             <div class="col-sm-4">
                                 <div class="row">
                                      <div class="col-xs-8">
-                                        <input type="text" class="form-control" placeholder="Nº da informação">
+                                        <input type="text" id="ninfo" name="ninfo" class="form-control" placeholder="Nº da informação">
                                     </div>
                                     <div class="col-xs-4">
                                        <!-- <input type="text" class="form-control" value="/2015">-->
-                                       <strong>  <input class="form-control" type="text" placeholder="/2015" readonly></strong>
+                                       <strong>  <input class="form-control" id="info_ano" name="info_ano" type="text" placeholder="/2015" readonly></strong>
                                     </div>
                                 </div>
                             </div>
@@ -174,29 +175,47 @@
                             </div>
                         </div>-->
                        <div class="form-group col-sm-12">
-                            <label for="ninfo" class="col-sm-4 control-label text-right">Atestado de Pagamento </label>
+                            <label for="natestado" class="col-sm-4 control-label text-right">Atestado de Pagamento </label>
                             <div class="col-sm-4">
                                 <div class="row">
                                      <div class="col-xs-8">
-                                        <input type="text" class="form-control" placeholder="Nº do atestado">
+                                        <input type="text" class="form-control"  id="natestado" name="natestado" placeholder="Nº do atestado">
                                     </div>
                                     <div class="col-xs-4">
                                        <!-- <input type="text" class="form-control" value="/2015">-->
-                                       <strong>  <input class="form-control" type="text" placeholder="/2015" readonly></strong>
+                                       <strong>  <input class="form-control" id="atest_ano" name="atest_ano" type="text" placeholder="/2015" readonly></strong>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <br/><br/><br/><br/>
+                         <div class="submitter">
+                    <input type="button" value="Voltar" name="prevButton" class="btn btn-primary" />
+                    <a href="#" class="btn btn-primary next">Próximo <span aria-hidden="true">&rarr;</span></a>
 
-                        <ul class="pager">
-                            <li class="previous" ><a href="#"><span aria-hidden="true" >&larr;</span> Voltar</a></li>
+                </div>
+
+                        <!--<ul class="pager">
+                            <li class="previous" id="previusTab"  ><a href="#"><span aria-hidden="true" >&larr;</span> Voltar</a></li>
+                            <li class=" "><button class="btn btn-default" name="prevButton">Voltar</button></li>
                             <li class="next "><a href="#">Próximo <span aria-hidden="true">&rarr;</span></a></li>
-                        </ul>
+                        </ul>-->
                     </div>
 
                     <div class="tiny">
+                           <div class="form-group infor">
+                            <div class="col-sm-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading"><strong> <span class="glyphicon glyphicon-edit" ></span> Infomação</strong> </div>
+                                    <div class="panel-body">
+                                        <textarea id="texto_info" name="texto_info" class="tinyMCE" title="texto_info" >
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="form-group atestado ">
                             <div class="col-sm-12">
                                 <div class="panel panel-primary">
@@ -209,22 +228,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group infor">
-                            <div class="col-sm-12">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading"><strong> <span class="glyphicon glyphicon-edit" ></span> Infomação</strong> </div>
-                                    <div class="panel-body">
-                                        <textarea id="texto_info" name="texto_info" class="tinyMCE" title="texto_info" >
-                                        </textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                     
 
                         <ul class="pager">
-                            <li class="previous" ><a href="#"><span aria-hidden="true" >&larr;</span> Voltar</a></li>
-                            <li class="next "><a href="#">Próximo <span aria-hidden="true">&rarr;</span></a></li>
-                            <li class="next "><button class="btn btn-default" type="submit">Button</button></li>
+                           <!-- <li class="previous" ><a href="#"><span aria-hidden="true" >&larr;</span> Voltar</a></li>
+                            <li class=" "><a href="#">Próximo <span aria-hidden="true">&rarr;</span></a></li>-->
+                           
+                            <li class=" "><button class="btn btn-default" type="submit">Finalizar</button></li>
                         </ul>
                     </div>
                 </div>

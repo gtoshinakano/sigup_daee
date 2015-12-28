@@ -62,6 +62,7 @@ if (!isset($_GET['notas'])) {
 
         $tpl->NMES_REF = getMesNome($mes_ref, false);
         $tpl->NANO_REF = $ano_ref;
+        $tpl->EMP_ID =$emp_id;
 
         if ($nivel != 1) {
             $sql = "SELECT  n.*, uo.unidade, uc.compl, emp.nome emp_nome, uc.rgi, emp.razao_social emp_rz
@@ -79,6 +80,7 @@ if (!isset($_GET['notas'])) {
 
         $query = mysql_query($sql);
         $count = 0;
+         $datas = array();
         $temConsumo = false;
         switch ($nivel) {
              case 1:$tpl->NTH_RGI = "NUMERO";
@@ -111,7 +113,14 @@ if (!isset($_GET['notas'])) {
             $tpl->LANCTO = $res['criado'];
             $tpl->LANCTO2 = date("d/m/Y", strtotime($res['criado']));
             
-         
+            
+           
+            $datas[$count] = date("d/m/Y", strtotime($res['vencto']));
+          //  $datas[] = 'Ovos';
+          //  $datas[] = 'Carne';
+          // $datas[] = 'Macarrão';
+            
+           // echo $datas[$count]."; ";    
 
           
 
@@ -125,6 +134,13 @@ if (!isset($_GET['notas'])) {
             //$tpl->MES_REF = getMesNome($res['mes_ref'], true);
             $tpl->block('EACH_NO');
         }
+      // for( $i=0; $i<=count($datas);$i++){
+           for( $i=1; $i<=sizeof($datas);$i++){
+          
+         //  echo $datas[$i]."; ";
+       }
+       
+     //  echo " -->MINIMO ".min($datas); 
         $tpl->UCTOTAL = $count;
         $tpl->block('TABELA');
         $tpl->block('PDF');

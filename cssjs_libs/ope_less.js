@@ -1,6 +1,7 @@
 var url = window.location.href;
 var baseName = url.split("/");
 var simpleBaseName = baseName[baseName.length - 1];
+var autos=false;
 
 $(document).ready(function () {
     var atestado = false;
@@ -63,14 +64,14 @@ $(document).ready(function () {
         }
     });
 
-  ////  $('.info').hide();
+    $('.info').hide();
     $("input[name=nextButton]").click(function () {
-   ////     $('.simple-table').hide();
-   ////     $('.info').show();
+       $('.simple-table').hide();
+        $('.info').show();
     });
     $("input[name=prevButton]").click(function () {
-   ////     $('.simple-table').show();
-   ////     $('.info').hide();
+        $('.simple-table').show();
+        $('.info').hide();
     });
 
   //  $('#info').click(function () {
@@ -91,9 +92,12 @@ $(document).ready(function () {
         content_style: "p{font-size:14px;font-family:Arial;color:#555}"
     });
 
-  ////  $('.atestado').hide();
-  ////  $('.infor').hide();
-   //// $('.tiny').hide();
+    $('.atestado').hide();
+    $('.infor').hide();
+    $('.tiny').hide();
+     $('.prov').hide();
+      $('.hide').hide();
+
     $('input[name=tem_atestado]').change(function () {
         if (this.checked) {
             atestado = true;
@@ -104,7 +108,16 @@ $(document).ready(function () {
     
     $('#selec').change(function () {
         $("#selec option:selected").each(function () {
-            alert($(this).text() + " ");
+            //alert($(this).text() + " ");
+            if($(this).text()==="Autos"){
+                autos=true;
+                 $('.prov').show();
+                 // alert($(this).text() + " -->Autossssss ");
+            }else{
+                autos=false;
+                 $('.prov').hide();
+                // alert($(this).text() + " -->>Processo ");
+            }
         });
     });
   
@@ -116,9 +129,9 @@ $(document).ready(function () {
         var ano = $(".ano").html();
         var total = $(".div-total").html();
 
-    ////    $('.info').hide();
-     ////   $('.tiny').show();
-     ////   $('.infor').show();
+        $('.info').hide();
+        $('.tiny').show();
+        $('.infor').show();
 
         var ates = "";
         if (atestado === true) {

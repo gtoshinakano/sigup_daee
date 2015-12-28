@@ -60,16 +60,46 @@ small{ font-family: serif;}
 }
 .texto{
     color:#000000;
-    padding: 145px 10px 0 10px;
+    padding: 100px 10px 0 10px;
 }
 .texto p{
     text-indent:0px; 
     text-align: left; 
    // font-family: "arial1";
     padding-left: 0px; 
-    line-height:19pt
+    line-height:15pt
+}
+.texto2{
+    color:#000000;
+    padding: 100px 0px 0 0px;
 }
 .paragrafo{
      font-family: "verdana1";
+      line-height:10pt;
 }
-.text-center{text-align:center}
+
+.data{
+    
+    color: #fff;
+}
+
+.left{
+    width: 50%;
+    float: left;
+     text-align: center;
+}
+
+.right{
+    width: 50%;
+    float: right;
+    text-align: center;
+}
+.center{
+    width: 100%;
+    text-align: center;
+    padding-top: 15px;
+}
+.center2{
+    width: 100%;
+    text-align: center;
+}
